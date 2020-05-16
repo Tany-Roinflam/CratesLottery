@@ -1,0 +1,2 @@
+# CratesLottery
+Free lottery plugin
