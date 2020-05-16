@@ -788,14 +788,8 @@ public void Close(InventoryCloseEvent event) {
 			}
 		}	
     	return;
-    }
-    
+    }   
 }
-    @EventHandler
-    public void Death(PlayerDeathEvent a) {
-    	Player killer = a.getEntity().getKiller();
-    	a.getEntity().getKiller().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
-    }
 
 	//	ItemStackתString
 	public static String ItemData(ItemStack item) {
