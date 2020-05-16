@@ -39,6 +39,16 @@ public class Commands implements CommandExecutor {
 		if(args.length==1) {
 			if(args[0].equalsIgnoreCase("help")) {
 				if(sender.isOp()) {
+					sender.sendMessage("§a[]==================§2[帮助§a界面<1/4>]==================[]");
+					sender.sendMessage("§a§l常用指令");
+					sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
+					sender.sendMessage("");
+					sender.sendMessage("§a/cl gui  §6打开制作gui");
+					sender.sendMessage("§a/cl crate [箱子名称]  [玩家] [数量]  §6给予抽奖方块");
+					sender.sendMessage("§a/cl key [箱子名称] [玩家] [数量]  §6给予抽奖钥匙");
+					sender.sendMessage("§a/cl setcrate §6设置手上物品放置出的方块即为抽奖箱");
+					sender.sendMessage("§a/cl setkey §6设置手上物品为抽奖钥匙");
+					sender.sendMessage("§a[]=========================§2==========================[]");
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -236,59 +246,53 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(number==1) {
-						ChatComponentAPI.sendClickChat("[下页]", "§a翻到下一页", "cl help 2");
 						sender.sendMessage("§a[]==================§2[帮助§a界面<1/4>]==================[]");
-						sender.sendMessage("§2§l常用指令");
+						sender.sendMessage("§a§l常用指令");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
 						sender.sendMessage("§a/cl gui  §6打开制作gui");
-						sender.sendMessage("§a/cl crate [箱子名称]  [玩家] [数量]  §6给予抽奖方块（设置时手握的）");
+						sender.sendMessage("§a/cl crate [箱子名称]  [玩家] [数量]  §6给予抽奖方块");
 						sender.sendMessage("§a/cl key [箱子名称] [玩家] [数量]  §6给予抽奖钥匙");
-						sender.sendMessage("§a/cl setcrate §6把手上物品添加到配置里，放置出的方块即为抽奖箱");
+						sender.sendMessage("§a/cl setcrate §6设置手上物品放置出的方块即为抽奖箱");
 						sender.sendMessage("§a/cl setkey §6设置手上物品为抽奖钥匙");
-						sender.sendMessage("§a[]========================§2============[下页]=========[]");
+						sender.sendMessage("§a[]=========================§2==========================[]");
 						return true;
 					}
 					if(number==2) {
-						ChatComponentAPI.sendClickChat("[上页]", "§a翻到上一页", "cl help 1");
-						ChatComponentAPI.sendClickChat("[下页]", "§a翻到下一页", "cl help 3");
 						sender.sendMessage("§a[]==================§2[帮助§a界面<2/4>]==================[]");
-						sender.sendMessage("§2§l箱子单独时间相关");
+						sender.sendMessage("§a§l箱子单独时间相关");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
 						sender.sendMessage("§a/cl time §2[箱子名称] [变幻次数] [变幻时间] §6普通开箱单独设置时间");
 						sender.sendMessage("§a/cl 9ninetime §2[箱子名称] [变幻次数] [变幻时间] §c九连抽§6开箱单独设置时间");
 						sender.sendMessage("§6为这个箱子单独设置时间，细看config.yml里的“开箱部分”自行理解");
-						sender.sendMessage("§a[]===========[上页]=========§2============[下页]=========[]");
+						sender.sendMessage("§a[]=========================§2==========================[]");
 						return true;
 					}
 					if(number==3) {
-						ChatComponentAPI.sendClickChat("[上页]", "§a翻到上一页", "/cl help 2");
-						ChatComponentAPI.sendClickChat("[下页]", "§a翻到下一页", "/cl help 4");
 						sender.sendMessage("§a[]==================§2[帮助§a界面<3/4>]==================[]");
-						sender.sendMessage("§2§l公告相关");
+						sender.sendMessage("§a§l公告相关");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
 						sender.sendMessage("§a/cl bc [箱子名称] [公告] ");
 						sender.sendMessage("§a/cl 9nine [箱子名称] [公告] ");
-						sender.sendMessage("§6设置箱子§a[普通开启/§c九连抽]§6开启时全服公告[如果写“无”则不启用]");
-						sender.sendMessage("§6[player]开箱玩家变量");
+						sender.sendMessage("§6设置箱子§a[普通开启/§c九连抽]§6开启时全服公告");
+						sender.sendMessage("§6注释：如果写“无”则不启用，[player]为开箱玩家变量");
 						sender.sendMessage("");
 						sender.sendMessage("§a/cl info [箱子名称] [true/false] §6启用公告抽奖到的物品");
 						sender.sendMessage("§a/cl 9nineinfo [箱子名称] [true/false] §6启用§c九连抽§2公告抽奖到的物品");
-						sender.sendMessage("§a[]===========[上页]=========§2============[下页]=========[]");
+						sender.sendMessage("§a[]=========================§2==========================[]");
 						return true;
 					}
 					if(number==4) {
-						ChatComponentAPI.sendClickChat("[上页]", "§a翻到上一页", "/cl help 3");
 						sender.sendMessage("§a[]==================§2[帮助§a界面<4/4>]==================[]");
-						sender.sendMessage("§2§l箱子的动画/特殊开箱相关");
+						sender.sendMessage("§a§l箱子的动画/特殊开箱相关");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
 						sender.sendMessage("§a/cl set [箱子名称] [true/false] §6启用箱子抽奖动画");
 						sender.sendMessage("§a/cl 9nineset [箱子名称] [true/false] §6启用§c九连抽§6箱子抽奖动画");
 						sender.sendMessage("§a/cl clear [箱子名称] [true/false] §6启用单抽箱子清理抽到的物品功能");
-						sender.sendMessage("§a[]===========[上页]=========§2============[下页]=========[]");
+						sender.sendMessage("§a[]=========================§2==========================[]");
 						return true;
 					}
 					sender.sendMessage("§c没有这个页数！");

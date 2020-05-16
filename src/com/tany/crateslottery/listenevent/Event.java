@@ -194,11 +194,11 @@ public class Event implements Listener  {
 	        						}
 	        						a++;
 	        					}
-	            					if(event.getItem().getAmount()<9) {
+	            					if(event.getPlayer().getInventory().getItemInHand().getAmount()<9) {
 	            						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoNineKeyMessage")));
 	            						return;
 	            					}
-	            					int amount = event.getItem().getAmount();
+	            					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
 	            					amount=amount-9;
 	            	    			if(version.contains("1.9")||version.contains("1.10")||version.contains("1.11")||version.contains("1.12")||version.contains("1.13")||version.contains("1.14")||version.contains("1.15")) {
 	                	    			if(amount!=0)
@@ -240,7 +240,7 @@ public class Event implements Listener  {
 	    						}
 	    						a++;
 	    					}
-	    					int amount = event.getItem().getAmount();
+	    					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
 	    					amount--;
 	    	    			if(version.contains("1.9")||version.contains("1.10")||version.contains("1.11")||version.contains("1.12")||version.contains("1.13")||version.contains("1.14")||version.contains("1.15")) {
 	        	    			if(amount!=0)
