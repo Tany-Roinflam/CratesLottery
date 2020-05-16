@@ -1,0 +1,34 @@
+#开箱部分（全局设置）
+#开箱时长次数（变幻次数）
+WingLongTime: 60
+#每次变幻相差秒数
+WingSpaceTime: 0.125
+
+#九连开箱时长次数（变幻次数）
+NineWingLongTime: 60
+#九连每次变幻相差秒数
+NineWingSpaceTime: 0.125
+
+#如果想要自定义每个箱子的时间
+#可以通过指令修改，顺序对应前：上、后：下
+#当然，如果不启用开箱动画，设置了也不影响
+
+
+#信息部分
+#当玩家获得抽奖钥匙时，是否提示它？
+KeyMessage: true
+
+
+#声音名
+#默认声音支持1.9+
+#如果你版本是1.9以下，请把下面的注释解除，并且把上面两行注释掉
+#不然你后台会快乐到死
+SoundName: 'ENTITY_EXPERIENCE_ORB_PICKUP'
+SoundsName: 'ENTITY_PLAYER_LEVELUP'
+#SoundName: 'ORB_PICKUP'
+#SoundsName: 'LEVEL_UP'
+
+#音响
+SoundSize: 1
+#音色
+SoundTimbre: 1

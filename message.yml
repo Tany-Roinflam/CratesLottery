@@ -1,0 +1,50 @@
+UseKeyMessage: '&c请使用钥匙对对应抽奖箱子右键'
+BreakCrateMessage: '&c你无法破坏抽奖箱！'
+
+#[crate]开启的对应箱子
+OpenCrateMessage: '&a成功开启[crate]&a箱子'
+
+#[crate]开启的对应箱子
+NineOpenCrateMessage: '&a成功&c九连&a抽[crate]&a箱子'
+
+#[key]对应钥匙
+NoOpenCrateMessage: '&c你必须使用[key]&c钥匙才能打开！'
+
+ClearCrateMessage: '&a你成功清理了一个不存在的抽奖箱'
+
+ClearKeyMessage: '&a成功清理了一个过期的钥匙'
+
+ClearCrateMessage: '&a成功清理了一个过期的箱子'
+
+#[crate]对应箱子
+ShowCrateMessage: '&a你正在查看[crate]&a奖池内容'
+
+WingMessage: '&a领取你的奖励吧！'
+
+NoItemMessage: '&c这个箱子没有内容可抽奖！'
+
+CrateLoreOne: '&b使用方法：'
+CrateLoreTwo: '&a拿着物品右键'
+CrateLoreThree: '&2放置出来的方块即为抽奖箱'
+CrateLoreFour: '&c不同物品也生效，钥匙也同机制，可以同时多种方块成为抽奖箱'
+
+KeyLoreOne: '§b使用方法：'
+KeyLoreTwo: '§a使用此物品，右键对应抽奖箱'
+KeyLoreThree: '§2即可抽奖'
+
+#[key]对应钥匙
+GetKeyMessage: '&a获得了[key]§a钥匙'
+
+NoNineKeyMessage: '&c你没有足够的钥匙进行九连抽'
+
+NoNineLotteryMessage: '&c你没有权限九连抽！'
+
+NoLotteryMessage: '&c你没有权限单抽！'
+
+#[player]玩家名，[crate]箱子名，[item]物品名（如果没自定义名，则为英文）
+InfoMessage: '&a玩家&2[player]&a开启了&d[crate]&a箱子，成功获得了&f[item]&a物品！'
+
+#[player]玩家名，[crate]箱子名，[item]物品列名
+NineInfoMessage: '&a玩家&2[player]§c九连抽§a了&d[crate]&a箱子，成功获得了&f[item]&a物品！'
+
+ClearMessage: '&c这个箱子开启了自动清理模式，无法九连抽'

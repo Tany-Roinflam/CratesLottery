@@ -1,0 +1,14 @@
+name: CratesLottery
+main: com.tany.crateslottery.Main
+version: 1.0.0
+author: tany
+depend: [ProtocolLib,PlaceholderAPI]
+commands:
+  crateslottery:
+    usage: /crateslottery
+    aliases: [cl]
+permissions: 
+  cl.lottery: 
+    default: true
+  cl.ninelottery: 
+    default: true
