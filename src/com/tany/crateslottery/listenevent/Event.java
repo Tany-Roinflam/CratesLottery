@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,7 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,9 +25,6 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
 import com.comphenix.protocol.utility.StreamSerializer;
 import com.tany.crateslottery.Main;
 import com.tany.crateslottery.conversation.Name;
@@ -39,8 +33,6 @@ import com.tany.crateslottery.task.NineWingTask;
 import com.tany.crateslottery.task.NineWingTaskS;
 import com.tany.crateslottery.task.WingTask;
 import com.tany.crateslottery.task.WingTaskS;
-
-import net.minecraft.server.v1_12_R1.MobEffects;
 
 public class Event implements Listener  {
 	public static String crate = null;
@@ -52,19 +44,16 @@ public class Event implements Listener  {
     
     @EventHandler
 	public void Toggle(PlayerToggleSneakEvent event) {
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		if(event.isSneaking()) {
 			Sneak.put(event.getPlayer(), true);
 		}else {
 			Sneak.put(event.getPlayer(), false);
 		}
 	}
+    
 
 	@EventHandler
     public void Break(BlockBreakEvent event) {
-        FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
         FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
         FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
         List<String> Location = config2.getStringList("Location");
@@ -102,29 +91,28 @@ public class Event implements Listener  {
 	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
-		Action action=event.getAction();
-		if((event.getItem()!=null&&event.getItem().getItemMeta().hasDisplayName()&&event.getItem().getItemMeta().getDisplayName().startsWith("§a开箱§6钥匙§3："))) {
+		if((event.getItem()!=null&&event.getItem().getItemMeta().hasDisplayName()&&event.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLotteryKey"))))) {
 			event.setCancelled(true);
-			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace("§a开箱§6钥匙§3：", ""));
+			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLotteryKey")), ""));
 			if(config2.getString("Info."+name+".color")==null) {
 				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("ClearKeyMessage")));
 				event.getPlayer().getInventory().setItemInHand(null);
 	    		return;
 			}
-			if(action.equals(action.RIGHT_CLICK_AIR)) {
+			if(event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("UseKeyMessage")));
 				return;
 			}
 		}
-		if(event.getItem()!=null&&event.getItem().getItemMeta().hasDisplayName()&&!event.getItem().getItemMeta().getDisplayName().equals("§a箱§2子§5：")&&event.getItem().getItemMeta().getDisplayName().startsWith("§a箱§2子§5：")) {
-			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace("§a箱§2子§5：", ""));
+		if(event.getItem()!=null&&event.getItem().getItemMeta().hasDisplayName()&&!event.getItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")))&&event.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")))) {
+			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")), ""));
 			if(config2.getString("Info."+name+".color")==null) {
 				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("ClearCrateMessage")));
 				event.getPlayer().getInventory().setItemInHand(null);
 			}
 			return;
 		}
-		if(event.getClickedBlock()!=null&&action.equals(action.RIGHT_CLICK_BLOCK)) {
+		if(event.getClickedBlock()!=null&&event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 	    	List<String> Location = config2.getStringList("Location");
 	    	Location block = event.getClickedBlock().getLocation();
 	    	if(Location.size()!=0) {
@@ -149,30 +137,16 @@ public class Event implements Listener  {
 				        	}
 	        				return;
 	        			}
-						String version = Bukkit.getServer().getVersion();
-						if(version.contains("1.9")||version.contains("1.10")||version.contains("1.11")||version.contains("1.12")||version.contains("1.13")||version.contains("1.14")||version.contains("1.15")) {
 							if(event.getPlayer().getInventory().getItemInHand()==null||event.getPlayer().getInventory().getItemInHand().getType()==Material.AIR) {
 								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrateMessage").replace("[key]", config2.getString("Info."+name+".color")+name)));
 								return;
 							}else if(!event.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()) {
 								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrateMessage").replace("[key]", config2.getString("Info."+name+".color")+name)));
 								return;
-							}else if(!ChatColor.stripColor(event.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName().replace("§a开箱§6钥匙§3：", "")).equals(name)) {
+							}else if(!ChatColor.stripColor(event.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLotteryKey")), "")).equals(name)) {
 								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrateMessage").replace("[key]", config2.getString("Info."+name+".color")+name)));
 								return;
 							}
-						}else {
-							if(event.getPlayer().getInventory().getItemInHand()==null||event.getPlayer().getInventory().getItemInHand().getType()==Material.AIR) {
-								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrateMessage").replace("[key]", config2.getString("Info."+name+".color")+name)));
-								return;
-							}else if(!event.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()) {
-								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrateMessage").replace("[key]", config2.getString("Info."+name+".color")+name)));
-								return;
-							}else if(!ChatColor.stripColor(event.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName().replace("§a开箱§6钥匙§3：", "")).equals(name)) {
-								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrateMessage").replace("[key]", config2.getString("Info."+name+".color")+name)));
-								return;
-							}
-						}
 	    				if(Sneak.containsKey(event.getPlayer())&&Sneak.get(event.getPlayer())) {
 	    					if(!event.getPlayer().hasPermission("cl.ninelottery")) {
 	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoNineLotteryMessage")));
@@ -184,6 +158,10 @@ public class Event implements Listener  {
 	    					}
 	        					List<String> itemlist = config2.getStringList("Info."+name+".data");
 	        					int a=1;
+	        					if(itemlist.size()==0) {
+        							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoItemMessage")));
+        							return;
+	        					}
 	        					for(String item:itemlist) {
 	        						if(!item.split(":")[1].equals("null")) {
 	        							break;
@@ -193,24 +171,18 @@ public class Event implements Listener  {
 	        							return;
 	        						}
 	        						a++;
-	        					}
+	        						}
+	        						a=1;
 	            					if(event.getPlayer().getInventory().getItemInHand().getAmount()<9) {
 	            						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoNineKeyMessage")));
 	            						return;
 	            					}
 	            					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
 	            					amount=amount-9;
-	            	    			if(version.contains("1.9")||version.contains("1.10")||version.contains("1.11")||version.contains("1.12")||version.contains("1.13")||version.contains("1.14")||version.contains("1.15")) {
-	                	    			if(amount!=0)
-	            	    				event.getPlayer().getInventory().getItemInHand().setAmount(amount);
-	                	    			else
-	                	    			event.getPlayer().getInventory().setItemInHand(null);
-	            	    			}else {
 	            	    				if(amount!=0)
 	                	    			event.getPlayer().getInventory().getItemInHand().setAmount(amount);
 	                	    			else
 	      								event.getPlayer().getInventory().setItemInHand(null);
-	            	    			}
 	            	    			if(!config2.getString("Info."+name+".nine").equals("无"))
 	            	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config2.getString("Info."+name+".nine").replace("[player]", event.getPlayer().getName())));
 	            	    			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NineOpenCrateMessage").replace("[crate]", config2.getString("Info."+name+".color")+name)));
@@ -230,6 +202,10 @@ public class Event implements Listener  {
 	    					}
 	    					List<String> itemlist = config2.getStringList("Info."+name+".data");
 	    					int a=1;
+        					if(itemlist.size()==0) {
+    							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoItemMessage")));
+    							return;
+        					}
 	    					for(String item:itemlist) {
 	    						if(!item.split(":")[1].equals("null")) {
 	    							break;
@@ -242,17 +218,10 @@ public class Event implements Listener  {
 	    					}
 	    					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
 	    					amount--;
-	    	    			if(version.contains("1.9")||version.contains("1.10")||version.contains("1.11")||version.contains("1.12")||version.contains("1.13")||version.contains("1.14")||version.contains("1.15")) {
-	        	    			if(amount!=0)
-	    	    				event.getPlayer().getInventory().getItemInHand().setAmount(amount);
-	        	    			else
-	        	    			event.getPlayer().getInventory().setItemInHand(null);
-	    	    			}else {
 	    	    				if(amount!=0)
 	        	    			event.getPlayer().getInventory().getItemInHand().setAmount(amount);
 	        	    			else
 								event.getPlayer().getInventory().setItemInHand(null);
-	    	    			}
 	    	    			if(!config2.getString("Info."+name+".announcement").equals("无"))
 	    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config2.getString("Info."+name+".announcement").replace("[player]", event.getPlayer().getName())));
 	    	    			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("OpenCrateMessage").replace("[crate]", config2.getString("Info."+name+".color")+name)));
@@ -270,7 +239,7 @@ public class Event implements Listener  {
 	    		}
 	    	}
 		}
-		if(action.equals(Action.LEFT_CLICK_BLOCK)&&!(Sneak.containsKey(event.getPlayer())&&Sneak.get(event.getPlayer()))) {
+		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)&&!(Sneak.containsKey(event.getPlayer())&&Sneak.get(event.getPlayer()))) {
 	    	List<String> Location = config2.getStringList("Location");
 	    	Location block = event.getClickedBlock().getLocation();
 	    	if(Location.size()!=0) {
@@ -306,11 +275,10 @@ public class Event implements Listener  {
 
 	@EventHandler
 	public void Place(BlockPlaceEvent event) {
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
-	    if(event.getItemInHand()!=null&&event.getItemInHand().hasItemMeta()&&event.getItemInHand().getItemMeta().hasDisplayName()&&event.getItemInHand().getItemMeta().getDisplayName().startsWith("§a箱§2子§5：")) {
-	    	String title = ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace("§a箱§2子§5：", ""));
+	    if(event.getItemInHand()!=null&&event.getItemInHand().hasItemMeta()&&event.getItemInHand().getItemMeta().hasDisplayName()&&event.getItemInHand().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")))) {
+	    	String title = ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")), ""));
 	    	int a = 0;
 	    	for(String name:config2.getConfigurationSection("Info").getKeys(false)) {
 	    		if(name.equals(title)) {
@@ -321,10 +289,10 @@ public class Event implements Listener  {
 	    			a=0;
 	    			return;
 	    		}
-	    	}
+	    	}		
 	    	a=0;
 	    	List<String> Location = config2.getStringList("Location");
-	    	Location.add(event.getBlock().getLocation().getWorld().getName()+":"+event.getBlock().getLocation().getBlockX()+":"+event.getBlock().getLocation().getBlockY()+":"+event.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace("§a箱§2子§5：", "")));
+	    	Location.add(event.getBlock().getLocation().getWorld().getName()+":"+event.getBlock().getLocation().getBlockX()+":"+event.getBlock().getLocation().getBlockY()+":"+event.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")), "")));
 	    	config2.set("Location", Location);
 	  		try {
 	  			config2.save(file1);
@@ -336,9 +304,7 @@ public class Event implements Listener  {
 
 	@EventHandler
 	public void Click(InventoryClickEvent player) {
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		Inventory inventory = player.getClickedInventory();
 		if(inventory == null) {
 			return;
@@ -702,6 +668,7 @@ public class Event implements Listener  {
 			}
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c删除这个箱子")) {
 				config2.set("Info."+name, null);
+		  		config2.set("backup."+name, null);
 		  		try {
 		  			config2.save(file1);
 		  		} catch (IOException e) {
@@ -736,9 +703,7 @@ public class Event implements Listener  {
 
 	@EventHandler
 public void Close(InventoryCloseEvent event) {
-    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
     FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
     if(event.getInventory().getTitle().startsWith("§2抽奖箱")) {
     	String title = ChatColor.stripColor(event.getInventory().getTitle().replace("§2抽奖箱", "").replace("§2设置", ""));
     	ArrayList<String> data = new ArrayList<String>();
@@ -748,7 +713,7 @@ public void Close(InventoryCloseEvent event) {
   			if(event.getInventory().getItem(a)==null||event.getInventory().getItem(a).getType()==Material.AIR)
   			item = "null";
   			else
-  			item = ItemData(event.getInventory().getItem(a));
+  			item = GetItemData(event.getInventory().getItem(a));
   			data.add(a+":"+item);
   			a++;
   		}
@@ -769,8 +734,10 @@ public void Close(InventoryCloseEvent event) {
   			config2.set("Info."+title+".clear", false);
   			config2.set("Info."+title+".info", false);
   			config2.set("Info."+title+".nineinfo", false);
+  			config2.set("Info."+title+".backup", false);
   			crate = null;
   		}
+  		config2.set("backup."+title, data);
   		config2.set("Info."+title+".data", data);
   		try {
   			config2.save(file1);
@@ -791,22 +758,20 @@ public void Close(InventoryCloseEvent event) {
     }   
 }
 
-	//	ItemStack转String
-	public static String ItemData(ItemStack item) {
-		StreamSerializer data = new StreamSerializer();
-		String s;
+//	ItemStack转String
+	public String GetItemData(ItemStack item) {
+		String a;
 		try {
-		    s = data.serializeItemStack(item);
+		    a = new StreamSerializer().serializeItemStack(item);
 		} catch (Exception e) {
-		    s = null;
+		    a = null;
 		}
-		return s;
+		return a;
 	}
 //	String转ItemStack
-	public static ItemStack GetItemStack(String data) {
-		StreamSerializer item = new StreamSerializer();
+	public ItemStack GetItemStack(String data) {
 		try {
-			return item.deserializeItemStack(data);
+			return new StreamSerializer().deserializeItemStack(data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

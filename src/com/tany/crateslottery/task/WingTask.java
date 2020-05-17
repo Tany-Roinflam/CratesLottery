@@ -80,6 +80,21 @@ public class WingTask extends BukkitRunnable  {
 					list.remove(list.get(Preset.location));
 					list.add(Preset.location+":"+"null");
 			  		config2.set("Info."+Crate+".data", list);
+			  		if(config2.getBoolean("Info."+Crate+".backup")) {
+				  		int a=0;
+				  		for(String backup:list) {
+				  			if(!backup.split(":")[1].equals("null")) {
+				  				break;
+				  			}
+				  			a++;
+				  			if(a==list.size()) {
+				  				List<String> back = config2.getStringList("backup."+Crate);
+				  				config2.set("Info."+Crate+".data", back);
+				  				break;
+				  			}
+				  		}
+				  		a=0;
+			  		}
 			  		try {
 			  			config2.save(file1);
 			  		} catch (IOException e) {
@@ -102,22 +117,10 @@ public class WingTask extends BukkitRunnable  {
 		else if(config2.getString("Info."+Crate+".type").equals("embellishment"))
 		Preset.embellishmentwinging(player, Crate);
 	}
-	//	ItemStackתString
-	public static String ItemData(ItemStack item) {
-		StreamSerializer data = new StreamSerializer();
-		String s;
-		try {
-		    s = data.serializeItemStack(item);
-		} catch (Exception e) {
-		    s = null;
-		}
-		return s;
-	}
 //	StringתItemStack
-	public static ItemStack GetItemStack(String data) {
-		StreamSerializer item = new StreamSerializer();
+	public ItemStack GetItemStack(String data) {
 		try {
-			return item.deserializeItemStack(data);
+			return new StreamSerializer().deserializeItemStack(data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

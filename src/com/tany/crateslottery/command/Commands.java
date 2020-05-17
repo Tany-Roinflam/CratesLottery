@@ -105,6 +105,14 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage("§c你没有权限使用此指令");
 				return true;
 			}
+			if(args[0].equalsIgnoreCase("backup")) {	
+				if(sender.isOp()) {
+					sender.sendMessage("§a/cl backup [箱子名称] [true/false] §6启用填充箱子物品功能");
+					return true;
+				}
+				sender.sendMessage("§c你没有权限使用此指令");
+				return true;
+			}
 			if(args[0].equalsIgnoreCase("9nineset")) {	
 				if(sender.isOp()) {
 					sender.sendMessage("§a/cl 9Nineset [箱子名称] [true/false] §2设置§c九连抽§2箱子的抽奖方式（true为带动画，默认true）");
@@ -141,7 +149,7 @@ public class Commands implements CommandExecutor {
 						  item = p.getInventory().getItemInHand();
 						  ItemMeta meta = item.getItemMeta();
 						  ItemMeta metas = item.getItemMeta();
-						  meta.setDisplayName("§a箱§2子§5：");
+						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")));
 						  ArrayList<String> lore = new ArrayList<String>();
 						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLoreOne")));
 						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLoreTwo")));
@@ -151,7 +159,7 @@ public class Commands implements CommandExecutor {
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
-						  config2.set("CrateItem", ItemData(item));
+						  config2.set("CrateItem", GetItemData(item));
 					  		try {
 					  			config2.save(file1);
 					  		} catch (IOException e) {
@@ -180,7 +188,7 @@ public class Commands implements CommandExecutor {
 						  item = p.getInventory().getItemInHand();
 						  ItemMeta meta = item.getItemMeta();
 						  ItemMeta metas = item.getItemMeta();
-						  meta.setDisplayName("§a开箱§6钥匙§3：");
+						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLotteryKey")));
 						  ArrayList<String> lore = new ArrayList<String>();
 						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("KeyLoreOne")));
 						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("KeyLoreTwo")));
@@ -189,7 +197,7 @@ public class Commands implements CommandExecutor {
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
-						  config2.set("CrateKey", ItemData(item));
+						  config2.set("CrateKey", GetItemData(item));
 					  		try {
 					  			config2.save(file1);
 					  		} catch (IOException e) {
@@ -225,6 +233,14 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		if(args.length==2) {
+			if(args[0].equalsIgnoreCase("backup")) {	
+				if(sender.isOp()) {
+					sender.sendMessage("§a/cl backup [箱子名称] [true/false] §6启用填充因clear清空完内容的箱子内容");
+					return true;
+				}
+				sender.sendMessage("§c你没有权限使用此指令");
+				return true;
+			}
 			if(args[0].equalsIgnoreCase("help")) {
 				if(sender.isOp()) {
 					int number = 1;
@@ -285,6 +301,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage("§a/cl set [箱子名称] [true/false] §6启用箱子抽奖动画");
 						sender.sendMessage("§a/cl 9nineset [箱子名称] [true/false] §6启用§c九连抽§6箱子抽奖动画");
 						sender.sendMessage("§a/cl clear [箱子名称] [true/false] §6启用单抽箱子清理抽到的物品功能");
+						sender.sendMessage("§a/cl backup [箱子名称] [true/false] §6启用填充因clear清空完内容的箱子内容");
 						sender.sendMessage("§a[]=========================§2==========================[]");
 						return true;
 					}
@@ -660,6 +677,48 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage("§c你没有权限使用此指令");
 				return true;
 			}
+			if(args[0].equalsIgnoreCase("backup")) {
+				if(sender.isOp()) {
+					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+						sender.sendMessage("§c当前没有存在任何抽奖箱");
+						return true;
+					}
+					int a=0;
+					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						if(crate.equals(args[1])) {
+							break;
+						}
+						a++;
+						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							sender.sendMessage("§c不存在这个抽奖箱");
+							return true;
+						}
+					}
+					a=0;
+					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
+						sender.sendMessage("§c请输入true或者false！");
+						return true;
+					}
+					if(!config2.getBoolean("Info."+args[1]+".clear")) {
+						sender.sendMessage("§c这个箱子没有开启一次性抽奖功能！");
+						return true;
+					}
+					if(args[2].equalsIgnoreCase("true"))
+					config2.set("Info."+args[1]+".backup", true);
+					else
+					if(args[2].equalsIgnoreCase("false"))
+					config2.set("Info."+args[1]+".backup", false);
+			  		try {
+			  			config2.save(file1);
+			  		} catch (IOException e) {
+			  			e.printStackTrace();
+		        	}
+			  		sender.sendMessage("§a设置成功");
+			  		return true;					
+				}
+				sender.sendMessage("§c你没有权限使用此指令");
+				return true;
+			}
 			if(args[0].equalsIgnoreCase("bc")) {
 				if(sender.isOp()) {
 					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
@@ -1014,47 +1073,25 @@ public class Commands implements CommandExecutor {
 		}
 		if(sender.isOp()) {
 		sender.sendMessage("§a/cl help <页数> §2使用指令帮助中心");
-//		sender.sendMessage("§a/cl gui  §2打开制作gui");
-//		sender.sendMessage("§a/cl crate [箱子名称]  [玩家] [ 数量]  §2给予抽奖方块（设置时手握的）");
-//		sender.sendMessage("§a/cl key [箱子名称] [玩家] [数量]  §2给予抽奖钥匙");
-//		sender.sendMessage("");
-//		sender.sendMessage("§a/cl setcrate §2把手上物品添加到配置里，放置出的方块即为抽奖箱");
-//		sender.sendMessage("§a/cl setkey §2设置手上物品为抽奖钥匙");
-//		sender.sendMessage("");
-//		sender.sendMessage("§a/cl time §2[箱子名称] [变幻次数] [变幻时间] 为这个箱子的普通开箱单独设置时间");
-//		sender.sendMessage("§a/cl 9ninetime §2[箱子名称] [变幻次数] [变幻时间] 为这个箱子的§c九连抽§2开箱单独设置时间");
-//		sender.sendMessage("§2为这个箱子单独设置时间，细看config.yml里的“开箱部分”自行理解");
-//		sender.sendMessage("");
-//		sender.sendMessage("§a/cl bc [箱子名称] [公告] ");
-//		sender.sendMessage("§a/cl 9nine [箱子名称] [公告] ");
-//		sender.sendMessage("§2设置箱子[普通开启/§c九连抽]§2开启时全服公告[如果写“无”则不启用]，[player]开箱玩家变量");
-//		sender.sendMessage("§a/cl info [箱子名称] [true/false] §2启用公告抽奖到的物品");
-//		sender.sendMessage("§a/cl 9nineinfo [箱子名称] [true/false] §2启用§c九连抽§2公告抽奖到的物品");
-//		sender.sendMessage("");
-//		sender.sendMessage("§a/cl set [箱子名称] [true/false] §2启用箱子抽奖动画");
-//		sender.sendMessage("§a/cl 9nineset [箱子名称] [true/false] §2启用§c九连抽§2箱子抽奖动画");
-//		sender.sendMessage("§a/cl clear [箱子名称] [true/false] §2启用单抽箱子清理抽到的物品功能");
 		}else {
 			sender.sendMessage("§c玩家还需要指令？别开玩笑了");
 		}
 		return true;
 	}
 //	ItemStack转String
-	public static String ItemData(ItemStack item) {
-		StreamSerializer data = new StreamSerializer();
-		String s;
+	public String GetItemData(ItemStack item) {
+		String a;
 		try {
-		    s = data.serializeItemStack(item);
+		    a = new StreamSerializer().serializeItemStack(item);
 		} catch (Exception e) {
-		    s = null;
+		    a = null;
 		}
-		return s;
+		return a;
 	}
 //	String转ItemStack
-	public static ItemStack GetItemStack(String data) {
-		StreamSerializer item = new StreamSerializer();
+	public ItemStack GetItemStack(String data) {
 		try {
-			return item.deserializeItemStack(data);
+			return new StreamSerializer().deserializeItemStack(data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

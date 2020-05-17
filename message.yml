@@ -23,11 +23,13 @@ WingMessage: '&a领取你的奖励吧！'
 
 NoItemMessage: '&c这个箱子没有内容可抽奖！'
 
+CrateLottery: '&a箱&2子&5：'
 CrateLoreOne: '&b使用方法：'
 CrateLoreTwo: '&a拿着物品右键'
 CrateLoreThree: '&2放置出来的方块即为抽奖箱'
 CrateLoreFour: '&c不同物品也生效，钥匙也同机制，可以同时多种方块成为抽奖箱'
 
+CrateLotteryKey: '&a开箱&6钥匙&3：'
 KeyLoreOne: '§b使用方法：'
 KeyLoreTwo: '§a使用此物品，右键对应抽奖箱'
 KeyLoreThree: '§2即可抽奖'

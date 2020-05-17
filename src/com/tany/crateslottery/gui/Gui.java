@@ -47,26 +47,14 @@ public class Gui {
 	}
 	
 	public static void createcrate(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§2抽奖箱"+name+"§2设置"));
-		
 	    player.openInventory(gui);
 	}
 
 	public static void cratelist(Player player,Integer type) {
 	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
 	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 	    
 		Inventory gui = Bukkit.createInventory(null, 54, "§a抽奖箱§2列表§5：§d第§e"+type+"§d页");
 		ItemStack chest = new ItemStack(Material.CHEST);
@@ -151,8 +139,31 @@ public class Gui {
 				lore.add("");
 				lore.add("§c九连抽§a变幻次数§e：§6"+config2.getDouble("Info."+crate.get(i)+".ninenumber"));
 				lore.add("§c九连抽§a变幻间隔时间§e：§6"+config2.getDouble("Info."+crate.get(i)+".ninecd"));
+			}	
+
+			lore.add("");
+			if(config2.getBoolean("Info."+crate.get(i)+".info")) {
+				lore.add("§a公告单抽到的物品： §a启用");
+			}else {
+				lore.add("§a公告单抽到的物品： §c未启用");
 			}
-			lore.add("");		
+			if(config2.getBoolean("Info."+crate.get(i)+".nineinfo")) {
+				lore.add("§a公告§c九连抽§a抽到的物品： §a启用");
+			}else {
+				lore.add("§a公告§c九连抽§a抽到的物品：§c未启用");
+			}
+			lore.add("");
+			if(config2.getBoolean("Info."+crate.get(i)+".clear")) {
+				lore.add("§d一次性§a单抽箱模式： §a启用");
+				if(config2.getBoolean("Info."+crate.get(i)+".backup")) {
+					lore.add("§a当清空抽奖箱到§c空§a时，备份填充§b： §a启用");
+				}else {
+					lore.add("§a当清空抽奖箱到§c空§a时，备份填充§b： §c未启用");
+				}
+			}else {
+				lore.add("§d一次性§a单抽箱模式： §c未启用");
+			}
+			lore.add("");	
 			if(config2.getString("Info."+crate.get(i)+".type").equals("normal"))
 				lore.add("§a抽奖动画状态§d： §a§l固定中间抽奖");
 			else
@@ -175,24 +186,6 @@ public class Gui {
 			else
 			if(config2.getString("Info."+crate.get(i)+".ninetype").equals("gradient"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §6§l快乐矩形抽奖");
-			lore.add("");
-			if(config2.getBoolean("Info."+crate.get(i)+".info")) {
-				lore.add("§a公告单抽到的物品： §a启用");
-			}else {
-				lore.add("§a公告单抽到的物品： §c未启用");
-			}
-			if(config2.getBoolean("Info."+crate.get(i)+".nineinfo")) {
-				lore.add("§a公告§c九连抽§a抽到的物品： §a启用");
-			}else {
-				lore.add("§a公告§c九连抽§a抽到的物品：§c未启用");
-			}
-
-			lore.add("");
-			if(config2.getBoolean("Info."+crate.get(i)+".clear")) {
-				lore.add("§d一次性§a单抽箱模式： §a启用");
-			}else {
-				lore.add("§d一次性§a单抽箱模式： §c未启用");
-			}
 			abc.setLore(lore);
 			chest.setItemMeta(abc);
 			lore.clear();
@@ -222,12 +215,8 @@ public class Gui {
 
 	public static void choose(Player player,String name) {
 	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
 	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		Inventory gui = Bukkit.createInventory(null, 9, "§3想对"+config2.getString("Info."+name+".color")+name+"§3进行什么操作？");
 		ItemStack set = new ItemStack(Material.ENCHANTMENT_TABLE);
 		ItemStack color = new ItemStack(Material.STAINED_GLASS_PANE);
@@ -273,12 +262,8 @@ public class Gui {
 	
 	public static void color(Player player,String name) {
 	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
 	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 	    
 		Inventory gui = Bukkit.createInventory(null, 27, "§3设置"+config2.getString("Info."+name+".color")+name+"§3显示的颜色");
 		
@@ -427,12 +412,8 @@ public class Gui {
 	}
 	public static void way(Player player,String name) {
 	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
 	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 	    
 	    ArrayList<String> lore = new ArrayList<String>();
 		Inventory gui = Bukkit.createInventory(null, 45, "§d设置抽奖箱"+config2.getString("Info."+name+".color")+name+"§d的开箱方式");
@@ -548,12 +529,8 @@ public class Gui {
 	
 	public static void setcrate(Player player,String name) {
 	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
 	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 	    
 		for(Player players:Bukkit.getOnlinePlayers()) {
 			if(players.getOpenInventory().getTitle().contains("§2抽奖箱"+config2.getString("Info."+name+".color")+name+"§2设置")) {
@@ -584,12 +561,8 @@ public class Gui {
 
 		public static void showcrate(Player player,String name) {
 	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file=new File(config.getDataFolder(),"config.yml");
 	    File file1=new File(config.getDataFolder(),"data.yml");
-	    File file2=new File(config.getDataFolder(),"message.yml");
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
 	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 	    
 		
 	    Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
@@ -659,22 +632,20 @@ public class Gui {
 	    player.openInventory(gui);
 	}
 
-		//	ItemStack转String
-		public static String ItemData(ItemStack item) {
-			StreamSerializer data = new StreamSerializer();
-			String s;
+//		ItemStack转String
+		public String GetItemData(ItemStack item) {
+			String a;
 			try {
-			    s = data.serializeItemStack(item);
+			    a = new StreamSerializer().serializeItemStack(item);
 			} catch (Exception e) {
-			    s = null;
+			    a = null;
 			}
-			return s;
+			return a;
 		}
-	//	String转ItemStack
+//		String转ItemStack
 		public static ItemStack GetItemStack(String data) {
-			StreamSerializer item = new StreamSerializer();
 			try {
-				return item.deserializeItemStack(data);
+				return new StreamSerializer().deserializeItemStack(data);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
