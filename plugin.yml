@@ -1,6 +1,6 @@
 name: CratesLottery
 main: com.tany.crateslottery.Main
-version: 1.0.1
+version: 1.0.2
 author: tany
 depend: [ProtocolLib,PlaceholderAPI]
 commands:
@@ -11,4 +11,6 @@ permissions:
   cl.lottery: 
     default: true
   cl.ninelottery: 
+    default: true
+  cl.allcrate: 
     default: true

@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
@@ -50,7 +51,10 @@ public class Event implements Listener  {
 			Sneak.put(event.getPlayer(), false);
 		}
 	}
-    
+	@EventHandler
+    public void commands(PlayerCommandPreprocessEvent event) {
+		
+	}
 
 	@EventHandler
     public void Break(BlockBreakEvent event) {
@@ -156,6 +160,10 @@ public class Event implements Listener  {
 	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("ClearMessage")));
 	    						return;
 	    					}
+	    					if(!event.getPlayer().hasPermission("cl.allcrate")&&!event.getPlayer().hasPermission("cl.crate."+name)) {
+	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrate".replace("[crate]", config2.getString("Info."+name+".color")+name))));
+	    						return;
+	    					}
 	        					List<String> itemlist = config2.getStringList("Info."+name+".data");
 	        					int a=1;
 	        					if(itemlist.size()==0) {
@@ -206,6 +214,10 @@ public class Event implements Listener  {
     							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoItemMessage")));
     							return;
         					}
+	    					if(!event.getPlayer().hasPermission("cl.allcrate")&&!event.getPlayer().hasPermission("cl.crate."+name)) {
+	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NoOpenCrate".replace("[crate]", config2.getString("Info."+name+".color")+name))));
+	    						return;
+	    					}
 	    					for(String item:itemlist) {
 	    						if(!item.split(":")[1].equals("null")) {
 	    							break;

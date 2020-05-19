@@ -48,11 +48,15 @@ public class Commands implements CommandExecutor {
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("gui")) {
-				if(sender instanceof Player) {
-					Gui.gui((Player) sender);
-					return true;
-				}
+				if(sender.isOp()) {
+					if(sender instanceof Player) {
+						Gui.gui((Player) sender);
+						return true;
+					}
 				sender.sendMessage("§c控制台不能使用此指令");
+				return true;
+				}
+				sender.sendMessage("§c你没有权限使用此指令");
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("9ninetime")) {

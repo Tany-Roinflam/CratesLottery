@@ -43,6 +43,9 @@ NoNineLotteryMessage: '&c你没有权限九连抽！'
 
 NoLotteryMessage: '&c你没有权限单抽！'
 
+#[crate]箱子名称
+NoOpenCrate: '&c你没有权限打开[crate]'
+
 #[player]玩家名，[crate]箱子名，[item]物品名（如果没自定义名，则为英文）
 InfoMessage: '&a玩家&2[player]&a开启了&d[crate]&a箱子，成功获得了&f[item]&a物品！'
 
