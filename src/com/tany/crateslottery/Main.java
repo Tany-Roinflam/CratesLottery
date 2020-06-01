@@ -2,21 +2,16 @@ package com.tany.crateslottery;
 
 import java.io.File;
 import java.util.HashMap;
-
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.tany.crateslottery.command.Commands;
 import com.tany.crateslottery.listenevent.Event;
 import com.tany.crateslottery.placeholderapi.PlaceholderAPI;
-import com.tany.crateslottery.task.CrateTask;
-
 public class Main extends JavaPlugin{
 	   	private static Main instance;
 		public static Plugin plugin = null;
 		public static String title = null;
-		public static int cratenumber = 0;
 		public static HashMap<String, Integer> number = new HashMap<String, Integer>();
 	    public static Main getInstance() {
 	        return instance;
@@ -41,7 +36,6 @@ public class Main extends JavaPlugin{
 		    getCommand("crateslottery").setExecutor(new Commands());
 		    getCommand("cl").setExecutor(new Commands());
 		    getServer().getPluginManager().registerEvents(new Event(), this);
-		    new CrateTask().runTaskTimer(this, 20, 20);
 	        new PlaceholderAPI(this).register();
 		}
 		public void onDisable() {

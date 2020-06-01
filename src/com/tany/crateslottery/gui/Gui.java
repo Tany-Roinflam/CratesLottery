@@ -1,13 +1,11 @@
 package com.tany.crateslottery.gui;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -15,23 +13,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.comphenix.protocol.utility.StreamSerializer;
+import com.tany.crateslottery.Other;
 
 public class Gui {
 	public static void gui(Player player) {
 		Inventory gui = Bukkit.createInventory(null, 9, "§c选§4择");
 		ItemStack Already = new ItemStack(Material.ENDER_CHEST);
 		ItemStack Crate = new ItemStack(Material.CHEST);
-		
 		ItemMeta data = Already.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        
         data.setDisplayName("§a进入已有的抽奖箱设置");
         lore.add("§2这里存放了你之前设置的抽奖箱列表");
         lore.add("§2点击后你可以根据你需要的进行更改内容、移除抽奖箱");
         data.setLore(lore);
         Already.setItemMeta(data);
         lore.clear();
-        
         data.setDisplayName("§5创建一个新的抽奖箱");
         lore.add("§d点击后，你需要输入抽奖箱名称§6（不支持颜色代码§b&§6）");
         lore.add("§d输入完后就会创建一个gui，这个gui就是你第一次设置抽奖箱的内容");
@@ -40,7 +36,6 @@ public class Gui {
         data.setLore(lore);
         Crate.setItemMeta(data);
         lore.clear();
-        
         gui.setItem(2, Already);
         gui.setItem(6, Crate);
         player.openInventory(gui);
@@ -52,17 +47,13 @@ public class Gui {
 	}
 
 	public static void cratelist(Player player,Integer type) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    
 		Inventory gui = Bukkit.createInventory(null, 54, "§a抽奖箱§2列表§5：§d第§e"+type+"§d页");
 		ItemStack chest = new ItemStack(Material.CHEST);
 		ItemStack xiaye = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack shangye = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack jieshao = new ItemStack(Material.STAINED_GLASS_PANE);
 		
-	    if(config2.getConfigurationSection("Info").getKeys(false).size()<(type-1)*45+1) {
+	    if(Other.data.getConfigurationSection("Info").getKeys(false).size()<(type-1)*45+1) {
 	    	if(type>1) {
 	    		player.closeInventory();
 	    		Gui.cratelist(player, --type);
@@ -75,7 +66,7 @@ public class Gui {
 	    }
 	    
 	    ArrayList<String> crate = new ArrayList<String>();
-	    for(String string:config2.getConfigurationSection("Info").getKeys(false)) {
+	    for(String string:Other.data.getConfigurationSection("Info").getKeys(false)) {
 	    	crate.add(string);
 	    }
 	    ItemMeta abc = jieshao.getItemMeta();
@@ -106,56 +97,56 @@ public class Gui {
 	    int a=0;
 	    int size = crate.size()-1;
 	    while(i<=size&&i<=44+(type-1)*45) {
-	    	abc.setDisplayName(ChatColor.translateAlternateColorCodes('§', "§6抽奖箱设置§b："+config2.getString("Info."+crate.get(i)+".color")+crate.get(i)));
+	    	abc.setDisplayName(ChatColor.translateAlternateColorCodes('§', "§6抽奖箱设置§b："+Other.data.getString("Info."+crate.get(i)+".color")+crate.get(i)));
 	    	
-			lore.add("§a抽奖启动§d动画§b状态§f："+config2.getString("Info."+crate.get(i)+".animation").replace("true", "§a启用").replace("false", "§c未启用"));
-			lore.add("§c九连抽§a启动§d动画§b状态§f："+config2.getString("Info."+crate.get(i)+".nineanimation").replace("true", "§a启用").replace("false", "§c未启用"));
+			lore.add("§a抽奖启动§d动画§b状态§f："+Other.data.getString("Info."+crate.get(i)+".animation").replace("true", "§a启用").replace("false", "§c未启用"));
+			lore.add("§c九连抽§a启动§d动画§b状态§f："+Other.data.getString("Info."+crate.get(i)+".nineanimation").replace("true", "§a启用").replace("false", "§c未启用"));
 			
 			lore.add("");
 			
-			if(config2.getString("Info."+crate.get(i)+".announcement").equals("无"))
+			if(Other.data.getString("Info."+crate.get(i)+".announcement").equals("无"))
 			lore.add("§a抽奖公告设置状态：§c未启用");
 			else
-			lore.add(ChatColor.translateAlternateColorCodes('&', "§a抽奖公告设置文本§d：§f"+config2.getString("Info."+crate.get(i)+".announcement")));
+			lore.add(ChatColor.translateAlternateColorCodes('&', "§a抽奖公告设置文本§d：§f"+Other.data.getString("Info."+crate.get(i)+".announcement")));
 			
-			if(config2.getString("Info."+crate.get(i)+".nine").equals("无"))
+			if(Other.data.getString("Info."+crate.get(i)+".nine").equals("无"))
 			lore.add("§c九连抽§a公告设置状态§d：§c未启用");
 			else
-			lore.add(ChatColor.translateAlternateColorCodes('&', "§c九连抽§a公告设置文本§d：§f"+config2.getString("Info."+crate.get(i)+".nine")));
+			lore.add(ChatColor.translateAlternateColorCodes('&', "§c九连抽§a公告设置文本§d：§f"+Other.data.getString("Info."+crate.get(i)+".nine")));
 			
 			lore.add("");
 			
-			if(config2.getDouble("Info."+crate.get(i)+".cd")<=0&&config2.getDouble("Info."+crate.get(i)+".number")<=0)
+			if(Other.data.getDouble("Info."+crate.get(i)+".cd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".number")<=0)
 			lore.add("§a自定义普通抽奖时间：§c未启用");
 			else {
-				lore.add("§a普通抽奖变幻次数§e：§6"+config2.getDouble("Info."+crate.get(i)+".number"));
-				lore.add("§a普通抽奖变幻间隔时间§e：§6"+config2.getDouble("Info."+crate.get(i)+".cd"));
+				lore.add("§a普通抽奖变幻次数§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".number"));
+				lore.add("§a普通抽奖变幻间隔时间§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".cd"));
 				lore.add("");
 			}
-			if(config2.getDouble("Info."+crate.get(i)+".ninecd")<=0&&config2.getDouble("Info."+crate.get(i)+".ninenumber")<=0)
+			if(Other.data.getDouble("Info."+crate.get(i)+".ninecd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".ninenumber")<=0)
 			lore.add("§a自定义§c九连抽§a抽奖时间：§c未启用");
 			else {
-				if(config2.getDouble("Info."+crate.get(i)+".cd")<=0&&config2.getDouble("Info."+crate.get(i)+".number")<=0)
+				if(Other.data.getDouble("Info."+crate.get(i)+".cd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".number")<=0)
 				lore.add("");
-				lore.add("§c九连抽§a变幻次数§e：§6"+config2.getDouble("Info."+crate.get(i)+".ninenumber"));
-				lore.add("§c九连抽§a变幻间隔时间§e：§6"+config2.getDouble("Info."+crate.get(i)+".ninecd"));
+				lore.add("§c九连抽§a变幻次数§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".ninenumber"));
+				lore.add("§c九连抽§a变幻间隔时间§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".ninecd"));
 			}	
 
 			lore.add("");
-			if(config2.getBoolean("Info."+crate.get(i)+".info")) {
+			if(Other.data.getBoolean("Info."+crate.get(i)+".info")) {
 				lore.add("§a公告单抽到的物品： §a启用");
 			}else {
 				lore.add("§a公告单抽到的物品： §c未启用");
 			}
-			if(config2.getBoolean("Info."+crate.get(i)+".nineinfo")) {
+			if(Other.data.getBoolean("Info."+crate.get(i)+".nineinfo")) {
 				lore.add("§a公告§c九连抽§a抽到的物品： §a启用");
 			}else {
 				lore.add("§a公告§c九连抽§a抽到的物品：§c未启用");
 			}
 			lore.add("");
-			if(config2.getBoolean("Info."+crate.get(i)+".clear")) {
+			if(Other.data.getBoolean("Info."+crate.get(i)+".clear")) {
 				lore.add("§d一次性§a单抽箱模式： §a启用");
-				if(config2.getBoolean("Info."+crate.get(i)+".backup")) {
+				if(Other.data.getBoolean("Info."+crate.get(i)+".backup")) {
 					lore.add("§a当清空抽奖箱到§c空§a时，备份填充§b： §a启用");
 				}else {
 					lore.add("§a当清空抽奖箱到§c空§a时，备份填充§b： §c未启用");
@@ -164,27 +155,27 @@ public class Gui {
 				lore.add("§d一次性§a单抽箱模式： §c未启用");
 			}
 			lore.add("");	
-			if(config2.getString("Info."+crate.get(i)+".type").equals("normal"))
+			if(Other.data.getString("Info."+crate.get(i)+".type").equals("normal"))
 				lore.add("§a抽奖动画状态§d： §a§l固定中间抽奖");
 			else
-			if(config2.getString("Info."+crate.get(i)+".type").equals("random"))
+			if(Other.data.getString("Info."+crate.get(i)+".type").equals("random"))
 				lore.add("§a抽奖动画状态§d： §e§l随机位置抽奖");
 			else
-			if(config2.getString("Info."+crate.get(i)+".type").equals("order"))
+			if(Other.data.getString("Info."+crate.get(i)+".type").equals("order"))
 				lore.add("§a抽奖动画状态§d： §b§l范围位置内抽奖");
 			else
-				if(config2.getString("Info."+crate.get(i)+".type").equals("embellishment"))
+				if(Other.data.getString("Info."+crate.get(i)+".type").equals("embellishment"))
 				lore.add("§a抽奖动画状态§d： §b§l有物品的随机抽奖");
-			if(config2.getString("Info."+crate.get(i)+".ninetype").equals("normal"))
+			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("normal"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §a§l固定中间抽奖");
 			else
-			if(config2.getString("Info."+crate.get(i)+".ninetype").equals("random"))
+			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("random"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §e§l随机位置抽奖");
 			else
-			if(config2.getString("Info."+crate.get(i)+".ninetype").equals("order"))
+			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("order"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §b§l范围位置内抽奖");
 			else
-			if(config2.getString("Info."+crate.get(i)+".ninetype").equals("gradient"))
+			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("gradient"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §6§l快乐矩形抽奖");
 			abc.setLore(lore);
 			chest.setItemMeta(abc);
@@ -214,10 +205,10 @@ public class Gui {
 	}
 
 	public static void choose(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-		Inventory gui = Bukkit.createInventory(null, 9, "§3想对"+config2.getString("Info."+name+".color")+name+"§3进行什么操作？");
+	    
+	    
+	    
+		Inventory gui = Bukkit.createInventory(null, 9, "§3想对"+Other.data.getString("Info."+name+".color")+name+"§3进行什么操作？");
 		ItemStack set = new ItemStack(Material.ENCHANTMENT_TABLE);
 		ItemStack color = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack remove = new ItemStack(Material.TRAPPED_CHEST);
@@ -246,7 +237,7 @@ public class Gui {
         color.setItemMeta(data);
         lore.clear();
         
-        datas.setDisplayName("§a设置"+config2.getString("Info."+name+".color")+name+"§a箱子的开箱方式");
+        datas.setDisplayName("§a设置"+Other.data.getString("Info."+name+".color")+name+"§a箱子的开箱方式");
         lore.add("§2普通抽奖和九连抽都在这设置");
         datas.setLore(lore);
         way.setItemMeta(datas);
@@ -261,12 +252,7 @@ public class Gui {
 	}
 	
 	public static void color(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    
-		Inventory gui = Bukkit.createInventory(null, 27, "§3设置"+config2.getString("Info."+name+".color")+name+"§3显示的颜色");
-		
+		Inventory gui = Bukkit.createInventory(null, 27, "§3设置"+Other.data.getString("Info."+name+".color")+name+"§3显示的颜色");	
 		ItemStack red = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack yellow = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack blue = new ItemStack(Material.STAINED_GLASS_PANE);
@@ -411,12 +397,12 @@ public class Gui {
         player.openInventory(gui);
 	}
 	public static void way(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+	    
+	    
+	    
 	    
 	    ArrayList<String> lore = new ArrayList<String>();
-		Inventory gui = Bukkit.createInventory(null, 45, "§d设置抽奖箱"+config2.getString("Info."+name+".color")+name+"§d的开箱方式");
+		Inventory gui = Bukkit.createInventory(null, 45, "§d设置抽奖箱"+Other.data.getString("Info."+name+".color")+name+"§d的开箱方式");
 		ItemStack normal = new ItemStack(Material.CHEST);
 		ItemStack random = new ItemStack(Material.FURNACE);
 		ItemStack order = new ItemStack(Material.ENDER_CHEST);
@@ -528,19 +514,19 @@ public class Gui {
 	
 	
 	public static void setcrate(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+	    
+	    
+	    
 	    
 		for(Player players:Bukkit.getOnlinePlayers()) {
-			if(players.getOpenInventory().getTitle().contains("§2抽奖箱"+config2.getString("Info."+name+".color")+name+"§2设置")) {
+			if(players.getOpenInventory().getTitle().contains("§2抽奖箱"+Other.data.getString("Info."+name+".color")+name+"§2设置")) {
 				player.sendMessage("§c这个箱子已经有人在编辑了");
 				return;
 			}
 		}
 		
-		Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§2抽奖箱"+config2.getString("Info."+name+".color")+name+"§2设置"));
-		List<String> list = config2.getStringList("Info."+name+".data");
+		Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§2抽奖箱"+Other.data.getString("Info."+name+".color")+name+"§2设置"));
+		List<String> list = Other.data.getStringList("Info."+name+".data");
 		
 		
 		int a=0;
@@ -560,15 +546,8 @@ public class Gui {
 	}
 
 		public static void showcrate(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    
-		
-	    Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
-		List<String> list = config2.getStringList("Info."+name+".data");
-		
-		
+	    Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+		List<String> list = Other.data.getStringList("Info."+name+".data");
 		int a=0;
 		int c=0;
 		int d=0;
@@ -595,15 +574,15 @@ public class Gui {
 			a++;
 		}
 		if(c==9) {
-			gui = Bukkit.createInventory(null, 45, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+			gui = Bukkit.createInventory(null, 45, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
 			if(d==9) {
-				gui = Bukkit.createInventory(null, 36, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+				gui = Bukkit.createInventory(null, 36, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
 				if(e==9) {
-					gui = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+					gui = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
 					if(f==9) {
-						gui = Bukkit.createInventory(null, 18, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+						gui = Bukkit.createInventory(null, 18, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
 						if(g==9) {
-							gui = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+config2.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+							gui = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
 						}
 					}
 				}

@@ -5,14 +5,11 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import com.tany.crateslottery.Main;
 import com.tany.crateslottery.gui.Gui;
 import com.tany.crateslottery.listenevent.Event;
 

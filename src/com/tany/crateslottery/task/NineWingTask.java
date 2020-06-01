@@ -1,22 +1,17 @@
 package com.tany.crateslottery.task;
 
-import java.io.File;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.tany.crateslottery.Other;
 import com.tany.crateslottery.gui.Preset;
 
 public class NineWingTask extends BukkitRunnable  {
-    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-    File file=new File(config.getDataFolder(),"config.yml");
-    File file1=new File(config.getDataFolder(),"data.yml");
-    File file2=new File(config.getDataFolder(),"message.yml");
 	int a=0;
 	int b=0;
 	public Player player;
@@ -28,24 +23,21 @@ public class NineWingTask extends BukkitRunnable  {
 	}
 	@Override
 	public void run() {
-        FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
-        FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-        FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		if(a==b) {
-			if(config2.getString("Info."+Crate+".ninetype").equals("normal"))
+			if(Other.data.getString("Info."+Crate+".ninetype").equals("normal"))
 			Preset.ninewing(player, Crate);
-    		else if(config2.getString("Info."+Crate+".ninetype").equals("random"))
+    		else if(Other.data.getString("Info."+Crate+".ninetype").equals("random"))
     		Preset.randomninewing(player, Crate);
-    		else if(config2.getString("Info."+Crate+".ninetype").equals("order"))
+    		else if(Other.data.getString("Info."+Crate+".ninetype").equals("order"))
     		Preset.orderninewing(player, Crate);
-    		else if(config2.getString("Info."+Crate+".ninetype").equals("gradient"))
+    		else if(Other.data.getString("Info."+Crate+".ninetype").equals("gradient"))
     		Preset.gradientwing(player, Crate);
-			player.sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("WingMessage")));
-			player.playSound(player.getLocation(), Sound.valueOf(config1.getString("SoundsName")), 2f, 2f);
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
+			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), 2f, 2f);
 			a=0;
 			b=0;
 			cancel();
-			if(config2.getBoolean("Info."+Crate+".nineinfo")){
+			if(Other.data.getBoolean("Info."+Crate+".nineinfo")){
 				int size = player.getOpenInventory().getBottomInventory().getSize()-1;
 				int location=0;
 				String info = "";
@@ -75,19 +67,19 @@ public class NineWingTask extends BukkitRunnable  {
 						continue;
 					}
 				}
-				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("NineInfoMessage").replace("[player]", player.getName()).replace("[crate]", config2.getString("Info."+Crate+".color")+Crate).replace("[item]", info)));
+				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineInfoMessage").replace("[player]", player.getName()).replace("[crate]", Other.data.getString("Info."+Crate+".color")+Crate).replace("[item]", info)));
 			}
 			return;
 		}
 		a++;
-		player.playSound(player.getLocation(), Sound.valueOf(config1.getString("SoundName")), 2f, 2f);
-		if(config2.getString("Info."+Crate+".ninetype").equals("normal"))
+		player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), 2f, 2f);
+		if(Other.data.getString("Info."+Crate+".ninetype").equals("normal"))
 		Preset.ninewinging(player, Crate);
-		else if(config2.getString("Info."+Crate+".ninetype").equals("random"))
+		else if(Other.data.getString("Info."+Crate+".ninetype").equals("random"))
 		Preset.randomninewinging(player, Crate);
-		else if(config2.getString("Info."+Crate+".ninetype").equals("order"))
+		else if(Other.data.getString("Info."+Crate+".ninetype").equals("order"))
 		Preset.orderninewinging(player, Crate);
-		else if(config2.getString("Info."+Crate+".ninetype").equals("gradient"))
+		else if(Other.data.getString("Info."+Crate+".ninetype").equals("gradient"))
 		Preset.gradientwinging(player, Crate);
 	}
 }

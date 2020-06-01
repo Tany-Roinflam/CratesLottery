@@ -6,20 +6,18 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import com.comphenix.protocol.utility.StreamSerializer;
+import com.tany.crateslottery.Other;
 import com.tany.crateslottery.gui.Preset;
 
 public class WingTask extends BukkitRunnable  {
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-    File file=new File(config.getDataFolder(),"config.yml");
     File file1=new File(config.getDataFolder(),"data.yml");
-    File file2=new File(config.getDataFolder(),"message.yml");
 	int a=0;
 	int b=0;
 	public Player player;
@@ -31,38 +29,35 @@ public class WingTask extends BukkitRunnable  {
 	}
 	@Override
 	public void run() {
-        FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
-        FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-        FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		if(a==b) {
-			player.playSound(player.getLocation(), Sound.valueOf(config1.getString("SoundsName")), config1.getInt("SoundSize"), config1.getInt("SoundTimbre"));
-			if(config2.getString("Info."+Crate+".type").equals("normal"))
+			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			if(Other.data.getString("Info."+Crate+".type").equals("normal"))
 			Preset.wing(player, Crate);
-			else if(config2.getString("Info."+Crate+".type").equals("random"))
+			else if(Other.data.getString("Info."+Crate+".type").equals("random"))
 			Preset.randomwing(player, Crate);
-			else if(config2.getString("Info."+Crate+".type").equals("order"))
+			else if(Other.data.getString("Info."+Crate+".type").equals("order"))
 			Preset.orderwing(player, Crate);
-			else if(config2.getString("Info."+Crate+".type").equals("embellishment"))
+			else if(Other.data.getString("Info."+Crate+".type").equals("embellishment"))
 			Preset.embellishmentwing(player, Crate);
-			player.sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("WingMessage")));
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
 			a=0;
 			b=0;
 			cancel();
-			List<String> list = config2.getStringList("Info."+Crate+".data");
-			if(config2.getBoolean("Info."+Crate+".info")) {
+			List<String> list = Other.data.getStringList("Info."+Crate+".data");
+			if(Other.data.getBoolean("Info."+Crate+".info")) {
 				if(GetItemStack(list.get(Preset.location).split(":")[1]).hasItemMeta()&&GetItemStack(list.get(Preset.location).split(":")[1]).getItemMeta().hasDisplayName()){
 					if(GetItemStack(list.get(Preset.location).split(":")[1]).getAmount()==1)
-					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", config2.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getItemMeta().getDisplayName())));
+					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", Other.data.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getItemMeta().getDisplayName())));
 					else
-					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", config2.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getItemMeta().getDisplayName()+"*"+GetItemStack(list.get(Preset.location).split(":")[1]).getAmount())));
+					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", Other.data.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getItemMeta().getDisplayName()+"*"+GetItemStack(list.get(Preset.location).split(":")[1]).getAmount())));
 				}else {
 					if(GetItemStack(list.get(Preset.location).split(":")[1]).getAmount()==1)
-					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", config2.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getType().name())));
+					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", Other.data.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getType().name())));
 					else
-					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", config2.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getType().name()+"*"+GetItemStack(list.get(Preset.location).split(":")[1]).getAmount())));
+					Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("InfoMessage").replace("[player]", player.getName()).replace("[crate]", Other.data.getString("Info."+Crate+".color")+Crate).replace("[item]", GetItemStack(list.get(Preset.location).split(":")[1]).getType().name()+"*"+GetItemStack(list.get(Preset.location).split(":")[1]).getAmount())));
 				}
 			}
-			if(config2.getBoolean("Info."+Crate+".clear")){
+			if(Other.data.getBoolean("Info."+Crate+".clear")){
 				int size = player.getOpenInventory().getBottomInventory().getSize()-1;
 				int location=0;
 				while(location<size) {
@@ -79,8 +74,8 @@ public class WingTask extends BukkitRunnable  {
 					}
 					list.remove(list.get(Preset.location));
 					list.add(Preset.location+":"+"null");
-			  		config2.set("Info."+Crate+".data", list);
-			  		if(config2.getBoolean("Info."+Crate+".backup")) {
+			  		Other.data.set("Info."+Crate+".data", list);
+			  		if(Other.data.getBoolean("Info."+Crate+".backup")) {
 				  		int a=0;
 				  		for(String backup:list) {
 				  			if(!backup.split(":")[1].equals("null")) {
@@ -88,15 +83,15 @@ public class WingTask extends BukkitRunnable  {
 				  			}
 				  			a++;
 				  			if(a==list.size()) {
-				  				List<String> back = config2.getStringList("backup."+Crate);
-				  				config2.set("Info."+Crate+".data", back);
+				  				List<String> back = Other.data.getStringList("backup."+Crate);
+				  				Other.data.set("Info."+Crate+".data", back);
 				  				break;
 				  			}
 				  		}
 				  		a=0;
 			  		}
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 			    	}
@@ -106,15 +101,15 @@ public class WingTask extends BukkitRunnable  {
 			}
 			return;
 		}
-		player.playSound(player.getLocation(), Sound.valueOf(config1.getString("SoundName")), config1.getInt("SoundSize"), config1.getInt("SoundTimbre"));
+		player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
 		a++;
-		if(config2.getString("Info."+Crate+".type").equals("normal"))
+		if(Other.data.getString("Info."+Crate+".type").equals("normal"))
 		Preset.winging(player, Crate);
-		else if(config2.getString("Info."+Crate+".type").equals("random"))
+		else if(Other.data.getString("Info."+Crate+".type").equals("random"))
 		Preset.randomwinging(player, Crate);
-		else if(config2.getString("Info."+Crate+".type").equals("order"))
+		else if(Other.data.getString("Info."+Crate+".type").equals("order"))
 		Preset.orderwinging(player, Crate);
-		else if(config2.getString("Info."+Crate+".type").equals("embellishment"))
+		else if(Other.data.getString("Info."+Crate+".type").equals("embellishment"))
 		Preset.embellishmentwinging(player, Crate);
 	}
 //	StringתItemStack

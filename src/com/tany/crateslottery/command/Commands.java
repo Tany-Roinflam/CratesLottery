@@ -9,13 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
+import com.tany.crateslottery.Main;
+import com.tany.crateslottery.Other;
 import com.tany.crateslottery.gui.Gui;
 
 public class Commands implements CommandExecutor {
@@ -23,12 +24,8 @@ public class Commands implements CommandExecutor {
     File file=new File(config.getDataFolder(),"config.yml");
     File file1=new File(config.getDataFolder(),"data.yml");
     File file2=new File(config.getDataFolder(),"message.yml");
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-	    FileConfiguration config1=YamlConfiguration.loadConfiguration(file);
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    FileConfiguration config3=YamlConfiguration.loadConfiguration(file2);
 		if(args.length==1) {
 			if(args[0].equalsIgnoreCase("help")) {
 				if(sender.isOp()) {
@@ -37,6 +34,7 @@ public class Commands implements CommandExecutor {
 					sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 					sender.sendMessage("");
 					sender.sendMessage("§a/cl gui  §6打开制作gui");
+					sender.sendMessage("§a/cl reload  §6重载插件配置/语言文件");
 					sender.sendMessage("§a/cl crate [箱子名称]  [玩家] [数量]  §6给予抽奖方块");
 					sender.sendMessage("§a/cl key [箱子名称] [玩家] [数量]  §6给予抽奖钥匙");
 					sender.sendMessage("§a/cl setcrate §6设置手上物品放置出的方块即为抽奖箱");
@@ -45,6 +43,14 @@ public class Commands implements CommandExecutor {
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
+				return true;
+			}
+			if(args[0].equalsIgnoreCase("reload")) {
+				Other.config = YamlConfiguration.loadConfiguration(file);
+				Other.data = YamlConfiguration.loadConfiguration(file1);
+				Other.message = YamlConfiguration.loadConfiguration(file2);
+				Main.plugin.reloadConfig();
+				sender.sendMessage("§a重载成功");
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("gui")) {
@@ -153,19 +159,19 @@ public class Commands implements CommandExecutor {
 						  item = p.getInventory().getItemInHand();
 						  ItemMeta meta = item.getItemMeta();
 						  ItemMeta metas = item.getItemMeta();
-						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLottery")));
+						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")));
 						  ArrayList<String> lore = new ArrayList<String>();
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLoreOne")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLoreTwo")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLoreThree")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLoreFour")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreOne")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreTwo")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreThree")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreFour")));
 						  meta.setLore(lore);
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
-						  config2.set("CrateItem", GetItemData(item));
+						  Other.data.set("CrateItem", GetItemData(item));
 					  		try {
-					  			config2.save(file1);
+					  			Other.data.save(file1);
 					  		} catch (IOException e) {
 					  			e.printStackTrace();
 				        	}
@@ -192,18 +198,18 @@ public class Commands implements CommandExecutor {
 						  item = p.getInventory().getItemInHand();
 						  ItemMeta meta = item.getItemMeta();
 						  ItemMeta metas = item.getItemMeta();
-						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config3.getString("CrateLotteryKey")));
+						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")));
 						  ArrayList<String> lore = new ArrayList<String>();
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("KeyLoreOne")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("KeyLoreTwo")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', config3.getString("KeyLoreThree")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("KeyLoreOne")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("KeyLoreTwo")));
+						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("KeyLoreThree")));
 						  meta.setLore(lore);
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
-						  config2.set("CrateKey", GetItemData(item));
+						  Other.data.set("CrateKey", GetItemData(item));
 					  		try {
-					  			config2.save(file1);
+					  			Other.data.save(file1);
 					  		} catch (IOException e) {
 					  			e.printStackTrace();
 				        	}
@@ -264,6 +270,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
 						sender.sendMessage("§a/cl gui  §6打开制作gui");
+						sender.sendMessage("§a/cl reload  §6重载插件配置/语言文件");
 						sender.sendMessage("§a/cl crate [箱子名称]  [玩家] [数量]  §6给予抽奖方块");
 						sender.sendMessage("§a/cl key [箱子名称] [玩家] [数量]  §6给予抽奖钥匙");
 						sender.sendMessage("§a/cl setcrate §6设置手上物品放置出的方块即为抽奖箱");
@@ -383,32 +390,32 @@ public class Commands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("crate")) {
 				if(sender instanceof Player) {
 					if(sender.isOp()) {
-						if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+						if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 							sender.sendMessage("§c当前没有存在任何抽奖箱");
 							return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
 								break;
 							}
 							a++;
-							if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
 								return true;
 							}
 						}
-						if(config2.getString("CrateItem")==null) {
+						if(Other.data.getString("CrateItem")==null) {
 							sender.sendMessage("§c未设置箱子");
 							return true;
 						}
 						a=0;
-						ItemStack item = GetItemStack(config2.getString("CrateItem"));
+						ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+config2.getString("Info."+args[1]+".color")+args[1]);
+						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
 						((Player) sender).getInventory().addItem(item);
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+config2.getString("Info."+args[1]+".color")+args[1]+"§a抽奖箱成功"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a抽奖箱成功"));
 						return true;
 					}
 					sender.sendMessage("§c你没有权限使用此指令");
@@ -420,34 +427,34 @@ public class Commands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("key")) {
 				if(sender instanceof Player) {
 					if(sender.isOp()) {
-						if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+						if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 							sender.sendMessage("§c当前没有存在任何抽奖箱");
 							return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
 								break;
 							}
 							a++;
-							if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
 								return true;
 							}
 						}
-						if(config2.getString("CrateKey") == null) {
+						if(Other.data.getString("CrateKey") == null) {
 							sender.sendMessage("§c未设置钥匙");
 							return true;
 						}
 						a=0;
-						ItemStack item = GetItemStack(config2.getString("CrateKey"));
+						ItemStack item = GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+config2.getString("Info."+args[1]+".color")+args[1]);
+						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
 						((Player) sender).getInventory().addItem(item);
-						if(config1.getBoolean("KeyMessage"))
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("GetKeyMessage").replace("[key]", config2.getString("Info."+args[1]+".color")+args[1])));
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+config2.getString("Info."+args[1]+".color")+args[1]+"§a钥匙成功"));
+						if(Other.config.getBoolean("KeyMessage"))
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info."+args[1]+".color")+args[1])));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a钥匙成功"));
 						return true;
 					}
 					sender.sendMessage("§c你没有权限使用此指令");
@@ -477,17 +484,17 @@ public class Commands implements CommandExecutor {
 		if(args.length==3) {
 			if(args[0].equalsIgnoreCase("info")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
@@ -498,12 +505,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(args[2].equalsIgnoreCase("true"))
-					config2.set("Info."+args[1]+".info", true);
+					Other.data.set("Info."+args[1]+".info", true);
 					else
 					if(args[2].equalsIgnoreCase("false"))
-					config2.set("Info."+args[1]+".info", false);
+					Other.data.set("Info."+args[1]+".info", false);
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -515,17 +522,17 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("9nineinfo")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
@@ -536,12 +543,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(args[2].equalsIgnoreCase("true"))
-					config2.set("Info."+args[1]+".nineinfo", true);
+					Other.data.set("Info."+args[1]+".nineinfo", true);
 					else
 					if(args[2].equalsIgnoreCase("false"))
-					config2.set("Info."+args[1]+".nineinfo", false);
+					Other.data.set("Info."+args[1]+".nineinfo", false);
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -569,17 +576,17 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("set")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
@@ -590,12 +597,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(args[2].equalsIgnoreCase("true"))
-					config2.set("Info."+args[1]+".animation", true);
+					Other.data.set("Info."+args[1]+".animation", true);
 					else
 					if(args[2].equalsIgnoreCase("false"))
-					config2.set("Info."+args[1]+".animation", false);
+					Other.data.set("Info."+args[1]+".animation", false);
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -607,17 +614,17 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("9nineset")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
@@ -628,12 +635,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(args[2].equalsIgnoreCase("true"))
-					config2.set("Info."+args[1]+".nineanimation", true);
+					Other.data.set("Info."+args[1]+".nineanimation", true);
 					else
 					if(args[2].equalsIgnoreCase("false"))
-					config2.set("Info."+args[1]+".nineanimation", false);
+					Other.data.set("Info."+args[1]+".nineanimation", false);
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -645,17 +652,17 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("clear")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
@@ -666,12 +673,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(args[2].equalsIgnoreCase("true"))
-					config2.set("Info."+args[1]+".clear", true);
+					Other.data.set("Info."+args[1]+".clear", true);
 					else
 					if(args[2].equalsIgnoreCase("false"))
-					config2.set("Info."+args[1]+".clear", false);
+					Other.data.set("Info."+args[1]+".clear", false);
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -683,17 +690,17 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("backup")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
@@ -703,17 +710,17 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage("§c请输入true或者false！");
 						return true;
 					}
-					if(!config2.getBoolean("Info."+args[1]+".clear")) {
+					if(!Other.data.getBoolean("Info."+args[1]+".clear")) {
 						sender.sendMessage("§c这个箱子没有开启一次性抽奖功能！");
 						return true;
 					}
 					if(args[2].equalsIgnoreCase("true"))
-					config2.set("Info."+args[1]+".backup", true);
+					Other.data.set("Info."+args[1]+".backup", true);
 					else
 					if(args[2].equalsIgnoreCase("false"))
-					config2.set("Info."+args[1]+".backup", false);
+					Other.data.set("Info."+args[1]+".backup", false);
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -725,31 +732,31 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("bc")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
 					}
 					a=0;
 					if(args[2].equals("无")) {
-						sender.sendMessage("§a成功取消"+config2.getString("Info."+args[1]+".color")+args[1]+"§a开箱时的公告");
-						config2.set("Info."+args[1]+".announcement", "无");
+						sender.sendMessage("§a成功取消"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a开箱时的公告");
+						Other.data.set("Info."+args[1]+".announcement", "无");
 					}else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "§a成功设置"+config2.getString("Info."+args[1]+".color")+args[1]+"§a开箱时的公告为"+args[2]));
-						config2.set("Info."+args[1]+".announcement", args[2]);
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "§a成功设置"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a开箱时的公告为"+args[2]));
+						Other.data.set("Info."+args[1]+".announcement", args[2]);
 					}
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -760,31 +767,31 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("9Nine")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 					}
 					int a=0;
-					for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 							break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 							sender.sendMessage("§c不存在这个抽奖箱");
 							return true;
 						}
 					}
 					a=0;
 					if(args[2].equals("无")) {
-						sender.sendMessage("§a成功取消"+config2.getString("Info."+args[1]+".color")+args[1]+"§c九连§a开箱时的公告");
-						config2.set("Info."+args[1]+".nine", "无");
+						sender.sendMessage("§a成功取消"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§c九连§a开箱时的公告");
+						Other.data.set("Info."+args[1]+".nine", "无");
 					}else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "§a成功设置"+config2.getString("Info."+args[1]+".color")+args[1]+"§c九连§a开箱时的公告为"+args[2]));
-						config2.set("Info."+args[1]+".nine", args[2]);
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "§a成功设置"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§c九连§a开箱时的公告为"+args[2]));
+						Other.data.set("Info."+args[1]+".nine", args[2]);
 					}
 			  		try {
-			  			config2.save(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 		        	}
@@ -795,22 +802,22 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("crate")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 						break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 						sender.sendMessage("§c不存在这个抽奖箱");
 						return true;
 						}
 					}
-					if(config2.getString("CrateItem")==null) {
+					if(Other.data.getString("CrateItem")==null) {
 						sender.sendMessage("§c未设置箱子");
 						return true;
 					}
@@ -819,12 +826,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					Player player = Bukkit.getServer().getPlayer(args[2]);
-					a=0;						ItemStack item = GetItemStack(config2.getString("CrateItem"));
+					a=0;						ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
 					ItemMeta meta = item.getItemMeta();
-					meta.setDisplayName(meta.getDisplayName()+config2.getString("Info."+args[1]+".color")+args[1]);
+					meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 					item.setItemMeta(meta);
 					player.getInventory().addItem(item);
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+config2.getString("Info."+args[1]+".color")+args[1]+"§a抽奖箱成功"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a抽奖箱成功"));
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -832,22 +839,22 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("key")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
 								break;
 							}
 							a++;
-							if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
 								return true;
 							}
 						}
-						if(config2.getString("CrateKey")==null) {
+						if(Other.data.getString("CrateKey")==null) {
 							sender.sendMessage("§c未设置钥匙");
 							return true;
 						}
@@ -857,14 +864,14 @@ public class Commands implements CommandExecutor {
 						}
 						Player player = Bukkit.getServer().getPlayer(args[2]);
 						a=0;
-						ItemStack item = GetItemStack(config2.getString("CrateKey"));
+						ItemStack item = GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+config2.getString("Info."+args[1]+".color")+args[1]);
+						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
 						player.getInventory().addItem(item);
-						if(config1.getBoolean("KeyMessage"))
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("GetKeyMessage").replace("[key]", config2.getString("Info."+args[1]+".color")+args[1])));
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+config2.getString("Info."+args[1]+".color")+args[1]+"§a钥匙成功"));
+						if(Other.config.getBoolean("KeyMessage"))
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info."+args[1]+".color")+args[1])));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a钥匙成功"));
 						return true;
 					}
 					sender.sendMessage("§c你没有权限使用此指令");
@@ -875,17 +882,17 @@ public class Commands implements CommandExecutor {
 		if(args.length==4) {
 			if(args[0].equalsIgnoreCase("time")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
 								break;
 							}
 							a++;
-							if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
 								return true;
 							}
@@ -912,15 +919,15 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage("§c时间不能小于等于0！");
 							return true;
 						}
-						config2.set("Info."+args[1]+".number", number);
-						config2.set("Info."+args[1]+".cd", cd);
+						Other.data.set("Info."+args[1]+".number", number);
+						Other.data.set("Info."+args[1]+".cd", cd);
 				  		try {
-				  			config2.save(file1);
+				  			Other.data.save(file1);
 				  		} catch (IOException e) {
 				  			e.printStackTrace();
 			        	}
-				  		sender.sendMessage("§a成功设置抽奖箱"+config2.getString("Info."+args[1]+".color")+args[1]+"§a的开箱时长次数为§2"+number+"§a次");
-				  		sender.sendMessage("§a成功设置抽奖箱"+config2.getString("Info."+args[1]+".color")+args[1]+"§a的每次变幻相差秒数为§2"+cd+"§a秒");
+				  		sender.sendMessage("§a成功设置抽奖箱"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a的开箱时长次数为§2"+number+"§a次");
+				  		sender.sendMessage("§a成功设置抽奖箱"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a的每次变幻相差秒数为§2"+cd+"§a秒");
 				  		return true;
 					}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -928,17 +935,17 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("9ninetime")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
 								break;
 							}
 							a++;
-							if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
 								return true;
 							}
@@ -965,15 +972,15 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage("§c时间不能小于等于0！");
 							return true;
 						}
-						config2.set("Info."+args[1]+".ninenumber", number);
-						config2.set("Info."+args[1]+".ninecd", cd);
+						Other.data.set("Info."+args[1]+".ninenumber", number);
+						Other.data.set("Info."+args[1]+".ninecd", cd);
 				  		try {
-				  			config2.save(file1);
+				  			Other.data.save(file1);
 				  		} catch (IOException e) {
 				  			e.printStackTrace();
 			        	}
-				  		sender.sendMessage("§a成功设置抽奖箱"+config2.getString("Info."+args[1]+".color")+args[1]+"§a的§c九连抽§a开箱时长次数为§2"+number+"§a次");
-				  		sender.sendMessage("§a成功设置抽奖箱"+config2.getString("Info."+args[1]+".color")+args[1]+"§a的§c九连抽§a每次变幻相差秒数为§2"+cd+"§a秒");
+				  		sender.sendMessage("§a成功设置抽奖箱"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a的§c九连抽§a开箱时长次数为§2"+number+"§a次");
+				  		sender.sendMessage("§a成功设置抽奖箱"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a的§c九连抽§a每次变幻相差秒数为§2"+cd+"§a秒");
 				  		return true;
 					}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -981,22 +988,22 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("key")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
 								break;
 							}
 							a++;
-							if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
 								return true;
 							}
 						}
-						if(config2.getString("CrateKey")==null) {
+						if(Other.data.getString("CrateKey")==null) {
 							sender.sendMessage("§c未设置钥匙");
 							return true;
 						}
@@ -1013,15 +1020,15 @@ public class Commands implements CommandExecutor {
 						}
 						Player player = Bukkit.getServer().getPlayer(args[2]);
 						a=0;
-						ItemStack item = GetItemStack(config2.getString("CrateKey"));
+						ItemStack item = GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+config2.getString("Info."+args[1]+".color")+args[1]);
+						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
 						item.setAmount(amount);
 						player.getInventory().addItem(item);
-						if(config1.getBoolean("KeyMessage"))
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', config3.getString("GetKeyMessage").replace("[key]", config2.getString("Info."+args[1]+".color")+args[1])));
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+config2.getString("Info."+args[1]+".color")+args[1]+"§a钥匙成功"));
+						if(Other.config.getBoolean("KeyMessage"))
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info."+args[1]+".color")+args[1])));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a钥匙成功"));
 						return true;
 					}
 					sender.sendMessage("§c你没有权限使用此指令");
@@ -1029,22 +1036,22 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("crate")) {
 				if(sender.isOp()) {
-					if(config2.getConfigurationSection("Info").getKeys(false).size()==0) {
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
 						}
 						int a=0;
-						for(String crate:config2.getConfigurationSection("Info").getKeys(false)) {
+						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 						if(crate.equals(args[1])) {
 						break;
 						}
 						a++;
-						if(a==config2.getConfigurationSection("Info").getKeys(false).size()) {
+						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 						sender.sendMessage("§c不存在这个抽奖箱");
 						return true;
 						}
 					}
-					if(config2.getString("CrateItem")==null) {
+					if(Other.data.getString("CrateItem")==null) {
 						sender.sendMessage("§c未设置箱子");
 						return true;
 					}
@@ -1061,13 +1068,13 @@ public class Commands implements CommandExecutor {
 					}
 					Player player = Bukkit.getServer().getPlayer(args[2]);
 					a=0;						
-					ItemStack item = GetItemStack(config2.getString("CrateItem"));
+					ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
 					ItemMeta meta = item.getItemMeta();
-					meta.setDisplayName(meta.getDisplayName()+config2.getString("Info."+args[1]+".color")+args[1]);
+					meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 					item.setItemMeta(meta);
 					item.setAmount(amount);
 					player.getInventory().addItem(item);
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+config2.getString("Info."+args[1]+".color")+args[1]+"§a抽奖箱成功"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('§', "§a给予§b"+Other.data.getString("Info."+args[1]+".color")+args[1]+"§a抽奖箱成功"));
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");

@@ -1,34 +1,27 @@
 package com.tany.crateslottery.gui;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
 import com.tany.crateslottery.Main;
+import com.tany.crateslottery.Other;
 
 public class Preset {
 	public static int location = 0;
 	public static void winging(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         
         int i=0;
         while(i<=44) {
@@ -63,17 +56,11 @@ public class Preset {
 	}
 	
 	public static void wing(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
-		
+		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
-		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         
         int i=0;
         while(i<=44) {
@@ -104,23 +91,15 @@ public class Preset {
 		}
 		Preset.location=get;
 		gui.setItem(22, GetItemStack(item));
-		
         player.openInventory(gui);
 	}
 	
 	public static void ninewinging(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-
-		Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+config2.getString("Info."+name+".color")+name+"§d中");
-		
+		Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
-		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
-        
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         int i=0;
         while(i<=44) {
 		Random random = new Random();
@@ -185,17 +164,11 @@ public class Preset {
 	}
 	
 	public static void ninewing(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
-	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+config2.getString("Info."+name+".color")+name+"§c九连开箱结果");
-		
+		Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
-		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         
         int i=0;
         while(i<=44) {
@@ -261,17 +234,17 @@ public class Preset {
 	}
 	
 	public static void randomwinging(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+	    
+	    
+	    
+		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
-	    List<String> list = config2.getStringList("Info."+name+".data");
+	    List<String> list = Other.data.getStringList("Info."+name+".data");
 	    
 	    int i=0;
 	    int a=0;
@@ -310,17 +283,17 @@ public class Preset {
 	}
 
 	public static void randomwing(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+	    
+	    
+	    
+		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 		
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         
         int i=0;
         int a=0;
@@ -360,21 +333,21 @@ public class Preset {
 	}
 	
 	public static void randomninewinging(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-
-	    File file1=new File(config.getDataFolder(),"data.yml");
-
-
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+	    
 
 	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+
+
+	    
+
+	    
+		Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         
         int i=0;
         while(i<=44) {
@@ -420,21 +393,21 @@ public class Preset {
 	}
 	
 	public static void randomninewing(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-
-	    File file1=new File(config.getDataFolder(),"data.yml");
-
-
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+	    
 
 	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+config2.getString("Info."+name+".color")+name+"§c九连开箱结果");
+
+
+	    
+
+	    
+		Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
 		
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
-        List<String> list = config2.getStringList("Info."+name+".data");
+        List<String> list = Other.data.getStringList("Info."+name+".data");
         
         int i=0;
         int a=0;
@@ -482,16 +455,16 @@ public class Preset {
 	}
 	
 	public static void orderwinging(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+	    
+	    
+	    
+		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
-	    List<String> list = config2.getStringList("Info."+name+".data");
+	    List<String> list = Other.data.getStringList("Info."+name+".data");
 	    
 	    int i=0;
 	    while(i<=44) {
@@ -527,18 +500,18 @@ public class Preset {
 	}
 
 		public static void orderwing(Player player,String name) {
-	    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-	    File file1=new File(config.getDataFolder(),"data.yml");
-	    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+	    
+	    
+	    
 
 	    
-		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 		
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
-	    List<String> list = config2.getStringList("Info."+name+".data");
+	    List<String> list = Other.data.getStringList("Info."+name+".data");
 	    
 	    int i=0;
 	    while(i<=44) {
@@ -576,17 +549,17 @@ public class Preset {
 	}
 
 		public static void orderninewinging(Player player,String name) {
-		    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-		    File file1=new File(config.getDataFolder(),"data.yml");
-		    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 		    
-			Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+		    
+		    
+		    
+			Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 			
 			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 			
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
-		    List<String> list = config2.getStringList("Info."+name+".data");
+		    List<String> list = Other.data.getStringList("Info."+name+".data");
 		    
 		    int i=0;
 		    while(i<=44) {
@@ -628,17 +601,17 @@ public class Preset {
 		}
 
 		public static void orderninewing(Player player,String name) {
-		    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-		    File file1=new File(config.getDataFolder(),"data.yml");
-		    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
 		    
-			Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+config2.getString("Info."+name+".color")+name+"§c九连开箱结果");
+		    
+		    
+		    
+			Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
 			
 			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 			
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
-		    List<String> list = config2.getStringList("Info."+name+".data");
+		    List<String> list = Other.data.getStringList("Info."+name+".data");
 		    
 		    int i=0;
 		    while(i<=44) {
@@ -679,12 +652,12 @@ public class Preset {
 		}
 
 		public static void embellishmentwinging(Player player,String name) {
-		    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-		    File file1=new File(config.getDataFolder(),"data.yml");
-		    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+		    
+		    
+		    
 	
-		    Inventory gui = Bukkit.createInventory(null, 54, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
-			List<String> list = config2.getStringList("Info."+name+".data");
+		    Inventory gui = Bukkit.createInventory(null, 54, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
+			List<String> list = Other.data.getStringList("Info."+name+".data");
 			int a=0;
 			int c=0;
 			int d=0;
@@ -713,19 +686,19 @@ public class Preset {
 			int size=54;
 			if(c==9) {
 				size=45;
-				gui = Bukkit.createInventory(null, 45, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+				gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 				if(d==9) {
 					size=36;
-					gui = Bukkit.createInventory(null, 36, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+					gui = Bukkit.createInventory(null, 36, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 					if(e==9) {
 						size=27;
-						gui = Bukkit.createInventory(null, 27, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+						gui = Bukkit.createInventory(null, 27, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 						if(f==9) {
 							size=18;
-							gui = Bukkit.createInventory(null, 18, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+							gui = Bukkit.createInventory(null, 18, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 							if(g==9) {
 								size=9;
-								gui = Bukkit.createInventory(null, 9, "§a正在开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+								gui = Bukkit.createInventory(null, 9, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 							}
 						}
 					}
@@ -744,7 +717,7 @@ public class Preset {
 			ItemMeta data = glass.getItemMeta();
 			ItemMeta datas = glasss.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
-		    List<String> lists = config2.getStringList("Info."+name+".data");
+		    List<String> lists = Other.data.getStringList("Info."+name+".data");
 	        int i=0;
 	        while(i<size) {
 	        data.setDisplayName("§f抽奖§d中");
@@ -812,12 +785,12 @@ public class Preset {
 		}
 
 		public static void embellishmentwing(Player player,String name) {
-		    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-		    File file1=new File(config.getDataFolder(),"data.yml");
-		    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+		    
+		    
+		    
 	
-		    Inventory gui = Bukkit.createInventory(null, 54, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
-			List<String> list = config2.getStringList("Info."+name+".data");
+		    Inventory gui = Bukkit.createInventory(null, 54, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
+			List<String> list = Other.data.getStringList("Info."+name+".data");
 			int a=0;
 			int c=0;
 			int d=0;
@@ -846,19 +819,19 @@ public class Preset {
 			int size=54;
 			if(c==9) {
 				size=45;
-				gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+				gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 				if(d==9) {
 					size=36;
-					gui = Bukkit.createInventory(null, 36, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+					gui = Bukkit.createInventory(null, 36, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 					if(e==9) {
 						size=27;
-						gui = Bukkit.createInventory(null, 27, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+						gui = Bukkit.createInventory(null, 27, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 						if(f==9) {
 							size=18;
-							gui = Bukkit.createInventory(null, 18, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+							gui = Bukkit.createInventory(null, 18, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 							if(g==9) {
 								size=9;
-								gui = Bukkit.createInventory(null, 9, "§6抽奖箱§c："+config2.getString("Info."+name+".color")+name+"§a开箱结果");
+								gui = Bukkit.createInventory(null, 9, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 							}
 						}
 					}
@@ -876,7 +849,7 @@ public class Preset {
 			ItemMeta data = glass.getItemMeta();
 			ItemMeta datas = glasss.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
-		    List<String> lists = config2.getStringList("Info."+name+".data");
+		    List<String> lists = Other.data.getStringList("Info."+name+".data");
 		    
 	        int i=0;
 	        while(i<size) {
@@ -945,18 +918,18 @@ public class Preset {
 		}
 
 		public static void gradientwinging(Player player,String name) {
-		    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-		    File file1=new File(config.getDataFolder(),"data.yml");
-		    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+		    
+		    
+		    
 	
 		    
-			Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+config2.getString("Info."+name+".color")+name+"§d中");
+			Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 			
 			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 			
 			ItemMeta data = glass.getItemMeta();
 	        ArrayList<String> lore = new ArrayList<String>();
-	        List<String> list = config2.getStringList("Info."+name+".data");
+	        List<String> list = Other.data.getStringList("Info."+name+".data");
 	        
 	        int i=0;
 	        while(i<=44) {
@@ -1081,17 +1054,17 @@ public class Preset {
 		}
 
 		public static void gradientwing(Player player,String name) {
-		    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-		    File file1=new File(config.getDataFolder(),"data.yml");
-		    FileConfiguration config2=YamlConfiguration.loadConfiguration(file1);
+		    
+		    
+		    
 		
-			Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+config2.getString("Info."+name+".color")+name+"§c九连开箱结果");
+			Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
 			
 			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 			
 			ItemMeta data = glass.getItemMeta();
 	        ArrayList<String> lore = new ArrayList<String>();
-	        List<String> list = config2.getStringList("Info."+name+".data");
+	        List<String> list = Other.data.getStringList("Info."+name+".data");
 	        
 	        int i=0;
 	        while(i<=44) {
