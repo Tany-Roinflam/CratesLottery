@@ -3,13 +3,13 @@ package com.tany.crateslottery.listenevent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -36,17 +37,24 @@ import com.tany.crateslottery.task.WingTaskS;
 
 public class Event implements Listener  {
 	public static String crate = null;
-    HashMap<Player, Boolean> Sneak = new HashMap<Player, Boolean>();
+	Set<String> Sneak = new HashSet<>();
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
     File file1=new File(config.getDataFolder(),"data.yml");
     
     @EventHandler
 	public void Toggle(PlayerToggleSneakEvent event) {
 		if(event.isSneaking()) {
-			Sneak.put(event.getPlayer(), true);
-		}else {
-			Sneak.put(event.getPlayer(), false);
+			Sneak.add(event.getPlayer().getName());
+		}else if(Sneak.contains(event.getPlayer().getName())){
+			Sneak.remove(event.getPlayer().getName());
 		}
+	}
+    
+    @EventHandler
+	public void leave(PlayerQuitEvent event) {
+    	if(Sneak.contains(event.getPlayer().getName())) {
+    		Sneak.remove(event.getPlayer().getName());
+    	}
 	}
 
 	@EventHandler
@@ -61,12 +69,12 @@ public class Event implements Listener  {
 				int z = Integer.parseInt(location.split(":")[3]);
 				if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
 					if(event.getPlayer().isOp()) {
-						if(Sneak.containsKey(event.getPlayer())&&Sneak.get(event.getPlayer())) {
+						if(Sneak.contains(event.getPlayer().getName())) {
 							event.getPlayer().sendMessage("§a成功破坏抽奖箱！");
 							Location.remove(location);
 							Other.data.set("Location", Location);
 					  		try {
-					  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+					  			Other.data.save(file1);
 					  		} catch (IOException e) {
 					  			e.printStackTrace();
 				        	}
@@ -83,7 +91,6 @@ public class Event implements Listener  {
     
     @EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-	    Main.plugin.saveConfig();
 		if((event.getItem()!=null&&event.getItem().getItemMeta().hasDisplayName()&&event.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey"))))) {
 			event.setCancelled(true);
 			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), ""));
@@ -124,7 +131,7 @@ public class Event implements Listener  {
 							Location.remove(location);
 							Other.data.set("Location", Location);
 					  		try {
-					  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+					  			Other.data.save(file1);
 					  		} catch (IOException e) {
 					  			e.printStackTrace();
 				        	}
@@ -140,7 +147,7 @@ public class Event implements Listener  {
 								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
 								return;
 							}
-	    				if(Sneak.containsKey(event.getPlayer())&&Sneak.get(event.getPlayer())) {
+	    				if(Sneak.contains(event.getPlayer().getName())) {
 	    					if(!event.getPlayer().hasPermission("cl.ninelottery")) {
 	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
 	    						return;
@@ -240,7 +247,7 @@ public class Event implements Listener  {
 	    		}
 	    	}
 		}
-		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)&&!(Sneak.containsKey(event.getPlayer())&&Sneak.get(event.getPlayer()))) {
+		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)&&!Sneak.contains(event.getPlayer().getName())) {
 	    	List<String> Location = Other.data.getStringList("Location");
 	    	Location block = event.getClickedBlock().getLocation();
 	    	if(Location.size()!=0) {
@@ -258,7 +265,7 @@ public class Event implements Listener  {
 							Location.remove(location);
 							Other.data.set("Location", Location);
 					  		try {
-					  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+					  			Other.data.save(file1);
 					  		} catch (IOException e) {
 					  			e.printStackTrace();
 				        	}
@@ -294,7 +301,7 @@ public class Event implements Listener  {
 	    	Location.add(event.getBlock().getLocation().getWorld().getName()+":"+event.getBlock().getLocation().getBlockX()+":"+event.getBlock().getLocation().getBlockY()+":"+event.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), "")));
 	    	Other.data.set("Location", Location);
 	  		try {
-	  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+	  			Other.data.save(file1);
 	  		} catch (IOException e) {
 	  			e.printStackTrace();
 	    	}
@@ -380,7 +387,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§4红色")) {
 				Other.data.set("Info."+name+".color", "§4");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -391,7 +398,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§e黄色")) {
 				Other.data.set("Info."+name+".color", "§e");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -402,7 +409,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§3蓝色")) {
 				Other.data.set("Info."+name+".color", "§3");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -413,7 +420,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§1深蓝色")) {
 				Other.data.set("Info."+name+".color", "§1");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -424,7 +431,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§0黑色")) {
 				Other.data.set("Info."+name+".color", "§0");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -435,7 +442,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§5紫色")) {
 				Other.data.set("Info."+name+".color", "§5");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -446,7 +453,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§6橙色")) {
 				Other.data.set("Info."+name+".color", "§6");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -457,7 +464,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§f白色")) {
 				Other.data.set("Info."+name+".color", "§f");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -468,7 +475,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§a浅绿色")) {
 				Other.data.set("Info."+name+".color", "§a");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -479,7 +486,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§2绿色")) {
 				Other.data.set("Info."+name+".color", "§2");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -490,7 +497,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§6橙色")) {
 				Other.data.set("Info."+name+".color", "§6");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -501,7 +508,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§b天蓝色")) {
 				Other.data.set("Info."+name+".color", "§b");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -512,7 +519,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c粉红色")) {
 				Other.data.set("Info."+name+".color", "§c");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -523,7 +530,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§d亮紫色")) {
 				Other.data.set("Info."+name+".color", "§d");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -534,7 +541,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§7灰色")) {
 				Other.data.set("Info."+name+".color", "§7");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -561,7 +568,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§a固定中间抽奖")) {
 				Other.data.set("Info."+name+".type", "normal");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -571,7 +578,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c九连抽§d：§a固定中间抽奖")) {
 				Other.data.set("Info."+name+".ninetype", "normal");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -581,7 +588,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§e随机位置抽奖")) {
 				Other.data.set("Info."+name+".type", "random");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -591,7 +598,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c九连抽§d：§e随机位置抽奖")) {
 				Other.data.set("Info."+name+".ninetype", "random");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -601,7 +608,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§b范围位置内抽奖")) {
 				Other.data.set("Info."+name+".type", "order");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -611,7 +618,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c九连抽§d：§b范围位置内抽奖")) {
 				Other.data.set("Info."+name+".ninetype", "order");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -621,7 +628,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§b有物品的随机抽奖")) {
 				Other.data.set("Info."+name+".type", "embellishment");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -631,7 +638,7 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c九连抽§d：§6快乐矩形抽奖")) {
 				Other.data.set("Info."+name+".ninetype", "gradient");
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -668,7 +675,7 @@ public class Event implements Listener  {
 				Other.data.set("Info."+name, null);
 		  		Other.data.set("backup."+name, null);
 		  		try {
-		  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+		  			Other.data.save(file1);
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
@@ -737,7 +744,7 @@ public void Close(InventoryCloseEvent event) {
   		Other.data.set("backup."+title, data);
   		Other.data.set("Info."+title+".data", data);
   		try {
-  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+  			Other.data.save(file1);
   		} catch (IOException e) {
   			e.printStackTrace();
     	}

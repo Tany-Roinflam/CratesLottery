@@ -91,7 +91,7 @@ public class WingTask extends BukkitRunnable  {
 				  		a=0;
 			  		}
 			  		try {
-			  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 			    	}

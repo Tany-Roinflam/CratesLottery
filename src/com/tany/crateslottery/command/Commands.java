@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
-import com.tany.crateslottery.Main;
 import com.tany.crateslottery.Other;
 import com.tany.crateslottery.gui.Gui;
 
@@ -47,9 +46,7 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("reload")) {
 				Other.config = YamlConfiguration.loadConfiguration(file);
-				Other.data = YamlConfiguration.loadConfiguration(file1);
 				Other.message = YamlConfiguration.loadConfiguration(file2);
-				Main.plugin.reloadConfig();
 				sender.sendMessage("§a重载成功");
 				return true;
 			}
@@ -1085,7 +1082,7 @@ public class Commands implements CommandExecutor {
 		if(sender.isOp()) {
 		sender.sendMessage("§a/cl help <页数> §2使用指令帮助中心");
 		}else {
-			sender.sendMessage("§c玩家还需要指令？别开玩笑了");
+			sender.sendMessage("§cNull");
 		}
 		return true;
 	}

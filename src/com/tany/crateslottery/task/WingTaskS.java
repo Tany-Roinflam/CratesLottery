@@ -6,7 +6,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -85,7 +84,7 @@ public class WingTaskS extends BukkitRunnable  {
 				  		a=0;
 			  		}
 			  		try {
-			  			Other.data.save(file1);Other.data = YamlConfiguration.loadConfiguration(file1);
+			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 			    	}
