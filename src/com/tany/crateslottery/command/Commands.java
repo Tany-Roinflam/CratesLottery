@@ -3,6 +3,8 @@ package com.tany.crateslottery.command;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -158,12 +160,12 @@ public class Commands implements CommandExecutor {
 						  ItemMeta meta = item.getItemMeta();
 						  ItemMeta metas = item.getItemMeta();
 						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")));
-						  ArrayList<String> lore = new ArrayList<String>();
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreOne")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreTwo")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreThree")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLoreFour")));
-						  meta.setLore(lore);
+						  List<String> lore = Other.message.getStringList("CrateLore");
+						  ArrayList<String> lores = new ArrayList<String>();
+						  for(String loreadd:lore) {
+							  lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
+						  }
+						  meta.setLore(lores);
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
@@ -197,11 +199,12 @@ public class Commands implements CommandExecutor {
 						  ItemMeta meta = item.getItemMeta();
 						  ItemMeta metas = item.getItemMeta();
 						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")));
-						  ArrayList<String> lore = new ArrayList<String>();
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("KeyLoreOne")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("KeyLoreTwo")));
-						  lore.add(ChatColor.translateAlternateColorCodes('&', Other.message.getString("KeyLoreThree")));
-						  meta.setLore(lore);
+						  List<String> lore = Other.message.getStringList("KeyLore");
+						  ArrayList<String> lores = new ArrayList<String>();
+						  for(String loreadd:lore) {
+							  lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
+						  }
+						  meta.setLore(lores);
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);

@@ -59,6 +59,8 @@ public class Event implements Listener  {
 
 	@EventHandler
     public void Break(BlockBreakEvent event) {
+		if(event.isCancelled())
+			return;
         List<String> Location = Other.data.getStringList("Location");
         Location block = event.getBlock().getLocation();
         if(Location.size()!=0) {
@@ -68,7 +70,7 @@ public class Event implements Listener  {
 				int y = Integer.parseInt(location.split(":")[2]);
 				int z = Integer.parseInt(location.split(":")[3]);
 				if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
-					if(event.getPlayer().isOp()) {
+					if(event.getPlayer().hasPermission("cl.break")) {
 						if(Sneak.contains(event.getPlayer().getName())) {
 							event.getPlayer().sendMessage("°Ïa≥…π¶∆∆ªµ≥ÈΩ±œ‰£°");
 							Location.remove(location);
