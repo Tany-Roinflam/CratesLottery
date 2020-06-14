@@ -14,6 +14,7 @@ import com.tany.crateslottery.gui.Preset;
 public class NineWingTask extends BukkitRunnable  {
 	int a=0;
 	int b=0;
+	int c=0;
 	public Player player;
 	public String Crate;
 	public NineWingTask(Player p,String s,int n) {
@@ -23,6 +24,9 @@ public class NineWingTask extends BukkitRunnable  {
 	}
 	@Override
 	public void run() {
+		if(c==5)
+			c=0;
+		c++;
 		if(a==b) {
 			if(Other.data.getString("Info."+Crate+".ninetype").equals("normal"))
 			Preset.ninewing(player, Crate);
@@ -72,7 +76,10 @@ public class NineWingTask extends BukkitRunnable  {
 			return;
 		}
 		a++;
-		player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), 2f, 2f);
+		if(Other.config.getBoolean("ChangeSoundTimbre"))
+			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), c);
+		else
+			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
 		if(Other.data.getString("Info."+Crate+".ninetype").equals("normal"))
 		Preset.ninewinging(player, Crate);
 		else if(Other.data.getString("Info."+Crate+".ninetype").equals("random"))

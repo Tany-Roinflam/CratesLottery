@@ -9,26 +9,19 @@ import com.tany.crateslottery.command.Commands;
 import com.tany.crateslottery.listenevent.Event;
 import com.tany.crateslottery.placeholderapi.PlaceholderAPI;
 public class Main extends JavaPlugin{
-	   	private static Main instance;
 		public static Plugin plugin = null;
 		public static String title = null;
 		public static HashMap<String, Integer> number = new HashMap<String, Integer>();
-	    public static Main getInstance() {
-	        return instance;
-	    }
 		public void onEnable() {
 			
-			Bukkit.getConsoleSender().sendMessage("§a[Crates§2Sale]§a插件已加载");
-		    File file = new File(getDataFolder(), "config.yml");
-		    if (!file.exists()) 
+			Bukkit.getConsoleSender().sendMessage("§a[Crates§2Lottery]§a插件已加载");
+		    if (!new File(getDataFolder(), "config.yml").exists()) 
 		    	saveDefaultConfig();
 		    
-		    File file1 = new File(getDataFolder(), "data.yml");
-		    if (!file1.exists())
+		    if (!new File(getDataFolder(), "message.yml").exists())
 		    	saveResource("data.yml",false);
 		    
-		    File file2 = new File(getDataFolder(), "message.yml");
-		    if (!file2.exists())
+		    if (!new File(getDataFolder(), "message.yml").exists())
 		    	saveResource("message.yml",false);
 		    
 		    reloadConfig();
@@ -39,6 +32,6 @@ public class Main extends JavaPlugin{
 	        new PlaceholderAPI(this).register();
 		}
 		public void onDisable() {
-			Bukkit.getConsoleSender().sendMessage("§a[Crates§2Sale]§c插件已卸载");
+			Bukkit.getConsoleSender().sendMessage("§a[Crates§2Lottery]§c插件已卸载");
 		}
 }

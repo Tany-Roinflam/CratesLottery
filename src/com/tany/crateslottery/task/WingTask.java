@@ -6,7 +6,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -20,6 +19,7 @@ public class WingTask extends BukkitRunnable  {
     File file1=new File(config.getDataFolder(),"data.yml");
 	int a=0;
 	int b=0;
+	int c=0;
 	public Player player;
 	public String Crate;
 	public WingTask(Player p,String s,int n) {
@@ -29,6 +29,9 @@ public class WingTask extends BukkitRunnable  {
 	}
 	@Override
 	public void run() {
+		if(c==5)
+			c=0;
+		c++;
 		if(a==b) {
 			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
 			if(Other.data.getString("Info."+Crate+".type").equals("normal"))
@@ -101,7 +104,10 @@ public class WingTask extends BukkitRunnable  {
 			}
 			return;
 		}
-		player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+		if(Other.config.getBoolean("ChangeSoundTimbre"))
+			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), c);
+		else
+			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
 		a++;
 		if(Other.data.getString("Info."+Crate+".type").equals("normal"))
 		Preset.winging(player, Crate);

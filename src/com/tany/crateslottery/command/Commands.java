@@ -46,6 +46,7 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("reload")) {
 				Other.config = YamlConfiguration.loadConfiguration(file);
+				Other.data = YamlConfiguration.loadConfiguration(file1);
 				Other.message = YamlConfiguration.loadConfiguration(file2);
 				sender.sendMessage("§a重载成功");
 				return true;
@@ -1033,6 +1034,10 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("crate")) {
 				if(sender.isOp()) {
+					if(Other.data.getString("CrateItem")==null) {
+						sender.sendMessage("§c未设置箱子");
+						return true;
+					}
 					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
 						sender.sendMessage("§c当前没有存在任何抽奖箱");
 						return true;
@@ -1047,10 +1052,6 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage("§c不存在这个抽奖箱");
 						return true;
 						}
-					}
-					if(Other.data.getString("CrateItem")==null) {
-						sender.sendMessage("§c未设置箱子");
-						return true;
 					}
 					if(Bukkit.getServer().getPlayer(args[2]) == null) {
 						sender.sendMessage("§c这个玩家不存在/不在线");
@@ -1080,7 +1081,7 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		if(sender.isOp()) {
-		sender.sendMessage("§a/cl help <页数> §2使用指令帮助中心");
+			sender.sendMessage("§a/cl help <页数> §2使用指令帮助中心");
 		}else {
 			sender.sendMessage("§cNull");
 		}
