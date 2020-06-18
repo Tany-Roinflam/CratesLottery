@@ -3,6 +3,8 @@ package com.tany.crateslottery.task;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -32,16 +34,20 @@ public class WingTask extends BukkitRunnable  {
 		if(c==5)
 			c=0;
 		c++;
-		if(a==b) {
+		if(a>=b) {
 			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
 			if(Other.data.getString("Info."+Crate+".type").equals("normal"))
-			Preset.wing(player, Crate);
+				Preset.wing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("random"))
-			Preset.randomwing(player, Crate);
+				Preset.randomwing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("order"))
-			Preset.orderwing(player, Crate);
+				Preset.orderwing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("embellishment"))
-			Preset.embellishmentwing(player, Crate);
+				Preset.embellishmentwing(player, Crate);
+			else if(Other.data.getString("Info."+Crate+".type").equals("repeatedly"))
+				Preset.repeatedlywing(player, Crate);
+			else if(Other.data.getString("Info."+Crate+".type").equals("show"))
+				Preset.showwing(player, Crate);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
 			a=0;
 			b=0;
@@ -109,14 +115,29 @@ public class WingTask extends BukkitRunnable  {
 		else
 			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
 		a++;
+		if(Other.data.getString("Info."+Crate+".type").equals("repeatedly")||Other.data.getString("Info."+Crate+".type").equals("show")) {
+			Random random = new Random();
+		    int randoms = random.nextInt(3)+1;
+		    if(randoms==2){
+		    	a++;
+		    }
+		    else if(randoms==1)
+		    {
+		    	a--;
+		    }
+		}
 		if(Other.data.getString("Info."+Crate+".type").equals("normal"))
-		Preset.winging(player, Crate);
+			Preset.winging(player, Crate);
 		else if(Other.data.getString("Info."+Crate+".type").equals("random"))
-		Preset.randomwinging(player, Crate);
+			Preset.randomwinging(player, Crate);
 		else if(Other.data.getString("Info."+Crate+".type").equals("order"))
-		Preset.orderwinging(player, Crate);
+			Preset.orderwinging(player, Crate);
 		else if(Other.data.getString("Info."+Crate+".type").equals("embellishment"))
-		Preset.embellishmentwinging(player, Crate);
+			Preset.embellishmentwinging(player, Crate);
+		else if(Other.data.getString("Info."+Crate+".type").equals("repeatedly"))
+			Preset.repeatedlywinging(player, Crate);
+		else if(Other.data.getString("Info."+Crate+".type").equals("show"))
+			Preset.showwinging(player, Crate);
 	}
 //	StringתItemStack
 	public ItemStack GetItemStack(String data) {

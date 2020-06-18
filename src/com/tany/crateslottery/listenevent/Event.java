@@ -153,7 +153,7 @@ public class Event implements Listener  {
 	    		}
 	    	}
 		}
-		if(event.getItem()!=null&&event.getItem().getItemMeta().hasDisplayName()&&event.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")))) {
+		if(event.getItem()!=null&&event.getItem().hasItemMeta()&&event.getItem().getItemMeta().hasDisplayName()&&event.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")))) {
 			event.setCancelled(true);
 			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), ""));
 			if(Other.data.getString("Info."+name+".color")==null) {
@@ -161,11 +161,11 @@ public class Event implements Listener  {
 				event.getPlayer().getInventory().setItemInHand(null);
 	    		return;
 			}
-			if(!Other.config.getBoolean("UnPackAnyTime")&&event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+			if(!Other.data.getBoolean("Info."+name+".unpackanytime")&&event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("UseKeyMessage")));
 				return;
 			}
-			if(Other.config.getBoolean("UnPackAnyTime")) {
+			if(Other.data.getBoolean("Info."+name+".unpackanytime")) {
 				if(event.getAction().equals(Action.LEFT_CLICK_AIR)) {
         			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
     				Gui.showcrate(event.getPlayer(), name);
@@ -426,9 +426,9 @@ public class Event implements Listener  {
 	        return;
 	    }
 	    if(player.getClickedInventory().getTitle().equals(p.getInventory().getTitle())) {
-	    	if(p.getOpenInventory().getTitle().startsWith("§c选§4择")||p.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")||p.getOpenInventory().getTitle().startsWith("§c抽奖箱：")) {
+	    	if(p.getOpenInventory().getTitle().startsWith("§c选§4择")||p.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")||p.getOpenInventory().getTitle().startsWith("§a抽奖箱：")) {
 	    		player.setCancelled(true);
-	    	}else if(p.getOpenInventory().getTitle().startsWith("§c抽奖箱：")||p.getOpenInventory().getTitle().startsWith("§3设置")||p.getOpenInventory().getTitle().startsWith("§3想对")) {
+	    	}else if(p.getOpenInventory().getTitle().startsWith("§3设置")||p.getOpenInventory().getTitle().startsWith("§3想对")) {
 	    		player.setCancelled(true);
 	    	}else if(p.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")||p.getOpenInventory().getTitle().startsWith("§a正在开箱")||p.getOpenInventory().getTitle().startsWith("§6抽奖箱设置§b：")||p.getOpenInventory().getTitle().startsWith("§d设置抽奖箱")) {
 	    		player.setCancelled(true);
@@ -469,7 +469,7 @@ public class Event implements Listener  {
 			Gui.choose(p, cratename);
 			return;
 	    }
-	    if(player.getClickedInventory().getTitle().startsWith("§c抽奖箱：")||player.getClickedInventory().getTitle().startsWith("§a正在开箱")||player.getClickedInventory().getTitle().startsWith("§c正在九连§a开箱")) {
+	    if(player.getClickedInventory().getTitle().startsWith("§a抽奖箱：")||player.getClickedInventory().getTitle().startsWith("§a正在开箱")||player.getClickedInventory().getTitle().startsWith("§c正在九连§a开箱")) {
 	    	player.setCancelled(true);
 	    	return;
 	    }
@@ -679,6 +679,14 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -689,6 +697,14 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -699,6 +715,14 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -709,6 +733,14 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -719,6 +751,14 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -729,6 +769,14 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -739,6 +787,50 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
+		  		p.sendMessage("§a成功设置");
+				return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c反复横跳抽奖")) {
+				Other.data.set("Info."+name+".type", "repeatedly");
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
+		  		p.sendMessage("§a成功设置");
+				return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c九连抽§d：§c反复横跳抽奖")) {
+				Other.data.set("Info."+name+".ninetype", "repeatedly");
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -749,6 +841,50 @@ public class Event implements Listener  {
 		  		} catch (IOException e) {
 		  			e.printStackTrace();
 	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
+		  		p.sendMessage("§a成功设置");
+				return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§3跑马灯抽奖")) {
+				Other.data.set("Info."+name+".type", "show");
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
+		  		p.sendMessage("§a成功设置");
+				return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c九连抽§d：§3跑马灯抽奖")) {
+				Other.data.set("Info."+name+".ninetype", "show");
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			}
+		  		}
 		  		p.sendMessage("§a成功设置");
 				return;
 			}
@@ -766,6 +902,9 @@ public class Event implements Listener  {
 			if(player.getCurrentItem() == null || player.getCurrentItem().getType() == Material.AIR) {
 				return;
 			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§a单独设置箱子属性")) {
+				return;
+			}
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§5修改奖池奖励")) {
 				Gui.setcrate(p, name);
 				return;
@@ -777,6 +916,205 @@ public class Event implements Listener  {
 			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a设置")) {
 				Gui.way(p, name);
 				return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a返回选项列表")) {
+				p.closeInventory();
+				Gui.cratelist(p, 1);
+				return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否启用单抽动画")) {
+				if(Other.data.getBoolean("Info."+name+".animation")) {
+					Other.data.set("Info."+name+".animation", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".animation", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否启用§c九连抽§a动画")) {
+				if(Other.data.getBoolean("Info."+name+".nineanimation")) {
+					Other.data.set("Info."+name+".nineanimation", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".nineanimation", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否启用公告单抽到的物品")) {
+				if(Other.data.getBoolean("Info."+name+".info")) {
+					Other.data.set("Info."+name+".info", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".info", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否启用公告§c九连抽§a到的物品")) {
+				if(Other.data.getBoolean("Info."+name+".nineinfo")) {
+					Other.data.set("Info."+name+".nineinfo", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".nineinfo", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否单抽箱子清理抽到的物品功能")) {
+				if(Other.data.getBoolean("Info."+name+".clear")) {
+					Other.data.set("Info."+name+".backup", false);
+					Other.data.set("Info."+name+".clear", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".clear", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否启用填充因clear清空完内容的箱子内容")) {
+				if(!Other.data.getBoolean("Info."+name+".clear")) {
+					p.sendMessage("§c这个箱子没有开启一次性抽奖功能！");
+					return;
+				}
+				if(Other.data.getBoolean("Info."+name+".backup")) {
+					Other.data.set("Info."+name+".backup", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".backup", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改是否启用这个抽奖箱无需对箱即可抽奖")) {
+				if(Other.data.getBoolean("Info."+name+".unpackanytime")) {
+					Other.data.set("Info."+name+".unpackanytime", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".unpackanytime", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file1);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
 			}
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c删除这个箱子")) {
 				Other.data.set("Info."+name, null);
@@ -846,6 +1184,7 @@ public void Close(InventoryCloseEvent event) {
   			Other.data.set("Info."+title+".info", false);
   			Other.data.set("Info."+title+".nineinfo", false);
   			Other.data.set("Info."+title+".backup", false);
+  			Other.data.set("Info."+title+".unpackanytime", false);
   			crate = null;
   		}
   		Other.data.set("backup."+title, data);

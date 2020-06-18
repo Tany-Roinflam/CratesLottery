@@ -26,13 +26,17 @@ public class WingTaskS extends BukkitRunnable  {
 	@Override
 	public void run() {
 			if(Other.data.getString("Info."+Crate+".type").equals("normal"))
-			Preset.wing(player, Crate);
+				Preset.wing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("random"))
-			Preset.randomwing(player, Crate);
+				Preset.randomwing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("order"))
-			Preset.orderwing(player, Crate);
+				Preset.orderwing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("embellishment"))
-			Preset.embellishmentwing(player, Crate);
+				Preset.embellishmentwing(player, Crate);
+			else if(Other.data.getString("Info."+Crate+".type").equals("repeatedly"))
+				Preset.repeatedlywing(player, Crate);
+			else if(Other.data.getString("Info."+Crate+".type").equals("show"))
+				Preset.showwing(player, Crate);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
 			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), 2f, 2f);
 			cancel();

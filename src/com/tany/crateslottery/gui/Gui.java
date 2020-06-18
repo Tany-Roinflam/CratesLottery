@@ -114,22 +114,28 @@ public class Gui {
 			
 			lore.add("");
 			
-			if(Other.data.getDouble("Info."+crate.get(i)+".cd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".number")<=0)
-			lore.add("§a自定义普通抽奖时间：§c未启用");
-			else {
-				lore.add("§a普通抽奖变幻次数§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".number"));
-				lore.add("§a普通抽奖变幻间隔时间§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".cd"));
-				lore.add("");
-			}
-			if(Other.data.getDouble("Info."+crate.get(i)+".ninecd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".ninenumber")<=0)
-			lore.add("§a自定义§c九连抽§a抽奖时间：§c未启用");
-			else {
+			if(Other.data.getBoolean("Info."+crate.get(i)+".animation")) {
 				if(Other.data.getDouble("Info."+crate.get(i)+".cd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".number")<=0)
-				lore.add("");
-				lore.add("§c九连抽§a变幻次数§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".ninenumber"));
-				lore.add("§c九连抽§a变幻间隔时间§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".ninecd"));
-			}	
-
+					lore.add("§a自定义普通抽奖时间：§c未启用");
+				else {
+					lore.add("§a普通抽奖变幻次数§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".number"));
+					lore.add("§a普通抽奖变幻间隔时间§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".cd"));
+					lore.add("");
+				}
+			}
+			
+			if(Other.data.getBoolean("Info."+crate.get(i)+".nineanimation")) {
+				if(Other.data.getDouble("Info."+crate.get(i)+".ninecd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".ninenumber")<=0)
+					lore.add("§a自定义§c九连抽§a抽奖时间：§c未启用");
+				else {
+					if(Other.data.getDouble("Info."+crate.get(i)+".cd")<=0&&Other.data.getDouble("Info."+crate.get(i)+".number")<=0)
+					lore.add("");
+					lore.add("§c九连抽§a变幻次数§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".ninenumber"));
+					lore.add("§c九连抽§a变幻间隔时间§e：§6"+Other.data.getDouble("Info."+crate.get(i)+".ninecd"));
+				}	
+			}
+			
+			if(Other.data.getBoolean("Info."+crate.get(i)+".nineanimation")||Other.data.getBoolean("Info."+crate.get(i)+".animation"))
 			lore.add("");
 			if(Other.data.getBoolean("Info."+crate.get(i)+".info")) {
 				lore.add("§a公告单抽到的物品： §a启用");
@@ -164,6 +170,14 @@ public class Gui {
 			else
 				if(Other.data.getString("Info."+crate.get(i)+".type").equals("embellishment"))
 				lore.add("§a抽奖动画状态§d： §b§l有物品的随机抽奖");
+			else
+				if(Other.data.getString("Info."+crate.get(i)+".type").equals("repeatedly"))
+				lore.add("§a抽奖动画状态§d： §c§l反复横跳抽奖");
+			else
+				if(Other.data.getString("Info."+crate.get(i)+".type").equals("show"))
+				lore.add("§a抽奖动画状态§d： §3§l跑马灯抽奖");
+			
+			
 			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("normal"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §a§l固定中间抽奖");
 			else
@@ -175,6 +189,18 @@ public class Gui {
 			else
 			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("gradient"))
 				lore.add("§c九连抽§a抽奖动画状态§d： §6§l快乐矩形抽奖");
+			else
+			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("repeatedly"))
+				lore.add("§c九连抽§a抽奖动画状态§d：  §c§l反复横跳抽奖");
+			else
+			if(Other.data.getString("Info."+crate.get(i)+".ninetype").equals("show"))
+				lore.add("§c九连抽§d：§3§l跑马灯抽奖");
+			
+			lore.add("");
+			if(Other.data.getBoolean("Info."+crate.get(i)+".unpackanytime"))
+				lore.add("§a随时抽奖状态：启用");
+			else
+				lore.add("§a随时抽奖状态：§c未启用");
 			abc.setLore(lore);
 			chest.setItemMeta(abc);
 			lore.clear();
@@ -206,45 +232,138 @@ public class Gui {
 	    
 	    
 	    
-		Inventory gui = Bukkit.createInventory(null, 9, "§3想对"+Other.data.getString("Info."+name+".color")+name+"§3进行什么操作？");
+		Inventory gui = Bukkit.createInventory(null, 36, "§3想对"+Other.data.getString("Info."+name+".color")+name+"§3进行什么操作？");
 		ItemStack set = new ItemStack(Material.ENCHANTMENT_TABLE);
 		ItemStack color = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack remove = new ItemStack(Material.TRAPPED_CHEST);
 		ItemStack way = new ItemStack(Material.BOOK);
+		ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack back= new ItemStack(Material.EYE_OF_ENDER);
 		
-		ItemMeta data = color.getItemMeta();
-		ItemMeta datas = way.getItemMeta();
+		ItemMeta setdata = set.getItemMeta();
+		ItemMeta colordata = color.getItemMeta();
+		ItemMeta removedata = remove.getItemMeta();
+		ItemMeta waydata = way.getItemMeta();
+		ItemMeta framedata = frame.getItemMeta();
+		ItemMeta backdata = back.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
             
-        data.setDisplayName("§c删除这个箱子");
+        removedata.setDisplayName("§c删除这个箱子");
         lore.add("§4直接删除这个箱子");
-        data.setLore(lore);
-        remove.setItemMeta(data);
+        removedata.setLore(lore);
+        remove.setItemMeta(removedata);
         lore.clear();
         
-        data.setDisplayName("§5修改奖池奖励");
+        setdata.setDisplayName("§5修改奖池奖励");
         lore.add("§2这里存放了你之前设置已设置的物品");
-        data.setLore(lore);
-        set.setItemMeta(data);
+        setdata.setLore(lore);
+        set.setItemMeta(setdata);
         lore.clear();
         
-        data.setDisplayName("§6设置颜色");
+        colordata.setDisplayName("§6设置颜色");
         lore.add("§e设置箱子的显示颜色");
         color.setDurability((short) 1);
-        data.setLore(lore);
-        color.setItemMeta(data);
+        colordata.setLore(lore);
+        color.setItemMeta(colordata);
         lore.clear();
         
-        datas.setDisplayName("§a设置"+Other.data.getString("Info."+name+".color")+name+"§a箱子的开箱方式");
+        waydata.setDisplayName("§a设置"+Other.data.getString("Info."+name+".color")+name+"§a箱子的开箱方式");
         lore.add("§2普通抽奖和九连抽都在这设置");
-        datas.setLore(lore);
-        way.setItemMeta(datas);
+        waydata.setLore(lore);
+        way.setItemMeta(waydata);
         lore.clear();
         
-        gui.setItem(1, color);
-        gui.setItem(3, set);
-        gui.setItem(5, way);
-        gui.setItem(7, remove);
+        framedata.setDisplayName("§a单独设置箱子属性");
+        lore.add("§d选择对应的项目，点击快速修改吧！");
+        color.setDurability((short) 3);
+        framedata.setLore(lore);
+        frame.setItemMeta(framedata);
+        lore.clear();
+        
+        backdata.setDisplayName("§a返回选项列表");
+        lore.add("§2返回到主列表");
+        backdata.setLore(lore);
+        back.setItemMeta(backdata);
+        lore.clear();
+        
+		ItemStack setcrate = new ItemStack(Material.CHEST);
+		ItemStack ninesetcrate = new ItemStack(Material.ENDER_CHEST);
+		ItemStack info = new ItemStack(Material.PAPER);
+		ItemStack nineinfo = new ItemStack(Material.BOOK);
+		ItemStack clear = new ItemStack(Material.LAVA_BUCKET);
+		ItemStack backup = new ItemStack(Material.WATER_BUCKET);
+		ItemStack unpackanytime = new ItemStack(Material.TRIPWIRE_HOOK);
+		
+		ItemMeta setcratedata = setcrate.getItemMeta();
+		ItemMeta ninesetcratedata = ninesetcrate.getItemMeta();
+		ItemMeta infodata = info.getItemMeta();
+		ItemMeta nineinfodata = nineinfo.getItemMeta();
+		ItemMeta cleardata = clear.getItemMeta();
+		ItemMeta backupdata = clear.getItemMeta();
+		ItemMeta unpackanytimedata = unpackanytime.getItemMeta();
+		
+		
+		setcratedata.setDisplayName("§a修改是否启用单抽动画");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".animation").replace("true", "§a启用").replace("false", "§c未启用"));
+        setcratedata.setLore(lore);
+        setcrate.setItemMeta(setcratedata);
+        lore.clear();
+        
+        ninesetcratedata.setDisplayName("§a修改是否启用§c九连抽§a动画");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".nineanimation").replace("true", "§a启用").replace("false", "§c未启用"));
+        ninesetcratedata.setLore(lore);
+        ninesetcrate.setItemMeta(ninesetcratedata);
+        lore.clear();
+        
+        infodata.setDisplayName("§a修改是否启用公告单抽到的物品");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".info").replace("true", "§a启用").replace("false", "§c未启用"));
+        infodata.setLore(lore);
+        info.setItemMeta(infodata);
+        lore.clear();
+        
+        nineinfodata.setDisplayName("§a修改是否启用公告§c九连抽§a到的物品");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".nineinfo").replace("true", "§a启用").replace("false", "§c未启用"));
+        nineinfodata.setLore(lore);
+        nineinfo.setItemMeta(nineinfodata);
+        lore.clear();
+        
+        cleardata.setDisplayName("§a修改是否单抽箱子清理抽到的物品功能");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".clear").replace("true", "§a启用").replace("false", "§c未启用"));
+        cleardata.setLore(lore);
+        clear.setItemMeta(cleardata);
+        lore.clear();
+        
+        backupdata.setDisplayName("§a修改是否启用填充因clear清空完内容的箱子内容");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".backup").replace("true", "§a启用").replace("false", "§c未启用"));
+        backupdata.setLore(lore);
+        backup.setItemMeta(backupdata);
+        lore.clear();
+        
+        unpackanytimedata.setDisplayName("§a修改是否启用这个抽奖箱无需对箱即可抽奖");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".unpackanytime").replace("true", "§a启用").replace("false", "§c未启用"));
+        lore.add("§2我愿称之为：§d虚空抽奖");
+        unpackanytimedata.setLore(lore);
+        unpackanytime.setItemMeta(unpackanytimedata);
+        lore.clear();
+        
+        gui.setItem(0, color);
+        gui.setItem(2, way);
+        gui.setItem(4, set);
+        gui.setItem(6, remove);
+        gui.setItem(8, back);
+        gui.setItem(18, setcrate);
+        gui.setItem(19, ninesetcrate);
+        gui.setItem(20, info);
+        gui.setItem(21, nineinfo);
+        gui.setItem(23, clear);
+        gui.setItem(24, backup);
+        gui.setItem(26, unpackanytime);
+        
+        for(int a=9;a<=17;a++) {
+        	gui.setItem(a, frame);
+        }
+        gui.setItem(22, frame);
+        gui.setItem(31, frame);
         
         player.openInventory(gui);
 	}
@@ -395,10 +514,6 @@ public class Gui {
         player.openInventory(gui);
 	}
 	public static void way(Player player,String name) {
-	    
-	    
-	    
-	    
 	    ArrayList<String> lore = new ArrayList<String>();
 		Inventory gui = Bukkit.createInventory(null, 45, "§d设置抽奖箱"+Other.data.getString("Info."+name+".color")+name+"§d的开箱方式");
 		ItemStack normal = new ItemStack(Material.CHEST);
@@ -407,6 +522,9 @@ public class Gui {
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		ItemStack embellishment = new ItemStack(Material.ENCHANTMENT_TABLE);
 		ItemStack gradient = new ItemStack(Material.COMPASS);
+		ItemStack repeatedly= new ItemStack(Material.ENDER_PEARL);
+		ItemStack horse= new ItemStack(Material.GOLD_BARDING);
+		ItemStack ninehorse= new ItemStack(Material.DIAMOND_BARDING);
 		ItemStack back= new ItemStack(Material.EYE_OF_ENDER);
 		
 		ItemMeta glassdata = glass.getItemMeta();
@@ -456,14 +574,14 @@ public class Gui {
 		randomdata.setLore(lore);
 		lore.clear();
 		random.setItemMeta(randomdata);
-		gui.setItem(12, random);
+		gui.setItem(11, random);
 		
 		randomdata.setDisplayName("§c九连抽§d：§e随机位置抽奖");
 		lore.add("§a在抽奖界面里随机一个格子内抽奖");
 		randomdata.setLore(lore);
 		lore.clear();
 		random.setItemMeta(randomdata);
-		gui.setItem(30, random);
+		gui.setItem(29, random);
 		
 		
 		ItemMeta orderdata = order.getItemMeta();
@@ -472,14 +590,32 @@ public class Gui {
 		orderdata.setLore(lore);
 		lore.clear();
 		order.setItemMeta(orderdata);
-		gui.setItem(14, order);
+		gui.setItem(12, order);
 		
 		orderdata.setDisplayName("§c九连抽§d：§b范围位置内抽奖");
 		lore.add("§a在抽奖界面横排随机上下范围抽奖");
 		orderdata.setLore(lore);
 		lore.clear();
 		order.setItemMeta(orderdata);
-		gui.setItem(32, order);
+		gui.setItem(30, order);
+		
+		ItemMeta repeatedlydata = repeatedly.getItemMeta();
+		repeatedlydata.setDisplayName("§c反复横跳抽奖");
+		lore.add("§a此动画第一次会随机在一个位置亮出");
+		lore.add("§a然后按着顺序依次亮出，到顶/底时，反转");
+		repeatedlydata.setLore(lore);
+		lore.clear();
+		repeatedly.setItemMeta(repeatedlydata);
+		gui.setItem(14, repeatedly);
+		
+		ItemMeta ninerepeatedlydata = repeatedly.getItemMeta();
+		ninerepeatedlydata.setDisplayName("§c九连抽§d：§c反复横跳抽奖");
+		lore.add("§a此动画第一次会随机在九个位置亮出");
+		lore.add("§a然后按着顺序依次亮出，到顶/底时，反转");
+		ninerepeatedlydata.setLore(lore);
+		lore.clear();
+		repeatedly.setItemMeta(ninerepeatedlydata);
+		gui.setItem(32, repeatedly);
 		
 		ItemMeta embellishmentdata = embellishment.getItemMeta();
 		embellishmentdata.setDisplayName("§b有物品的随机抽奖");
@@ -489,6 +625,25 @@ public class Gui {
 		lore.clear();
 		embellishment.setItemMeta(embellishmentdata);
 		gui.setItem(16, embellishment);
+		
+		ItemMeta horsedata = horse.getItemMeta();
+		horsedata.setDisplayName("§3跑马灯抽奖");
+		lore.add("§a每次抽都会在奖池显示九个物品");
+		lore.add("§a根据玻璃板最终显示的位置获取对应位置的物品");
+		horsedata.setLore(lore);
+		lore.clear();
+		horse.setItemMeta(horsedata);
+		gui.setItem(15, horse);
+		
+		ItemMeta ninehorsedata = ninehorse.getItemMeta();
+		ninehorsedata.setDisplayName("§c九连抽§d：§3跑马灯抽奖");
+		lore.add("§a每次抽都会在奖池显示九个物品");
+		lore.add("§a根据玻璃板最终显示的列表获得对应显示的所有物品");
+		ninehorsedata.setLore(lore);
+		lore.clear();
+		ninehorse.setItemMeta(ninehorsedata);
+		gui.setItem(33, ninehorse);
+		
 		
 		ItemMeta gradientdata = gradient.getItemMeta();
 		gradientdata.setDisplayName("§c九连抽§d：§6快乐矩形抽奖");
@@ -512,10 +667,6 @@ public class Gui {
 	
 	
 	public static void setcrate(Player player,String name) {
-	    
-	    
-	    
-	    
 		for(Player players:Bukkit.getOnlinePlayers()) {
 			if(players.getOpenInventory().getTitle().contains("§2抽奖箱"+Other.data.getString("Info."+name+".color")+name+"§2设置")) {
 				player.sendMessage("§c这个箱子已经有人在编辑了");
@@ -544,7 +695,7 @@ public class Gui {
 	}
 
 		public static void showcrate(Player player,String name) {
-	    Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+	    Inventory gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('§', "§a抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§a可抽到的物品"));
 		List<String> list = Other.data.getStringList("Info."+name+".data");
 		int a=0;
 		int c=0;
@@ -572,15 +723,15 @@ public class Gui {
 			a++;
 		}
 		if(c==9) {
-			gui = Bukkit.createInventory(null, 45, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+			gui = Bukkit.createInventory(null, 45, ChatColor.translateAlternateColorCodes('§', "§a抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§a可抽到的物品"));
 			if(d==9) {
-				gui = Bukkit.createInventory(null, 36, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+				gui = Bukkit.createInventory(null, 36, ChatColor.translateAlternateColorCodes('§', "§a抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§a可抽到的物品"));
 				if(e==9) {
-					gui = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+					gui = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('§', "§a抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§a可抽到的物品"));
 					if(f==9) {
-						gui = Bukkit.createInventory(null, 18, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+						gui = Bukkit.createInventory(null, 18, ChatColor.translateAlternateColorCodes('§', "§a抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§a可抽到的物品"));
 						if(g==9) {
-							gui = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('§', "§c抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§b可抽到的物品"));
+							gui = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('§', "§a抽奖箱："+Other.data.getString("Info."+name+".color")+name+"§a可抽到的物品"));
 						}
 					}
 				}

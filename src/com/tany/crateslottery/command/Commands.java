@@ -15,10 +15,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
+import com.tany.crateslottery.Main;
 import com.tany.crateslottery.Other;
 import com.tany.crateslottery.gui.Gui;
+import com.tany.crateslottery.task.NineWingTask;
+import com.tany.crateslottery.task.NineWingTaskS;
+import com.tany.crateslottery.task.WingTask;
+import com.tany.crateslottery.task.WingTaskS;
 
 public class Commands implements CommandExecutor {
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
@@ -30,7 +36,7 @@ public class Commands implements CommandExecutor {
 		if(args.length==1) {
 			if(args[0].equalsIgnoreCase("help")) {
 				if(sender.isOp()) {
-					sender.sendMessage("§a[]==================§2[帮助§a界面<1/4>]==================[]");
+					sender.sendMessage("§a[]==================§2[帮助§a界面<1/3>]==================[]");
 					sender.sendMessage("§a§l常用指令");
 					sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 					sender.sendMessage("");
@@ -94,54 +100,6 @@ public class Commands implements CommandExecutor {
 				if(sender.isOp()) {
 					sender.sendMessage("§a/cl bc [箱子名称] [公告] ");
 					sender.sendMessage("§2设置箱子开启时全服公告[如果写“无”则不启用]，[player]开箱玩家变量");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("set")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl set [箱子名称] [true/false] §2设置箱子的抽奖方式（true为带动画，默认true）");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("clear")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl clear [箱子名称] [true/false] §2启用单抽箱子清理抽到的物品功能");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("backup")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl backup [箱子名称] [true/false] §6启用填充箱子物品功能");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9nineset")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl 9Nineset [箱子名称] [true/false] §2设置§c九连抽§2箱子的抽奖方式（true为带动画，默认true）");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9nineinfo")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl 9nineinfo [箱子名称] [true/false] §2启用§c九连抽§2公告抽奖到的物品");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("info")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl info [箱子名称] [true/false] §2启用公告抽奖到的物品");
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -244,12 +202,171 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		if(args.length==2) {
-			if(args[0].equalsIgnoreCase("backup")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl backup [箱子名称] [true/false] §6启用填充因clear清空完内容的箱子内容");
+			if(args[0].equalsIgnoreCase("show")) {
+				if(!(sender instanceof Player)) {
+					sender.sendMessage("§c控制台不能使用此指令");
 					return true;
 				}
-				sender.sendMessage("§c你没有权限使用此指令");
+				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+					return true;
+				}
+				int a=0;
+				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
+					if(args[1].equals(name)) {
+						break;
+					}
+					a++;
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+						return true;
+					}
+				}
+				a=0;
+				Player player = (Player) sender;
+				String name = args[1];
+				if(!player.hasPermission("cl.showall")&&!player.hasPermission("cl.show."+name)) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowMessage:").replace("[crate]", name)));
+					return true;
+				}
+    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				Gui.showcrate(player, name);
+				return true;
+			}
+			if(args[0].equalsIgnoreCase("start")) {
+				if(!(sender instanceof Player)) {
+					sender.sendMessage("§c控制台不能抽奖");
+					return true;
+				}
+				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+					return true;
+				}
+				int a=0;
+				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
+					if(args[1].equals(name)) {
+						break;
+					}
+					a++;
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+						return true;
+					}
+				}
+				a=0;
+				if(!sender.hasPermission("cl.startall")&&!sender.hasPermission("cl.start."+args[1])) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoAuthorityMessage").replace("[crate]", args[1])));
+					return true;
+				}
+				String name = args[1];
+				Player player = (Player) sender;
+				if(!player.hasPermission("cl.lottery")) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
+					return true;
+				}
+				if(!player.hasPermission("cl.allcrate")&&!player.hasPermission("cl.crate."+name)) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+					return true;
+				}
+				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
+				int g=1;
+				if(itemlist.size()==0) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				for(String item:itemlist) {
+				if(!item.split(":")[1].equals("null")) {
+					break;
+				}
+				if(g==itemlist.size()) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				g++;
+				}
+				g=1;
+    			if(!Other.data.getString("Info."+name+".announcement").equals("无"))
+    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", player.getName())));
+    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				if(Other.data.getBoolean("Info."+name+".animation")) {
+					if(Other.data.getDouble("Info."+name+".cd")<=0&&Other.data.getDouble("Info."+name+".number")<=0)
+					new WingTask(player, name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
+					else
+					new WingTask(player, name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
+				}else {
+					new WingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+				}
+				return true;
+			}
+			if(args[0].equalsIgnoreCase("ninestart")) {
+				if(!(sender instanceof Player)) {
+					sender.sendMessage("§c控制台不能抽奖");
+					return true;
+				}
+				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+					return true;
+				}
+				int a=0;
+				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
+					if(args[1].equals(name)) {
+						a=0;
+						break;
+					}
+					a++;
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
+						a=0;
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+						return true;
+					}
+				}
+				if(!sender.hasPermission("cl.ninestartall")&&!sender.hasPermission("cl.ninestart."+args[1])) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineAuthorityMessage").replace("[crate]", args[1])));
+					return true;
+				}
+				String name = args[1];
+				Player player = (Player) sender;
+				if(!player.hasPermission("cl.ninelottery")) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
+					return true;
+				}
+				if(Other.data.getBoolean("Info."+name+".clear")) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
+					return true;
+				}
+				if(!player.hasPermission("cl.allcrate")&&!player.hasPermission("cl.crate."+name)) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+					return true;
+				}
+				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
+				int g=1;
+				if(itemlist.size()==0) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				for(String item:itemlist) {
+				if(!item.split(":")[1].equals("null")) {
+					break;
+				}
+				if(g==itemlist.size()) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				g++;
+				}
+				g=1;
+				
+    			if(!Other.data.getString("Info."+name+".nine").equals("无"))
+    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", player.getName())));
+    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				if(Other.data.getBoolean("Info."+name+".nineanimation")) {
+					if(Other.data.getDouble("Info."+name+".ninecd")<=0&&Other.data.getDouble("Info."+name+".ninenumber")<=0)
+					new NineWingTask(player, name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
+					else
+					new NineWingTask(player, name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
+				} else {
+					new NineWingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+				}
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("help")) {
@@ -266,7 +383,7 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(number==1) {
-						sender.sendMessage("§a[]==================§2[帮助§a界面<1/4>]==================[]");
+						sender.sendMessage("§a[]==================§2[帮助§a界面<1/3>]==================[]");
 						sender.sendMessage("§a§l常用指令");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
@@ -280,10 +397,12 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(number==2) {
-						sender.sendMessage("§a[]==================§2[帮助§a界面<2/4>]==================[]");
-						sender.sendMessage("§a§l箱子单独时间相关");
+						sender.sendMessage("§a[]==================§2[帮助§a界面<2/3>]==================[]");
+						sender.sendMessage("§a§l自定义相关");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
+						sender.sendMessage("§a/cl bc [箱子名称] [公告] ");
+						sender.sendMessage("§a/cl 9nine [箱子名称] [公告] ");
 						sender.sendMessage("§a/cl time §2[箱子名称] [变幻次数] [变幻时间] §6普通开箱单独设置时间");
 						sender.sendMessage("§a/cl 9ninetime §2[箱子名称] [变幻次数] [变幻时间] §c九连抽§6开箱单独设置时间");
 						sender.sendMessage("§6为这个箱子单独设置时间，细看config.yml里的“开箱部分”自行理解");
@@ -291,29 +410,16 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					if(number==3) {
-						sender.sendMessage("§a[]==================§2[帮助§a界面<3/4>]==================[]");
-						sender.sendMessage("§a§l公告相关");
+						sender.sendMessage("§a[]==================§2[帮助§a界面<3/3>]==================[]");
+						sender.sendMessage("§a§l指令开箱相关");
 						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
 						sender.sendMessage("");
-						sender.sendMessage("§a/cl bc [箱子名称] [公告] ");
-						sender.sendMessage("§a/cl 9nine [箱子名称] [公告] ");
-						sender.sendMessage("§6设置箱子§a[普通开启/§c九连抽]§6开启时全服公告");
-						sender.sendMessage("§6注释：如果写“无”则不启用，[player]为开箱玩家变量");
-						sender.sendMessage("");
-						sender.sendMessage("§a/cl info [箱子名称] [true/false] §6启用公告抽奖到的物品");
-						sender.sendMessage("§a/cl 9nineinfo [箱子名称] [true/false] §6启用§c九连抽§2公告抽奖到的物品");
-						sender.sendMessage("§a[]=========================§2==========================[]");
-						return true;
-					}
-					if(number==4) {
-						sender.sendMessage("§a[]==================§2[帮助§a界面<4/4>]==================[]");
-						sender.sendMessage("§a§l箱子的动画/特殊开箱相关");
-						sender.sendMessage("§a/cl help <页数> §6使用指令帮助中心");
-						sender.sendMessage("");
-						sender.sendMessage("§a/cl set [箱子名称] [true/false] §6启用箱子抽奖动画");
-						sender.sendMessage("§a/cl 9nineset [箱子名称] [true/false] §6启用§c九连抽§6箱子抽奖动画");
-						sender.sendMessage("§a/cl clear [箱子名称] [true/false] §6启用单抽箱子清理抽到的物品功能");
-						sender.sendMessage("§a/cl backup [箱子名称] [true/false] §6启用填充因clear清空完内容的箱子内容");
+						sender.sendMessage("§a/cl start §2[箱子名称]  §6让自己开始单抽这个箱子");
+						sender.sendMessage("§a/cl ninestart §2[箱子名称]  §6让自己开始§c九连抽§6这个箱子");
+						sender.sendMessage("§a/cl start §2[箱子名称] [玩家]  §6让玩家开始单抽这个箱子");
+						sender.sendMessage("§a/cl ninestart §2[箱子名称] [玩家]  §6让玩家开始§c九连抽§6这个箱子");
+						sender.sendMessage("§a/cl show §2[箱子名称]  §6查看这个箱子的奖池内容");
+						sender.sendMessage("§a/cl show §2[箱子名称] [玩家]  §6让玩家查看这个奖池的内容");
 						sender.sendMessage("§a[]=========================§2==========================[]");
 						return true;
 					}
@@ -323,33 +429,9 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage("§c你没有权限使用此指令");
 				return true;
 			}
-			if(args[0].equalsIgnoreCase("9nineinfo")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl 9nineinfo [箱子名称] [true/false] §2启用§c九连抽§2公告抽奖到的物品");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("info")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl info [箱子名称] [true/false] §2启用公告抽奖到的物品");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("clear")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl clear [箱子名称] [true/false] §2启用单抽箱子清理抽到的物品功能");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
 			if(args[0].equalsIgnoreCase("9ninetime")) {
 				if(sender.isOp()) {
-					sender.sendMessage("§a/cl 9ninetime §2[箱子名称]  [变幻次数] [变幻时间] 为这个箱子的§c九连抽§2开箱单独设置时间");
+					sender.sendMessage("§a/cl 9ninetime §2[箱子名称] [变幻次数] [变幻时间] 为这个箱子的§c九连抽§2开箱单独设置时间");
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -357,15 +439,7 @@ public class Commands implements CommandExecutor {
 			}
 			if(args[0].equalsIgnoreCase("time")) {
 				if(sender.isOp()) {
-					sender.sendMessage("§a/cl time §2[箱子名称]  [变幻次数] [变幻时间] 为这个箱子的普通开箱单独设置时间");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9nineset")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl 9Nineset [箱子名称] [true/false] §2设置§c九连抽§2箱子的抽奖方式（true为带动画，默认true）");
+					sender.sendMessage("§a/cl time §2[箱子名称] [变幻次数] [变幻时间] 为这个箱子的普通开箱单独设置时间");
 					return true;
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
@@ -398,11 +472,13 @@ public class Commands implements CommandExecutor {
 						int a=0;
 						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
 							if(crate.equals(args[1])) {
+								a=0;
 								break;
 							}
 							a++;
 							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
 								sender.sendMessage("§c不存在这个抽奖箱");
+								a=0;
 								return true;
 							}
 						}
@@ -410,7 +486,6 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage("§c未设置箱子");
 							return true;
 						}
-						a=0;
 						ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
@@ -464,99 +539,154 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage("§c不能给控制台物品");
 				return true;
 			}
-			if(args[0].equalsIgnoreCase("set")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl set [箱子名称] [true/false] §2设置箱子的抽奖方式（true为带动画，默认true）");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9Nineset")) {	
-				if(sender.isOp()) {
-					sender.sendMessage("§a/cl 9Nineset [箱子名称] [true/false] §2设置§c九连抽§2箱子的抽奖方式（true为带动画，默认true）");
-					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
 			return true;
 		}
 		if(args.length==3) {
-			if(args[0].equalsIgnoreCase("info")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("§c当前没有存在任何抽奖箱");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("§c不存在这个抽奖箱");
-							return true;
-						}
-					}
-					a=0;
-					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
-						sender.sendMessage("§c请输入true或者false！");
-						return true;
-					}
-					if(args[2].equalsIgnoreCase("true"))
-					Other.data.set("Info."+args[1]+".info", true);
-					else
-					if(args[2].equalsIgnoreCase("false"))
-					Other.data.set("Info."+args[1]+".info", false);
-			  		try {
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		sender.sendMessage("§a设置成功");
-			  		return true;					
+			if(args[0].equalsIgnoreCase("show")) {
+				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+					return true;
 				}
-				sender.sendMessage("§c你没有权限使用此指令");
+				int a=0;
+				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
+					if(args[1].equals(name)) {
+						break;
+					}
+					a++;
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+						return true;
+					}
+				}
+				a=0;
+				if(Bukkit.getPlayer(args[2])==null) {
+					sender.sendMessage("§c这个玩家未在线");
+					return true;
+				}
+				if(!sender.isOp()) {
+					sender.sendMessage("§c你没有权限让其他人抽奖");
+					return true;
+				}
+				Player player = Bukkit.getPlayer(args[2]);
+				String name = args[1];
+    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				Gui.showcrate(player, name);
 				return true;
 			}
-			if(args[0].equalsIgnoreCase("9nineinfo")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("§c当前没有存在任何抽奖箱");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("§c不存在这个抽奖箱");
-							return true;
-						}
-					}
-					a=0;
-					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
-						sender.sendMessage("§c请输入true或者false！");
-						return true;
-					}
-					if(args[2].equalsIgnoreCase("true"))
-					Other.data.set("Info."+args[1]+".nineinfo", true);
-					else
-					if(args[2].equalsIgnoreCase("false"))
-					Other.data.set("Info."+args[1]+".nineinfo", false);
-			  		try {
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		sender.sendMessage("§a设置成功");
-			  		return true;					
+			if(args[0].equalsIgnoreCase("start")) {
+				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+					return true;
 				}
-				sender.sendMessage("§c你没有权限使用此指令");
+				int a=0;
+				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
+					if(args[1].equals(name)) {
+						a=0;
+						break;
+					}
+					a++;
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
+						a=0;
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+						return true;
+					}
+				}
+				if(Bukkit.getPlayer(args[2])==null) {
+					sender.sendMessage("§c这个玩家未在线");
+					return true;
+				}
+				if(!sender.isOp()) {
+					sender.sendMessage("§c你没有权限让其他人抽奖");
+					return true;
+				}
+				String name = args[1];
+				Player player = Bukkit.getPlayer(args[2]);
+				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
+				int g=1;
+				if(itemlist.size()==0) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				for(String item:itemlist) {
+				if(!item.split(":")[1].equals("null")) {
+					break;
+				}
+				if(g==itemlist.size()) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				g++;
+				}
+				g=1;
+    			if(!Other.data.getString("Info."+name+".announcement").equals("无"))
+    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", player.getName())));
+    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				if(Other.data.getBoolean("Info."+name+".animation")) {
+					if(Other.data.getDouble("Info."+name+".cd")<=0&&Other.data.getDouble("Info."+name+".number")<=0)
+					new WingTask(player, name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
+					else
+					new WingTask(player, name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
+				}else {
+					new WingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+				}
+				return true;
+			}
+			if(args[0].equalsIgnoreCase("ninestart")) {
+				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+					return true;
+				}
+				int a=0;
+				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
+					if(args[1].equals(name)) {
+						a=0;
+						break;
+					}
+					a++;
+					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
+						a=0;
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+						return true;
+					}
+				}
+				if(Bukkit.getPlayer(args[2])==null) {
+					sender.sendMessage("§c这个玩家未在线");
+					return true;
+				}
+				if(!sender.isOp()) {
+					sender.sendMessage("§c你没有权限让其他人抽奖");
+					return true;
+				}
+				String name = args[1];
+				Player player = Bukkit.getPlayer(args[2]);
+				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
+				int g=1;
+				if(itemlist.size()==0) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				for(String item:itemlist) {
+				if(!item.split(":")[1].equals("null")) {
+					break;
+				}
+				if(g==itemlist.size()) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+					return true;
+				}
+				g++;
+				}
+				g=1;
+    			if(!Other.data.getString("Info."+name+".nine").equals("无"))
+    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", player.getName())));
+    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				if(Other.data.getBoolean("Info."+name+".nineanimation")) {
+					if(Other.data.getDouble("Info."+name+".ninecd")<=0&&Other.data.getDouble("Info."+name+".ninenumber")<=0)
+					new NineWingTask(player, name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
+					else
+					new NineWingTask(player, name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
+				} else {
+					new NineWingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+				}
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("9ninetime")) {
@@ -571,162 +701,6 @@ public class Commands implements CommandExecutor {
 				if(sender.isOp()) {
 					sender.sendMessage("§a/cl time §2[箱子名称]  [变幻次数] [变幻时间] 为这个箱子的普通开箱单独设置时间");
 					return true;
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("set")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("§c当前没有存在任何抽奖箱");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("§c不存在这个抽奖箱");
-							return true;
-						}
-					}
-					a=0;
-					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
-						sender.sendMessage("§c请输入true或者false！");
-						return true;
-					}
-					if(args[2].equalsIgnoreCase("true"))
-					Other.data.set("Info."+args[1]+".animation", true);
-					else
-					if(args[2].equalsIgnoreCase("false"))
-					Other.data.set("Info."+args[1]+".animation", false);
-			  		try {
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		sender.sendMessage("§a设置成功");
-			  		return true;					
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9nineset")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("§c当前没有存在任何抽奖箱");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("§c不存在这个抽奖箱");
-							return true;
-						}
-					}
-					a=0;
-					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
-						sender.sendMessage("§c请输入true或者false！");
-						return true;
-					}
-					if(args[2].equalsIgnoreCase("true"))
-					Other.data.set("Info."+args[1]+".nineanimation", true);
-					else
-					if(args[2].equalsIgnoreCase("false"))
-					Other.data.set("Info."+args[1]+".nineanimation", false);
-			  		try {
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		sender.sendMessage("§a设置成功");
-			  		return true;					
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("clear")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("§c当前没有存在任何抽奖箱");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("§c不存在这个抽奖箱");
-							return true;
-						}
-					}
-					a=0;
-					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
-						sender.sendMessage("§c请输入true或者false！");
-						return true;
-					}
-					if(args[2].equalsIgnoreCase("true"))
-					Other.data.set("Info."+args[1]+".clear", true);
-					else
-					if(args[2].equalsIgnoreCase("false"))
-					Other.data.set("Info."+args[1]+".clear", false);
-			  		try {
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		sender.sendMessage("§a设置成功");
-			  		return true;					
-				}
-				sender.sendMessage("§c你没有权限使用此指令");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("backup")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("§c当前没有存在任何抽奖箱");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("§c不存在这个抽奖箱");
-							return true;
-						}
-					}
-					a=0;
-					if(!args[2].equalsIgnoreCase("true")&&!args[2].equalsIgnoreCase("false")) {
-						sender.sendMessage("§c请输入true或者false！");
-						return true;
-					}
-					if(!Other.data.getBoolean("Info."+args[1]+".clear")) {
-						sender.sendMessage("§c这个箱子没有开启一次性抽奖功能！");
-						return true;
-					}
-					if(args[2].equalsIgnoreCase("true"))
-					Other.data.set("Info."+args[1]+".backup", true);
-					else
-					if(args[2].equalsIgnoreCase("false"))
-					Other.data.set("Info."+args[1]+".backup", false);
-			  		try {
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		sender.sendMessage("§a设置成功");
-			  		return true;					
 				}
 				sender.sendMessage("§c你没有权限使用此指令");
 				return true;
@@ -1085,10 +1059,85 @@ public class Commands implements CommandExecutor {
 		}
 		if(sender.isOp()) {
 			sender.sendMessage("§a/cl help <页数> §2使用指令帮助中心");
+			return true;
 		}else {
+			if(sender instanceof Player) {
+				Player player = (Player) sender;
+				boolean a = false;
+				if(player.hasPermission("cl.startall")) {
+					for(String p:Other.data.getConfigurationSection("Info").getKeys(false)) {
+						a=true;
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowStart").replace("[crate]", Other.data.getString("Info."+p+".color")+p)));
+					}
+				} else {
+					for(PermissionAttachmentInfo p:sender.getEffectivePermissions()) {
+						if(p.getPermission().startsWith("cl.start.")) {
+							for(String b:Other.data.getConfigurationSection("Info").getKeys(false)) {
+								if(b.equals(p.getPermission().split("\\.")[2])) {
+									a=true;
+									player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowStart").replace("[crate]", Other.data.getString("Info."+p.getPermission().split("\\.")[2])+".color")+p.getPermission().split("\\.")[2]));
+								}
+							}
+						}
+					}
+				}
+				int c = 0;
+				if(player.hasPermission("cl.ninestartall")) {
+					for(String p:Other.data.getConfigurationSection("Info").getKeys(false)) {
+						c++;
+						if(c==1&&a)
+							sender.sendMessage("");
+						a=true;
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowNineStart").replace("[crate]", Other.data.getString("Info."+p+".color")+p)));
+					}
+				} else {
+					for(PermissionAttachmentInfo p:sender.getEffectivePermissions()) {
+						if(p.getPermission().startsWith("cl.ninestart.")) {
+							for(String b:Other.data.getConfigurationSection("Info").getKeys(false)) {
+								if(b.equals(p.getPermission().split("\\.")[2])) {
+									c++;
+									if(c==1&&a)
+										sender.sendMessage("");
+									a=true;
+									player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowNineStart").replace("[crate]", Other.data.getString("Info."+p.getPermission().split("\\.")[2])+".color")+p.getPermission().split("\\.")[2]));
+								}
+							}
+						}
+					}
+				}
+				c=1;
+				if(player.hasPermission("cl.showall")) {
+					for(String p:Other.data.getConfigurationSection("Info").getKeys(false)) {
+						if(a&&c!=0) {
+							sender.sendMessage("");
+							c=0;
+						}
+						a=true;
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowMessage").replace("[crate]", Other.data.getString("Info."+p+".color")+p)));
+					}
+				} else {
+					for(PermissionAttachmentInfo p:sender.getEffectivePermissions()) {
+						if(p.getPermission().startsWith("cl.show.")) {
+							for(String b:Other.data.getConfigurationSection("Info").getKeys(false)) {
+								if(b.equals(p.getPermission().split("\\.")[2])) {
+									if(a&&c!=0) {
+										sender.sendMessage("");
+										c=0;
+									}
+									a=true;
+									player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowMessage").replace("[crate]", Other.data.getString("Info."+p.getPermission().split("\\.")[2])+".color")+p.getPermission().split("\\.")[2]));
+								}
+							}
+						}
+					}
+				}
+				if(!a)
+				sender.sendMessage("§cNull");
+				return true;
+			}
 			sender.sendMessage("§cNull");
+			return true;
 		}
-		return true;
 	}
 //	ItemStack转String
 	public String GetItemData(ItemStack item) {

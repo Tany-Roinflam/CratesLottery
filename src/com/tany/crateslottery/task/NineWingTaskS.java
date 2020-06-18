@@ -33,6 +33,10 @@ public class NineWingTaskS extends BukkitRunnable  {
     		Preset.orderninewing(player, Crate);
     		else if(Other.data.getString("Info."+Crate+".ninetype").equals("gradient"))
     		Preset.gradientwing(player, Crate);
+    		else if(Other.data.getString("Info."+Crate+".ninetype").equals("repeatedly"))
+    		Preset.repeatedlyninewing(player, Crate);
+    		else if(Other.data.getString("Info."+Crate+".ninetype").equals("show"))
+        	Preset.showninewing(player, Crate);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
 			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), 2f, 2f);
 			cancel();

@@ -1,7 +1,6 @@
 package com.tany.crateslottery;
 
 import java.io.File;
-import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,8 +9,6 @@ import com.tany.crateslottery.listenevent.Event;
 import com.tany.crateslottery.placeholderapi.PlaceholderAPI;
 public class Main extends JavaPlugin{
 		public static Plugin plugin = null;
-		public static String title = null;
-		public static HashMap<String, Integer> number = new HashMap<String, Integer>();
 		public void onEnable() {
 			
 			Bukkit.getConsoleSender().sendMessage("°Ïa[Crates°Ï2Lottery]°Ïa≤Âº˛“—º”‘ÿ");
@@ -24,7 +21,6 @@ public class Main extends JavaPlugin{
 		    if (!new File(getDataFolder(), "message.yml").exists())
 		    	saveResource("message.yml",false);
 		    
-		    reloadConfig();
 		    plugin = this;
 		    getCommand("crateslottery").setExecutor(new Commands());
 		    getCommand("cl").setExecutor(new Commands());
