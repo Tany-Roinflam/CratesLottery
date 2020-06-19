@@ -15,7 +15,7 @@ public class Main extends JavaPlugin{
 		    if (!new File(getDataFolder(), "config.yml").exists()) 
 		    	saveDefaultConfig();
 		    
-		    if (!new File(getDataFolder(), "message.yml").exists())
+		    if (!new File(getDataFolder(), "data.yml").exists())
 		    	saveResource("data.yml",false);
 		    
 		    if (!new File(getDataFolder(), "message.yml").exists())
