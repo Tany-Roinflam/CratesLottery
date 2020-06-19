@@ -12,6 +12,8 @@ NoShowMessage: '&c你没有权限使用指令查看[crate]箱子内容'
 #[crate]对应的箱子
 NoAuthorityMessage: '&c你没有权限使用指令单抽[crate]箱'
 
+NoCheckMessage: '&c你没有权限查看[crate]箱子内容'
+
 #[crate]对应的箱子
 NoNineAuthorityMessage: '&c你没有权限使用指令九连抽[crate]箱'
 

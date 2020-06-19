@@ -5,12 +5,12 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.tany.crateslottery.Main;
 import com.tany.crateslottery.Other;
 import com.tany.crateslottery.gui.Preset;
 
@@ -30,8 +30,7 @@ public class NineWingTask extends BukkitRunnable  {
 		if(c==5)
 			c=0;
 		c++;
-		if(a==b) {
-			
+		if(a>=b) {
 			if(Other.data.getString("Info."+Crate+".ninetype").equals("normal"))
 			Preset.ninewing(player, Crate);
     		else if(Other.data.getString("Info."+Crate+".ninetype").equals("random"))
@@ -55,6 +54,10 @@ public class NineWingTask extends BukkitRunnable  {
 				String info = "";
 				while(location<size) {
 					ItemStack item = player.getOpenInventory().getItem(location);
+					if(item == null||item.getType() == Material.AIR) {
+						location++;
+						continue;
+					}
 					if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName()) {
 						if(ChatColor.stripColor(item.getItemMeta().getDisplayName()).contains("领取你的战利品吧！")) {
 							location++;

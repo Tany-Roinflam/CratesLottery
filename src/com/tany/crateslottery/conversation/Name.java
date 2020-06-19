@@ -39,7 +39,4 @@ public class Name extends StringPrompt {
 	public String getPromptText(ConversationContext context) {
 		return "§a请输入一个不与先前抽奖箱冲突的名称！";
 	}
-
-
-
 }
