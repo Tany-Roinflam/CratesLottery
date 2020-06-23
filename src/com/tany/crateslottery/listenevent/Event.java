@@ -28,6 +28,7 @@ import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
 import com.tany.crateslottery.Main;
 import com.tany.crateslottery.Other;
+import com.tany.crateslottery.Way;
 import com.tany.crateslottery.conversation.Name;
 import com.tany.crateslottery.gui.Gui;
 import com.tany.crateslottery.task.NineWingTask;
@@ -95,6 +96,11 @@ public class Event implements Listener  {
 	public void Place(BlockPlaceEvent event) {
 		if(event.isCancelled())
 			return;
+		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
+			if(Way.getPlaceHand(event)) {
+				return;
+			}
+		}
 	    if(event.getItemInHand()!=null&&event.getItemInHand().hasItemMeta()&&event.getItemInHand().getItemMeta().hasDisplayName()&&event.getItemInHand().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")))) {
 	    	String title = ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), ""));
 	    	int a = 0;
@@ -125,6 +131,11 @@ public class Event implements Listener  {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
+		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
+			if(Way.getInteractHand(event)) {
+				return;
+			}
+		}
 		if(!event.getAction().equals(Action.LEFT_CLICK_AIR)&&!event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 	    	List<String> Location = Other.data.getStringList("Location");
 	    	Location block = event.getClickedBlock().getLocation();
