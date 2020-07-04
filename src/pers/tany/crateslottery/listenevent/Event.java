@@ -1,4 +1,4 @@
-package com.tany.crateslottery.listenevent;
+package pers.tany.crateslottery.listenevent;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,19 +22,19 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
-import com.tany.crateslottery.Main;
-import com.tany.crateslottery.Other;
-import com.tany.crateslottery.Way;
-import com.tany.crateslottery.conversation.Name;
-import com.tany.crateslottery.gui.Gui;
-import com.tany.crateslottery.task.NineWingTask;
-import com.tany.crateslottery.task.NineWingTaskS;
-import com.tany.crateslottery.task.WingTask;
-import com.tany.crateslottery.task.WingTaskS;
+
+import pers.tany.crateslottery.Main;
+import pers.tany.crateslottery.Other;
+import pers.tany.crateslottery.Way;
+import pers.tany.crateslottery.conversation.Name;
+import pers.tany.crateslottery.gui.Gui;
+import pers.tany.crateslottery.task.NineWingTask;
+import pers.tany.crateslottery.task.NineWingTaskS;
+import pers.tany.crateslottery.task.WingTask;
+import pers.tany.crateslottery.task.WingTaskS;
 
 public class Event implements Listener  {
 	public static String crate = null;
@@ -43,27 +43,27 @@ public class Event implements Listener  {
     File file=new File(config.getDataFolder(),"data.yml");
     
     @EventHandler
-	public void Toggle(PlayerToggleSneakEvent event) {
-		if(event.isSneaking()) {
-			Sneak.add(event.getPlayer().getName());
-		}else if(Sneak.contains(event.getPlayer().getName())){
-			Sneak.remove(event.getPlayer().getName());
+	public void Toggle(PlayerToggleSneakEvent evt) {
+		if(evt.isSneaking()) {
+			Sneak.add(evt.getPlayer().getName());
+		}else if(Sneak.contains(evt.getPlayer().getName())){
+			Sneak.remove(evt.getPlayer().getName());
 		}
 	}
     
     @EventHandler
-	public void leave(PlayerQuitEvent event) {
-    	if(Sneak.contains(event.getPlayer().getName())) {
-    		Sneak.remove(event.getPlayer().getName());
+	public void leave(PlayerQuitEvent evt) {
+    	if(Sneak.contains(evt.getPlayer().getName())) {
+    		Sneak.remove(evt.getPlayer().getName());
     	}
 	}
 
 	@EventHandler
-    public void Break(BlockBreakEvent event) {
-		if(event.isCancelled())
+    public void Break(BlockBreakEvent evt) {
+		if(evt.isCancelled())
 			return;
         List<String> Location = Other.data.getStringList("Location");
-        Location block = event.getBlock().getLocation();
+        Location block = evt.getBlock().getLocation();
         if(Location.size()!=0) {
         	for(String location:Location) {
 				String world = location.split(":")[0];
@@ -71,9 +71,9 @@ public class Event implements Listener  {
 				int y = Integer.parseInt(location.split(":")[2]);
 				int z = Integer.parseInt(location.split(":")[3]);
 				if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
-					if(event.getPlayer().hasPermission("cl.break")) {
-						if(Sneak.contains(event.getPlayer().getName())) {
-							event.getPlayer().sendMessage("§a成功破坏抽奖箱！");
+					if(evt.getPlayer().hasPermission("cl.break")) {
+						if(Sneak.contains(evt.getPlayer().getName())) {
+							evt.getPlayer().sendMessage("§a成功破坏抽奖箱！");
 							Location.remove(location);
 							Other.data.set("Location", Location);
 					  		try {
@@ -83,8 +83,8 @@ public class Event implements Listener  {
 				        	}
 						}
 					}else {
-						event.setCancelled(true);
-						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("BreakCrateMessage")));
+						evt.setCancelled(true);
+						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("BreakCrateMessage")));
 					}
 					return;
 				}
@@ -93,16 +93,16 @@ public class Event implements Listener  {
     }
     
     @EventHandler
-	public void Place(BlockPlaceEvent event) {
-		if(event.isCancelled())
+	public void Place(BlockPlaceEvent evt) {
+		if(evt.isCancelled())
 			return;
 		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
-			if(Way.getPlaceHand(event)) {
+			if(Way.getPlaceHand(evt)) {
 				return;
 			}
 		}
-	    if(event.getItemInHand()!=null&&event.getItemInHand().hasItemMeta()&&event.getItemInHand().getItemMeta().hasDisplayName()&&event.getItemInHand().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")))) {
-	    	String title = ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), ""));
+	    if(evt.getItemInHand()!=null&&evt.getItemInHand().hasItemMeta()&&evt.getItemInHand().getItemMeta().hasDisplayName()&&evt.getItemInHand().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")))) {
+	    	String title = ChatColor.stripColor(evt.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), ""));
 	    	int a = 0;
 	    	for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
 	    		if(name.equals(title)) {
@@ -116,8 +116,8 @@ public class Event implements Listener  {
 	    	}		
 	    	a=0;
 	    	List<String> Location = Other.data.getStringList("Location");
-	    	if(!Location.contains(event.getBlock().getLocation().getWorld().getName()+":"+event.getBlock().getLocation().getBlockX()+":"+event.getBlock().getLocation().getBlockY()+":"+event.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), "")))) {
-	    		Location.add(event.getBlock().getLocation().getWorld().getName()+":"+event.getBlock().getLocation().getBlockX()+":"+event.getBlock().getLocation().getBlockY()+":"+event.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(event.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), "")));
+	    	if(!Location.contains(evt.getBlock().getLocation().getWorld().getName()+":"+evt.getBlock().getLocation().getBlockX()+":"+evt.getBlock().getLocation().getBlockY()+":"+evt.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(evt.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), "")))) {
+	    		Location.add(evt.getBlock().getLocation().getWorld().getName()+":"+evt.getBlock().getLocation().getBlockX()+":"+evt.getBlock().getLocation().getBlockY()+":"+evt.getBlock().getLocation().getBlockZ()+":"+ChatColor.stripColor(evt.getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")), "")));
 	    	}
 	    	Other.data.set("Location", Location);
 	  		try {
@@ -130,15 +130,15 @@ public class Event implements Listener  {
 	}
 
 	@EventHandler
-	public void onInteract(PlayerInteractEvent event) {
+	public void onInteract(PlayerInteractEvent evt) {
 		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
-			if(Way.getInteractHand(event)) {
+			if(Way.getInteractHand(evt)) {
 				return;
 			}
 		}
-		if(!event.getAction().equals(Action.LEFT_CLICK_AIR)&&!event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+		if(!evt.getAction().equals(Action.LEFT_CLICK_AIR)&&!evt.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 	    	List<String> Location = Other.data.getStringList("Location");
-	    	Location block = event.getClickedBlock().getLocation();
+	    	Location block = evt.getClickedBlock().getLocation();
 	    	if(Location.size()!=0) {
 	    		for(String location:Location) {
 	    			String world = location.split(":")[0];
@@ -148,9 +148,9 @@ public class Event implements Listener  {
 	    			String names = location.split(":")[4];
 	    			if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
 	        			if(Other.data.getString("Info."+names+".color")==null) {
-	        				event.getClickedBlock().setType(Material.AIR);
-	        				event.setCancelled(true);
-	        				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearCrateMessage")));
+	        				evt.getClickedBlock().setType(Material.AIR);
+	        				evt.setCancelled(true);
+	        				evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearCrateMessage")));
 							Location.remove(location);
 							Other.data.set("Location", Location);
 					  		try {
@@ -164,47 +164,47 @@ public class Event implements Listener  {
 	    		}
 	    	}
 		}
-		if(event.getItem()!=null&&event.getItem().hasItemMeta()&&event.getItem().getItemMeta().hasDisplayName()&&event.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")))) {
-			event.setCancelled(true);
-			String name = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), ""));
+		if(evt.getItem()!=null&&evt.getItem().hasItemMeta()&&evt.getItem().getItemMeta().hasDisplayName()&&evt.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")))) {
+			evt.setCancelled(true);
+			String name = ChatColor.stripColor(evt.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), ""));
 			if(Other.data.getString("Info."+name+".color")==null) {
-				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearKeyMessage")));
-				event.getPlayer().getInventory().setItemInHand(null);
+				evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearKeyMessage")));
+				evt.getPlayer().getInventory().setItemInHand(null);
 	    		return;
 			}
-			if(!Other.data.getBoolean("Info."+name+".unpackanytime")&&event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("UseKeyMessage")));
+			if(!Other.data.getBoolean("Info."+name+".unpackanytime")&&evt.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+				evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("UseKeyMessage")));
 				return;
 			}
 			if(Other.data.getBoolean("Info."+name+".unpackanytime")) {
-				if(event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-					if(!(event.getPlayer().hasPermission("cl.checkall")||event.getPlayer().hasPermission("cl.check."+name))) {
-						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoCheckMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+				if(evt.getAction().equals(Action.LEFT_CLICK_AIR)) {
+					if(!(evt.getPlayer().hasPermission("cl.checkall")||evt.getPlayer().hasPermission("cl.check."+name))) {
+						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoCheckMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
 						return;
 					}
-        			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-    				Gui.showcrate(event.getPlayer(), name);
-    				event.setCancelled(true);
+        			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+    				Gui.showcrate(evt.getPlayer(), name);
+    				evt.setCancelled(true);
     				return;
 				}
-				if(event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-					if(Sneak.contains(event.getPlayer().getName())) {
-    					if(!event.getPlayer().hasPermission("cl.ninelottery")) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
+				if(evt.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+					if(Sneak.contains(evt.getPlayer().getName())) {
+    					if(!evt.getPlayer().hasPermission("cl.ninelottery")) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
     						return;
     					}
     					if(Other.data.getBoolean("Info."+name+".clear")) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
     						return;
     					}
-    					if(!event.getPlayer().hasPermission("cl.allcrate")&&!event.getPlayer().hasPermission("cl.crate."+name)) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+    					if(!evt.getPlayer().hasPermission("cl.allcrate")&&!evt.getPlayer().hasPermission("cl.crate."+name)) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
     						return;
     					}
 						List<String> itemlist = Other.data.getStringList("Info."+name+".data");
 						int a=1;
 						if(itemlist.size()==0) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
 							return;
 						}
 						for(String item:itemlist) {
@@ -212,47 +212,47 @@ public class Event implements Listener  {
 							break;
 						}
 						if(a==itemlist.size()) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
 							return;
 						}
 						a++;
 						}
 						a=1;
-    					if(event.getPlayer().getInventory().getItemInHand().getAmount()<9) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineKeyMessage")));
+    					if(evt.getPlayer().getInventory().getItemInHand().getAmount()<9) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineKeyMessage")));
     						return;
     					}
-    					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
+    					int amount = evt.getPlayer().getInventory().getItemInHand().getAmount();
     					amount=amount-9;
     	    				if(amount!=0)
-        	    			event.getPlayer().getInventory().getItemInHand().setAmount(amount);
+        	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
         	    			else
-							event.getPlayer().getInventory().setItemInHand(null);
+							evt.getPlayer().getInventory().setItemInHand(null);
     	    			if(!Other.data.getString("Info."+name+".nine").equals("无"))
-    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", event.getPlayer().getName())));
-    	    			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", evt.getPlayer().getName())));
+    	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
     					if(Other.data.getBoolean("Info."+name+".nineanimation")) {
     						if(Other.data.getDouble("Info."+name+".ninecd")<=0&&Other.data.getDouble("Info."+name+".ninenumber")<=0)
-    						new NineWingTask(event.getPlayer(), name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
+    						new NineWingTask(evt.getPlayer(), name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
     						else
-    						new NineWingTask(event.getPlayer(), name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
+    						new NineWingTask(evt.getPlayer(), name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
     					} else {
-    						new NineWingTaskS(event.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
+    						new NineWingTaskS(evt.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
     					}
         				return;
 					} else {
-    					if(!event.getPlayer().hasPermission("cl.lottery")) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
+    					if(!evt.getPlayer().hasPermission("cl.lottery")) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
     						return;
     					}
     					List<String> itemlist = Other.data.getStringList("Info."+name+".data");
     					int a=1;
     					if(itemlist.size()==0) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
 							return;
     					}
-    					if(!event.getPlayer().hasPermission("cl.allcrate")&&!event.getPlayer().hasPermission("cl.crate."+name)) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+    					if(!evt.getPlayer().hasPermission("cl.allcrate")&&!evt.getPlayer().hasPermission("cl.crate."+name)) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
     						return;
     					}
     					for(String item:itemlist) {
@@ -260,36 +260,36 @@ public class Event implements Listener  {
     							break;
     						}
     						if(a==itemlist.size()) {
-    							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+    							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
     							return;
     						}
     						a++;
     					}
-    					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
+    					int amount = evt.getPlayer().getInventory().getItemInHand().getAmount();
     					amount--;
     	    				if(amount!=0)
-        	    			event.getPlayer().getInventory().getItemInHand().setAmount(amount);
+        	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
         	    			else
-							event.getPlayer().getInventory().setItemInHand(null);
+							evt.getPlayer().getInventory().setItemInHand(null);
     	    			if(!Other.data.getString("Info."+name+".announcement").equals("无"))
-    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", event.getPlayer().getName())));
-    	    			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", evt.getPlayer().getName())));
+    	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
     					if(Other.data.getBoolean("Info."+name+".animation")) {
     						if(Other.data.getDouble("Info."+name+".cd")<=0&&Other.data.getDouble("Info."+name+".number")<=0)
-    						new WingTask(event.getPlayer(), name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
+    						new WingTask(evt.getPlayer(), name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
     						else
-    						new WingTask(event.getPlayer(), name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
+    						new WingTask(evt.getPlayer(), name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
     					}else {
-    						new WingTaskS(event.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
+    						new WingTaskS(evt.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
     					}
         				return;
 					}
 				}
 			}
 		}
-		if(event.getClickedBlock()!=null&&event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+		if(evt.getClickedBlock()!=null&&evt.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 	    	List<String> Location = Other.data.getStringList("Location");
-	    	Location block = event.getClickedBlock().getLocation();
+	    	Location block = evt.getClickedBlock().getLocation();
 	    	if(Location.size()!=0) {
 	    		for(String location:Location) {
 	    			String world = location.split(":")[0];
@@ -298,34 +298,34 @@ public class Event implements Listener  {
 	    			int z = Integer.parseInt(location.split(":")[3]);
 	    			String name = location.split(":")[4];
 	    			if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
-	    				event.setCancelled(true);
-						if(event.getPlayer().getInventory().getItemInHand()==null||event.getPlayer().getInventory().getItemInHand().getType()==Material.AIR) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
+	    				evt.setCancelled(true);
+						if(evt.getPlayer().getInventory().getItemInHand()==null||evt.getPlayer().getInventory().getItemInHand().getType()==Material.AIR) {
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
 							return;
-						}else if(!event.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
+						}else if(!evt.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()) {
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
 							return;
-						}else if(!ChatColor.stripColor(event.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), "")).equals(name)) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
+						}else if(!ChatColor.stripColor(evt.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), "")).equals(name)) {
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
 							return;
 						}
-    				if(Sneak.contains(event.getPlayer().getName())) {
-    					if(!event.getPlayer().hasPermission("cl.ninelottery")) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
+    				if(Sneak.contains(evt.getPlayer().getName())) {
+    					if(!evt.getPlayer().hasPermission("cl.ninelottery")) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
     						return;
     					}
     					if(Other.data.getBoolean("Info."+name+".clear")) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
     						return;
     					}
-    					if(!event.getPlayer().hasPermission("cl.allcrate")&&!event.getPlayer().hasPermission("cl.crate."+name)) {
-    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+    					if(!evt.getPlayer().hasPermission("cl.allcrate")&&!evt.getPlayer().hasPermission("cl.crate."+name)) {
+    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
     						return;
     					}
         					List<String> itemlist = Other.data.getStringList("Info."+name+".data");
         					int a=1;
         					if(itemlist.size()==0) {
-    							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+    							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
     							return;
         					}
         					for(String item:itemlist) {
@@ -333,47 +333,47 @@ public class Event implements Listener  {
     							break;
     						}
     						if(a==itemlist.size()) {
-    							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+    							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
     							return;
     						}
     						a++;
     						}
     						a=1;
-        					if(event.getPlayer().getInventory().getItemInHand().getAmount()<9) {
-        						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineKeyMessage")));
+        					if(evt.getPlayer().getInventory().getItemInHand().getAmount()<9) {
+        						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineKeyMessage")));
         						return;
         					}
-        					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
+        					int amount = evt.getPlayer().getInventory().getItemInHand().getAmount();
         					amount=amount-9;
         	    				if(amount!=0)
-            	    			event.getPlayer().getInventory().getItemInHand().setAmount(amount);
+            	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
             	    			else
-  								event.getPlayer().getInventory().setItemInHand(null);
+  								evt.getPlayer().getInventory().setItemInHand(null);
         	    			if(!Other.data.getString("Info."+name+".nine").equals("无"))
-        	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", event.getPlayer().getName())));
-        	    			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+        	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", evt.getPlayer().getName())));
+        	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
         					if(Other.data.getBoolean("Info."+name+".nineanimation")) {
         						if(Other.data.getDouble("Info."+name+".ninecd")<=0&&Other.data.getDouble("Info."+name+".ninenumber")<=0)
-        						new NineWingTask(event.getPlayer(), name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
+        						new NineWingTask(evt.getPlayer(), name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
         						else
-        						new NineWingTask(event.getPlayer(), name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
+        						new NineWingTask(evt.getPlayer(), name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
         					}else {
-        						new NineWingTaskS(event.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
+        						new NineWingTaskS(evt.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
         					}
             				return;
 	    				}else {
-	    					if(!event.getPlayer().hasPermission("cl.lottery")) {
-	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
+	    					if(!evt.getPlayer().hasPermission("cl.lottery")) {
+	    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
 	    						return;
 	    					}
 	    					List<String> itemlist = Other.data.getStringList("Info."+name+".data");
 	    					int a=1;
         					if(itemlist.size()==0) {
-    							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+    							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
     							return;
         					}
-	    					if(!event.getPlayer().hasPermission("cl.allcrate")&&!event.getPlayer().hasPermission("cl.crate."+name)) {
-	    						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+	    					if(!evt.getPlayer().hasPermission("cl.allcrate")&&!evt.getPlayer().hasPermission("cl.crate."+name)) {
+	    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
 	    						return;
 	    					}
 	    					for(String item:itemlist) {
@@ -381,27 +381,27 @@ public class Event implements Listener  {
 	    							break;
 	    						}
 	    						if(a==itemlist.size()) {
-	    							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+	    							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
 	    							return;
 	    						}
 	    						a++;
 	    					}
-	    					int amount = event.getPlayer().getInventory().getItemInHand().getAmount();
+	    					int amount = evt.getPlayer().getInventory().getItemInHand().getAmount();
 	    					amount--;
 	    	    				if(amount!=0)
-	        	    			event.getPlayer().getInventory().getItemInHand().setAmount(amount);
+	        	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
 	        	    			else
-								event.getPlayer().getInventory().setItemInHand(null);
+								evt.getPlayer().getInventory().setItemInHand(null);
 	    	    			if(!Other.data.getString("Info."+name+".announcement").equals("无"))
-	    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", event.getPlayer().getName())));
-	    	    			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+	    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", evt.getPlayer().getName())));
+	    	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
 	    					if(Other.data.getBoolean("Info."+name+".animation")) {
 	    						if(Other.data.getDouble("Info."+name+".cd")<=0&&Other.data.getDouble("Info."+name+".number")<=0)
-	    						new WingTask(event.getPlayer(), name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
+	    						new WingTask(evt.getPlayer(), name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
 	    						else
-	    						new WingTask(event.getPlayer(), name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
+	    						new WingTask(evt.getPlayer(), name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
 	    					}else {
-	    						new WingTaskS(event.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
+	    						new WingTaskS(evt.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
 	    					}
 	        				return;
 	        			}
@@ -409,9 +409,9 @@ public class Event implements Listener  {
 	    		}
 	    	}
 		}
-		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)&&!Sneak.contains(event.getPlayer().getName())) {
+		if(evt.getAction().equals(Action.LEFT_CLICK_BLOCK)&&!Sneak.contains(evt.getPlayer().getName())) {
 	    	List<String> Location = Other.data.getStringList("Location");
-	    	Location block = event.getClickedBlock().getLocation();
+	    	Location block = evt.getClickedBlock().getLocation();
 	    	if(Location.size()!=0) {
 	    		for(String location:Location) {
 	    			String world = location.split(":")[0];
@@ -420,13 +420,13 @@ public class Event implements Listener  {
 	    			int z = Integer.parseInt(location.split(":")[3]);
 	    			String name = location.split(":")[4];
 	    			if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
-						if(!(event.getPlayer().hasPermission("cl.checkall")||event.getPlayer().hasPermission("cl.check."+name))) {
-							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoCheckMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+						if(!(evt.getPlayer().hasPermission("cl.checkall")||evt.getPlayer().hasPermission("cl.check."+name))) {
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoCheckMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
 							return;
 						}
-	        			event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-	    				Gui.showcrate(event.getPlayer(), name);
-	    				event.setCancelled(true);
+	        			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+	    				Gui.showcrate(evt.getPlayer(), name);
+	    				evt.setCancelled(true);
 	    				return;
 	    			}
 	    		}
@@ -436,15 +436,11 @@ public class Event implements Listener  {
 
 	@EventHandler
 	public void Click(InventoryClickEvent player) {
-		Inventory inventory = player.getClickedInventory();
-		if(inventory == null) {
-			return;
-		}
-	    Player p = (Player) player.getWhoClicked();
 	    if (!(player.getWhoClicked() instanceof Player)) {
 	        return;
 	    }
-	    if(player.getClickedInventory().getTitle().equals(p.getInventory().getTitle())) {
+	    Player p = (Player) player.getWhoClicked();
+	    if(!p.getOpenInventory().getTitle().equals(player.getInventory().getTitle())&&player.getClickedInventory().getTitle().equals(p.getInventory().getTitle())) {
 	    	if(p.getOpenInventory().getTitle().startsWith("§c选§4择")||p.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")||p.getOpenInventory().getTitle().startsWith("§a抽奖箱：")) {
 	    		player.setCancelled(true);
 	    	}else if(p.getOpenInventory().getTitle().startsWith("§3设置")||p.getOpenInventory().getTitle().startsWith("§3想对")) {
@@ -1171,17 +1167,17 @@ public class Event implements Listener  {
 	}
 
 	@EventHandler
-public void Close(InventoryCloseEvent event) {
-    if(event.getInventory().getTitle().startsWith("§2抽奖箱")) {
-    	String title = ChatColor.stripColor(event.getInventory().getTitle().replace("§2抽奖箱", "").replace("§2设置", ""));
+public void Close(InventoryCloseEvent evt) {
+    if(evt.getInventory().getTitle().startsWith("§2抽奖箱")) {
+    	String title = ChatColor.stripColor(evt.getInventory().getTitle().replace("§2抽奖箱", "").replace("§2设置", ""));
     	ArrayList<String> data = new ArrayList<String>();
   		int a=0;
   		while(a<54) {
   			String item = null;
-  			if(event.getInventory().getItem(a)==null||event.getInventory().getItem(a).getType()==Material.AIR)
+  			if(evt.getInventory().getItem(a)==null||evt.getInventory().getItem(a).getType()==Material.AIR)
   			item = "null";
   			else
-  			item = GetItemData(event.getInventory().getItem(a));
+  			item = GetItemData(evt.getInventory().getItem(a));
   			data.add(a+":"+item);
   			a++;
   		}
@@ -1213,7 +1209,7 @@ public void Close(InventoryCloseEvent event) {
   		} catch (IOException e) {
   			e.printStackTrace();
     	}
-  		Player player = (Player) event.getPlayer();
+  		Player player = (Player) evt.getPlayer();
   		player.sendMessage("§a保存成功");
   		for(Player players:Bukkit.getOnlinePlayers()) {
   			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
@@ -1224,7 +1220,19 @@ public void Close(InventoryCloseEvent event) {
 			}
 		}
     	return;
-    }   
+    }
+    if(evt.getInventory().getTitle().contains("§c九连开箱结果")||evt.getInventory().getTitle().contains("§a开箱结果")) {
+    	for(ItemStack item:evt.getInventory().getContents()) {
+    		if(item==null||item.getType() == Material.AIR) {
+    			continue;
+    		}
+    		if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName()&&(item.getItemMeta().getDisplayName().contains("领取你的奖励吧！")||item.getItemMeta().getDisplayName().equals("§2仅展示")||item.getItemMeta().getDisplayName().contains("领取你的战利品吧！"))) {
+    			continue;
+    		}
+    		Way.GiveItem((Player) evt.getPlayer(), item);
+    	}
+    	return;
+    }
 }
 
 //	ItemStack转String

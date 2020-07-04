@@ -1,12 +1,13 @@
-package com.tany.crateslottery;
+package pers.tany.crateslottery;
 
 import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.tany.crateslottery.command.Commands;
-import com.tany.crateslottery.listenevent.Event;
-import com.tany.crateslottery.placeholderapi.PlaceholderAPI;
+
+import pers.tany.crateslottery.command.Commands;
+import pers.tany.crateslottery.listenevent.Event;
+import pers.tany.crateslottery.placeholderapi.PlaceholderAPI;
 public class Main extends JavaPlugin{
 		public static Plugin plugin = null;
 		public void onEnable() {

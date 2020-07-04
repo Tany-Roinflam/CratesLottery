@@ -1,4 +1,4 @@
-package com.tany.crateslottery.gui;
+package pers.tany.crateslottery.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.comphenix.protocol.utility.StreamSerializer;
-import com.tany.crateslottery.Other;
+
+import pers.tany.crateslottery.Other;
 
 public class Gui {
 	public static void gui(Player player) {

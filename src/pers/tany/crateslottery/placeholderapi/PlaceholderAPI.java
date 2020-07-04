@@ -1,10 +1,10 @@
-package com.tany.crateslottery.placeholderapi;
+package pers.tany.crateslottery.placeholderapi;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import com.tany.crateslottery.Main;
-import com.tany.crateslottery.Other;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import pers.tany.crateslottery.Main;
+import pers.tany.crateslottery.Other;
 
 public class PlaceholderAPI extends PlaceholderExpansion {
 	

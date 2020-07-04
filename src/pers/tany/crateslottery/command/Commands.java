@@ -1,4 +1,4 @@
-package com.tany.crateslottery.command;
+package pers.tany.crateslottery.command;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,13 +18,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import com.comphenix.protocol.utility.StreamSerializer;
-import com.tany.crateslottery.Main;
-import com.tany.crateslottery.Other;
-import com.tany.crateslottery.gui.Gui;
-import com.tany.crateslottery.task.NineWingTask;
-import com.tany.crateslottery.task.NineWingTaskS;
-import com.tany.crateslottery.task.WingTask;
-import com.tany.crateslottery.task.WingTaskS;
+
+import pers.tany.crateslottery.Main;
+import pers.tany.crateslottery.Other;
+import pers.tany.crateslottery.gui.Gui;
+import pers.tany.crateslottery.task.NineWingTask;
+import pers.tany.crateslottery.task.NineWingTaskS;
+import pers.tany.crateslottery.task.WingTask;
+import pers.tany.crateslottery.task.WingTaskS;
 
 public class Commands implements CommandExecutor {
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");

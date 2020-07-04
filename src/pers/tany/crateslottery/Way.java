@@ -1,4 +1,4 @@
-package com.tany.crateslottery;
+package pers.tany.crateslottery;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -96,6 +96,15 @@ public class Way {
   			return (int) (level < 17 ? level * (level + 6) : level < 31 ? level * (level * 2.5 - 40.5) + 360 : level * (level * 4.5 - 162.5) + 2220);
   		}
   		
+//		给予玩家物品，如果背包满则在原地生成掉落物
+		public static void GiveItem(Player player,ItemStack item) {
+			if(player.getInventory().firstEmpty()==-1) {
+				player.getWorld().dropItemNaturally(player.getLocation(), item);
+			} else {
+				player.getInventory().addItem(item);
+			}
+		}
+		
 //  	判断交互手
   		public static boolean getInteractHand(PlayerInteractEvent evt)
   		{

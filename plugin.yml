@@ -1,8 +1,8 @@
 name: CratesLottery
-main: com.tany.crateslottery.Main
-version: 2.0.2
+main: pers.tany.crateslottery.Main
+version: 2.0.3
 author: tany
-depend: [ProtocolLib,PlaceholderAPI]
+depend: [ProtocolLib]
 commands:
   crateslottery:
     usage: /crateslottery

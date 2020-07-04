@@ -1,4 +1,4 @@
-package com.tany.crateslottery.conversation;
+package pers.tany.crateslottery.conversation;
 
 
 import org.bukkit.conversations.ConversationContext;
@@ -6,9 +6,9 @@ import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
-import com.tany.crateslottery.Other;
-import com.tany.crateslottery.gui.Gui;
-import com.tany.crateslottery.listenevent.Event;
+import pers.tany.crateslottery.Other;
+import pers.tany.crateslottery.gui.Gui;
+import pers.tany.crateslottery.listenevent.Event;
 
 public class Name extends StringPrompt {
 	@Override

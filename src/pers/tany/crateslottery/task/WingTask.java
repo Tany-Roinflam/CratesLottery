@@ -1,4 +1,4 @@
-package com.tany.crateslottery.task;
+package pers.tany.crateslottery.task;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import com.comphenix.protocol.utility.StreamSerializer;
-import com.tany.crateslottery.Other;
-import com.tany.crateslottery.gui.Preset;
+
+import pers.tany.crateslottery.Other;
+import pers.tany.crateslottery.gui.Preset;
 
 public class WingTask extends BukkitRunnable  {
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");

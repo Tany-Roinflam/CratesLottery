@@ -1,4 +1,4 @@
-package com.tany.crateslottery;
+package pers.tany.crateslottery;
 
 import java.io.File;
 

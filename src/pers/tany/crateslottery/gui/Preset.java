@@ -1,4 +1,4 @@
-package com.tany.crateslottery.gui;
+package pers.tany.crateslottery.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import com.comphenix.protocol.utility.StreamSerializer;
-import com.tany.crateslottery.Other;
+
+import pers.tany.crateslottery.Other;
 
 public class Preset {
 	public static int location = 0;
