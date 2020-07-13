@@ -108,7 +108,7 @@ public class Way {
 //  	判断交互手
   		public static boolean getInteractHand(PlayerInteractEvent evt)
   		{
-  			if(!evt.getHand().equals(EquipmentSlot.HAND))
+  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
 			return true;
   			else
   			return false;
@@ -117,7 +117,7 @@ public class Way {
 //  	判断放置手
   		public static boolean getPlaceHand(BlockPlaceEvent evt)
   		{
-  			if(!evt.getHand().equals(EquipmentSlot.HAND))
+  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
 			return true;
   			else
   			return false;
