@@ -1,6 +1,6 @@
 name: CratesLottery
 main: pers.tany.crateslottery.Main
-version: 2.0.3
+version: 2.0.4
 author: tany
 depend: [ProtocolLib]
 commands:

@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import com.comphenix.protocol.utility.StreamSerializer;
 
+import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.Other;
 
 public class Preset {
@@ -55,7 +55,7 @@ public class Preset {
 			get = random.nextInt(54);
 			item = list.get(get).split(":")[1];
 		}
-		gui.setItem(22, GetItemStack(item));
+		gui.setItem(22, CommonlyWay.GetItemStack(item));
 		
         player.openInventory(gui);
 	}
@@ -95,7 +95,7 @@ public class Preset {
 			item = list.get(get).split(":")[1];
 		}
 		Preset.location=get;
-		gui.setItem(22, GetItemStack(item));
+		gui.setItem(22, CommonlyWay.GetItemStack(item));
         player.openInventory(gui);
 	}
 	
@@ -137,31 +137,31 @@ public class Preset {
 			item = list.get(get).split(":")[1];
 		}
 		if(location==1)
-		gui.setItem(12, GetItemStack(item));
+		gui.setItem(12, CommonlyWay.GetItemStack(item));
 		else
 		if(location==2)
-		gui.setItem(13, GetItemStack(item));
+		gui.setItem(13, CommonlyWay.GetItemStack(item));
 		else
 		if(location==3)
-		gui.setItem(14, GetItemStack(item));
+		gui.setItem(14, CommonlyWay.GetItemStack(item));
 		else
 		if(location==4)
-		gui.setItem(21, GetItemStack(item));
+		gui.setItem(21, CommonlyWay.GetItemStack(item));
 		else
 		if(location==5)
-		gui.setItem(22, GetItemStack(item));
+		gui.setItem(22, CommonlyWay.GetItemStack(item));
 		else
 		if(location==6)
-		gui.setItem(23, GetItemStack(item));
+		gui.setItem(23, CommonlyWay.GetItemStack(item));
 		else
 		if(location==7)
-		gui.setItem(30, GetItemStack(item));
+		gui.setItem(30, CommonlyWay.GetItemStack(item));
 		else
 		if(location==8)
-		gui.setItem(31, GetItemStack(item));
+		gui.setItem(31, CommonlyWay.GetItemStack(item));
 		else
 		if(location==9)
-		gui.setItem(32, GetItemStack(item));
+		gui.setItem(32, CommonlyWay.GetItemStack(item));
 		number++;
 		location++;
         }
@@ -206,31 +206,31 @@ public class Preset {
 			item = list.get(get).split(":")[1];
 		}
 		if(location==1)
-		gui.setItem(12, GetItemStack(item));
+		gui.setItem(12, CommonlyWay.GetItemStack(item));
 		else
 		if(location==2)
-		gui.setItem(13, GetItemStack(item));
+		gui.setItem(13, CommonlyWay.GetItemStack(item));
 		else
 		if(location==3)
-		gui.setItem(14, GetItemStack(item));
+		gui.setItem(14, CommonlyWay.GetItemStack(item));
 		else
 		if(location==4)
-		gui.setItem(21, GetItemStack(item));
+		gui.setItem(21, CommonlyWay.GetItemStack(item));
 		else
 		if(location==5)
-		gui.setItem(22, GetItemStack(item));
+		gui.setItem(22, CommonlyWay.GetItemStack(item));
 		else
 		if(location==6)
-		gui.setItem(23, GetItemStack(item));
+		gui.setItem(23, CommonlyWay.GetItemStack(item));
 		else
 		if(location==7)
-		gui.setItem(30, GetItemStack(item));
+		gui.setItem(30, CommonlyWay.GetItemStack(item));
 		else
 		if(location==8)
-		gui.setItem(31, GetItemStack(item));
+		gui.setItem(31, CommonlyWay.GetItemStack(item));
 		else
 		if(location==9)
-		gui.setItem(32, GetItemStack(item));
+		gui.setItem(32, CommonlyWay.GetItemStack(item));
 		number++;
 		location++;
         }
@@ -276,7 +276,7 @@ public class Preset {
 			item = list.get(get).split(":")[1];
 		}
 		get = random.nextInt(45);
-		gui.setItem(get, GetItemStack(item));
+		gui.setItem(get, CommonlyWay.GetItemStack(item));
 		
 	    player.openInventory(gui);
 	}
@@ -322,7 +322,7 @@ public class Preset {
 		}
 		Preset.location=get;
 		get = random.nextInt(45);
-		gui.setItem(get, GetItemStack(item));
+		gui.setItem(get, CommonlyWay.GetItemStack(item));
 		
         player.openInventory(gui);
 	}
@@ -370,7 +370,7 @@ public class Preset {
 		while(location.size()!=0&&location.contains(get)) {
 			get = random.nextInt(45);
 		}
-		gui.setItem(get, GetItemStack(item));
+		gui.setItem(get, CommonlyWay.GetItemStack(item));
 		location.add(get);
 		number++;
         }
@@ -423,7 +423,7 @@ public class Preset {
 		while(location.size()!=0&&location.contains(get)) {
 			get = random.nextInt(45);
 		}
-		gui.setItem(get, GetItemStack(item));
+		gui.setItem(get, CommonlyWay.GetItemStack(item));
 		location.add(get);
 		number++;
         }
@@ -467,7 +467,7 @@ public class Preset {
 			item = list.get(get).split(":")[1];
 		}
 		get = random.nextInt(5);
-		gui.setItem(4+get*9, GetItemStack(item));
+		gui.setItem(4+get*9, CommonlyWay.GetItemStack(item));
 		
 	    player.openInventory(gui);
 	}
@@ -509,7 +509,7 @@ public class Preset {
 			Preset.location=get;
 		}
 		get = random.nextInt(5);
-		gui.setItem(4+get*9, GetItemStack(item));
+		gui.setItem(4+get*9, CommonlyWay.GetItemStack(item));
 		
 	    player.openInventory(gui);
 	}
@@ -556,7 +556,7 @@ public class Preset {
 				item = list.get(get).split(":")[1];
 			}
 			Preset.location=get;
-			gui.setItem(number-1+9*location, GetItemStack(item));
+			gui.setItem(number-1+9*location, CommonlyWay.GetItemStack(item));
 			number++;
 		    }
 		    player.openInventory(gui);
@@ -602,7 +602,7 @@ public class Preset {
 				get = random.nextInt(54);
 				item = list.get(get).split(":")[1];
 			}
-			gui.setItem(number-1+9*location, GetItemStack(item));
+			gui.setItem(number-1+9*location, CommonlyWay.GetItemStack(item));
 			number++;
 		    }
 			
@@ -693,7 +693,7 @@ public class Preset {
 					a++;
 					continue;
 				}
-				stack = GetItemStack(item);
+				stack = CommonlyWay.GetItemStack(item);
 				ItemMeta stackdata = stack.getItemMeta();
 				lore.add("§a又没抽中我，看我干什么");
 				stackdata.setLore(lore);
@@ -719,7 +719,7 @@ public class Preset {
 				get = random.nextInt(size);
 				item = list.get(get).split(":")[1];
 			}
-			ItemStack items = GetItemStack(item);
+			ItemStack items = CommonlyWay.GetItemStack(item);
 			
 			gui.setItem(Integer.parseInt(lists.get(get).split(":")[0]),items);
 			
@@ -822,7 +822,7 @@ public class Preset {
 					a++;
 					continue;
 				}
-				stack = GetItemStack(item);
+				stack = CommonlyWay.GetItemStack(item);
 				ItemMeta stackdata = stack.getItemMeta();
 				lore.add("§a又没抽中我，看我干什么");
 				stackdata.setLore(lore);
@@ -849,7 +849,7 @@ public class Preset {
 				item = list.get(get).split(":")[1];
 			}
 			Preset.location=get;
-			gui.setItem(Integer.parseInt(lists.get(get).split(":")[0]), GetItemStack(item));
+			gui.setItem(Integer.parseInt(lists.get(get).split(":")[0]), CommonlyWay.GetItemStack(item));
 			
 			if(Integer.parseInt(lists.get(get).split(":")[0])!=8&&Integer.parseInt(lists.get(get).split(":")[0])!=17&&Integer.parseInt(lists.get(get).split(":")[0])!=26&&Integer.parseInt(lists.get(get).split(":")[0])!=35&&Integer.parseInt(lists.get(get).split(":")[0])!=44&&Integer.parseInt(lists.get(get).split(":")[0])!=53) {
 				gui.setItem(Integer.parseInt(lists.get(get).split(":")[0])+1, glasss);
@@ -914,76 +914,76 @@ public class Preset {
 			
 			if(a==1) {
 			if(0+start==9) {
-				gui.setItem(0, GetItemStack(item));
+				gui.setItem(0, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(0+start, GetItemStack(item));
+			gui.setItem(0+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==2) {
 			if(9+start==18) {
-				gui.setItem(9, GetItemStack(item));
+				gui.setItem(9, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(9+start, GetItemStack(item));
+			gui.setItem(9+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==3) {
 			if(10+start==18) {
-				gui.setItem(9, GetItemStack(item));
+				gui.setItem(9, CommonlyWay.GetItemStack(item));
 			}else if(10+start==19) {
-				gui.setItem(10, GetItemStack(item));
+				gui.setItem(10, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(10+start, GetItemStack(item));
+			gui.setItem(10+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==4) {
 			if(18+start==27) {
-				gui.setItem(18, GetItemStack(item));
+				gui.setItem(18, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(18+start, GetItemStack(item));
+			gui.setItem(18+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==5) {
 			if(19+start==27) {
-				gui.setItem(18, GetItemStack(item));
+				gui.setItem(18, CommonlyWay.GetItemStack(item));
 			}else if(19+start==28) {
-				gui.setItem(19, GetItemStack(item));
+				gui.setItem(19, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(19+start, GetItemStack(item));
+			gui.setItem(19+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==6) {
 			if(20+start==27) {
-				gui.setItem(18, GetItemStack(item));
+				gui.setItem(18, CommonlyWay.GetItemStack(item));
 			}else if(20+start==28) {
-				gui.setItem(19, GetItemStack(item));
+				gui.setItem(19, CommonlyWay.GetItemStack(item));
 			}else if(20+start==29) {
-				gui.setItem(20, GetItemStack(item));
+				gui.setItem(20, CommonlyWay.GetItemStack(item));
 				abc=true;
 			}else 
-			gui.setItem(20+start, GetItemStack(item));
+			gui.setItem(20+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==7) {
 			if(27+start==36) {
-				gui.setItem(27, GetItemStack(item));
+				gui.setItem(27, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(27+start, GetItemStack(item));
+			gui.setItem(27+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==8) {
 			if(28+start==36) {
-				gui.setItem(27, GetItemStack(item));
+				gui.setItem(27, CommonlyWay.GetItemStack(item));
 			}else if(28+start==37) {
-				gui.setItem(28, GetItemStack(item));
+				gui.setItem(28, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(28+start, GetItemStack(item));
+			gui.setItem(28+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==9) {
 			if(36+start==45) {
-				gui.setItem(36, GetItemStack(item));
+				gui.setItem(36, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(36+start, GetItemStack(item));
+			gui.setItem(36+start, CommonlyWay.GetItemStack(item));
 			}
 			a++;
 	        }
@@ -1040,75 +1040,75 @@ public class Preset {
 			
 			if(a==1) {
 			if(0+start==9) {
-				gui.setItem(0, GetItemStack(item));
+				gui.setItem(0, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(0+start, GetItemStack(item));
+			gui.setItem(0+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==2) {
 			if(9+start==18) {
-				gui.setItem(9, GetItemStack(item));
+				gui.setItem(9, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(9+start, GetItemStack(item));
+			gui.setItem(9+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==3) {
 			if(10+start==18) {
-				gui.setItem(9, GetItemStack(item));
+				gui.setItem(9, CommonlyWay.GetItemStack(item));
 			}else if(10+start==19) {
-				gui.setItem(10, GetItemStack(item));
+				gui.setItem(10, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(10+start, GetItemStack(item));
+			gui.setItem(10+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==4) {
 			if(18+start==27) {
-				gui.setItem(18, GetItemStack(item));
+				gui.setItem(18, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(18+start, GetItemStack(item));
+			gui.setItem(18+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==5) {
 			if(19+start==27) {
-				gui.setItem(18, GetItemStack(item));
+				gui.setItem(18, CommonlyWay.GetItemStack(item));
 			}else if(19+start==28) {
-				gui.setItem(19, GetItemStack(item));
+				gui.setItem(19, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(19+start, GetItemStack(item));
+			gui.setItem(19+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==6) {
 			if(20+start==27) {
-				gui.setItem(18, GetItemStack(item));
+				gui.setItem(18, CommonlyWay.GetItemStack(item));
 			}else if(20+start==28) {
-				gui.setItem(19, GetItemStack(item));
+				gui.setItem(19, CommonlyWay.GetItemStack(item));
 			}else if(20+start==29) {
-				gui.setItem(20, GetItemStack(item));
+				gui.setItem(20, CommonlyWay.GetItemStack(item));
 			}else 
-			gui.setItem(20+start, GetItemStack(item));
+			gui.setItem(20+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==7) {
 			if(27+start==36) {
-				gui.setItem(27, GetItemStack(item));
+				gui.setItem(27, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(27+start, GetItemStack(item));
+			gui.setItem(27+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==8) {
 			if(28+start==36) {
-				gui.setItem(27, GetItemStack(item));
+				gui.setItem(27, CommonlyWay.GetItemStack(item));
 			}else if(28+start==37) {
-				gui.setItem(28, GetItemStack(item));
+				gui.setItem(28, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(28+start, GetItemStack(item));
+			gui.setItem(28+start, CommonlyWay.GetItemStack(item));
 			}
 			else
 			if(a==9) {
 			if(36+start==45) {
-				gui.setItem(36, GetItemStack(item));
+				gui.setItem(36, CommonlyWay.GetItemStack(item));
 			}else
-			gui.setItem(36+start, GetItemStack(item));
+			gui.setItem(36+start, CommonlyWay.GetItemStack(item));
 			}
 			a++;
 	        }
@@ -1165,7 +1165,7 @@ public class Preset {
 				get = random.nextInt(54);
 				item = list.get(get).split(":")[1];
 			}
-			gui.setItem(location, GetItemStack(item));
+			gui.setItem(location, CommonlyWay.GetItemStack(item));
 			
 			if(law.get(player.getName())) {
 				location++;
@@ -1224,7 +1224,7 @@ public class Preset {
 				item = list.get(get).split(":")[1];
 			}
 			Preset.location=get;
-			gui.setItem(location, GetItemStack(item));
+			gui.setItem(location, CommonlyWay.GetItemStack(item));
 			
 			law.remove(player.getName());
 			number.remove(player.getName());
@@ -1283,7 +1283,7 @@ public class Preset {
 					item = list.get(get).split(":")[1];
 				}
 //			    Bukkit.broadcastMessage(number.get(player.getName())+"+"+a+"="+(location+a));
-				gui.setItem(location+a, GetItemStack(item));
+				gui.setItem(location+a, CommonlyWay.GetItemStack(item));
 		    }
 		    
 			
@@ -1352,7 +1352,7 @@ public class Preset {
 					get = random.nextInt(54);
 					item = list.get(get).split(":")[1];
 				}
-				gui.setItem(location+a, GetItemStack(item));
+				gui.setItem(location+a, CommonlyWay.GetItemStack(item));
 		    }
 
 			
@@ -1414,7 +1414,7 @@ public class Preset {
 		    int location = number.get(player.getName());
 		    int b = 0;
 		    for(int a:item.get(player.getName())) {
-		    	ItemStack item = GetItemStack(list.get(a).split(":")[1]);
+		    	ItemStack item = CommonlyWay.GetItemStack(list.get(a).split(":")[1]);
 		    	ItemMeta itemdata = item.getItemMeta();
 				Random random = new Random();
 				int color = (short) random.nextInt(9)+1;
@@ -1502,7 +1502,7 @@ public class Preset {
 		    int b = 0;
 		    int location = number.get(player.getName());
 		    for(int a:item.get(player.getName())) {
-		    	ItemStack item = GetItemStack(list.get(a).split(":")[1]);
+		    	ItemStack item = CommonlyWay.GetItemStack(list.get(a).split(":")[1]);
 		    	gui.setItem(9+b, item);
 		    	b++;
 		    }
@@ -1575,7 +1575,7 @@ public class Preset {
 		    int location = number.get(player.getName());
 		    int b = 0;
 		    for(int a:item.get(player.getName())) {
-		    	ItemStack item = GetItemStack(list.get(a).split(":")[1]);
+		    	ItemStack item = CommonlyWay.GetItemStack(list.get(a).split(":")[1]);
 		    	ItemMeta itemdata = item.getItemMeta();
 		        data.setDisplayName("§f抽奖§d中");
 		        lore.add("§f抽奖一时爽§a，§2一直抽奖一直爽");
@@ -1659,7 +1659,7 @@ public class Preset {
 		    int b = 0;
 		    int location = number.get(player.getName());
 		    for(int a:item.get(player.getName())) {
-		    	ItemStack item = GetItemStack(list.get(a).split(":")[1]);
+		    	ItemStack item = CommonlyWay.GetItemStack(list.get(a).split(":")[1]);
 		    	if(b!=location) {
 					ItemMeta stackdata = item.getItemMeta();
 					lore.add("§a又没抽中我，看我干什么");
@@ -1690,15 +1690,5 @@ public class Preset {
 	        item.remove(player.getName());
 	        number.remove(player.getName());
 		    player.openInventory(gui);
-		}
-
-		//		String转ItemStack
-		public static ItemStack GetItemStack(String data) {
-			try {
-				return new StreamSerializer().deserializeItemStack(data);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
 		}
 }

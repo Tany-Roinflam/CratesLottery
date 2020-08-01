@@ -9,5 +9,6 @@
 			<attribute name="javadoc_location" value="file:/G:/plugin/API/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="G:/plugin/Mohist-1.12.2-b704e64-server.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

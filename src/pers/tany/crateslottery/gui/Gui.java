@@ -10,8 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.comphenix.protocol.utility.StreamSerializer;
-
+import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.Other;
 
 public class Gui {
@@ -293,12 +292,14 @@ public class Gui {
 		ItemStack nineinfo = new ItemStack(Material.BOOK);
 		ItemStack clear = new ItemStack(Material.LAVA_BUCKET);
 		ItemStack backup = new ItemStack(Material.WATER_BUCKET);
+		ItemStack check = new ItemStack(Material.QUARTZ);
 		ItemStack unpackanytime = new ItemStack(Material.TRIPWIRE_HOOK);
 		
 		ItemMeta setcratedata = setcrate.getItemMeta();
 		ItemMeta ninesetcratedata = ninesetcrate.getItemMeta();
 		ItemMeta infodata = info.getItemMeta();
 		ItemMeta nineinfodata = nineinfo.getItemMeta();
+		ItemMeta checkdata = check.getItemMeta();
 		ItemMeta cleardata = clear.getItemMeta();
 		ItemMeta backupdata = clear.getItemMeta();
 		ItemMeta unpackanytimedata = unpackanytime.getItemMeta();
@@ -347,6 +348,12 @@ public class Gui {
         unpackanytime.setItemMeta(unpackanytimedata);
         lore.clear();
         
+        checkdata.setDisplayName("§a修改这个抽奖箱是否可以查看奖池内容");
+        lore.add("§2当前状态："+Other.data.getString("Info."+name+".check").replace("true", "§a启用").replace("false", "§c未启用"));
+        checkdata.setLore(lore);
+        check.setItemMeta(checkdata);
+        lore.clear();
+        
         gui.setItem(0, color);
         gui.setItem(2, way);
         gui.setItem(4, set);
@@ -359,6 +366,7 @@ public class Gui {
         gui.setItem(23, clear);
         gui.setItem(24, backup);
         gui.setItem(26, unpackanytime);
+        gui.setItem(27, check);
         
         for(int a=9;a<=17;a++) {
         	gui.setItem(a, frame);
@@ -688,7 +696,7 @@ public class Gui {
 				a++;
 				continue;
 			}
-			stack = GetItemStack(item);
+			stack = CommonlyWay.GetItemStack(item);
 			gui.setItem(b, stack);
 			a++;
 		}
@@ -753,31 +761,11 @@ public class Gui {
 				a++;
 				continue;
 			}
-			stack = GetItemStack(item);
+			stack = CommonlyWay.GetItemStack(item);
 			gui.setItem(b, stack);
 			a++;
 		}
 		a=0;
 	    player.openInventory(gui);
 	}
-
-//		ItemStack转String
-		public String GetItemData(ItemStack item) {
-			String a;
-			try {
-			    a = new StreamSerializer().serializeItemStack(item);
-			} catch (Exception e) {
-			    a = null;
-			}
-			return a;
-		}
-//		String转ItemStack
-		public static ItemStack GetItemStack(String data) {
-			try {
-				return new StreamSerializer().deserializeItemStack(data);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
 }

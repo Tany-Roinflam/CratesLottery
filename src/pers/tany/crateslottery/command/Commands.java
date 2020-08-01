@@ -17,8 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
-import com.comphenix.protocol.utility.StreamSerializer;
 
+import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.Main;
 import pers.tany.crateslottery.Other;
 import pers.tany.crateslottery.gui.Gui;
@@ -26,6 +26,9 @@ import pers.tany.crateslottery.task.NineWingTask;
 import pers.tany.crateslottery.task.NineWingTaskS;
 import pers.tany.crateslottery.task.WingTask;
 import pers.tany.crateslottery.task.WingTaskS;
+import red.mohist.api.PlayerAPI;
+import red.mohist.api.ServerAPI;
+import red.mohist.forge.MohistMod;
 
 public class Commands implements CommandExecutor {
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
@@ -128,7 +131,7 @@ public class Commands implements CommandExecutor {
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
-						  Other.data.set("CrateItem", GetItemData(item));
+						  Other.data.set("CrateItem", CommonlyWay.GetItemData(item));
 					  		try {
 					  			Other.data.save(file1);
 					  		} catch (IOException e) {
@@ -167,7 +170,7 @@ public class Commands implements CommandExecutor {
 						  item.setItemMeta(meta);
 						  int amount = item.getAmount();
 						  item.setAmount(1);
-						  Other.data.set("CrateKey", GetItemData(item));
+						  Other.data.set("CrateKey", CommonlyWay.GetItemData(item));
 					  		try {
 					  			Other.data.save(file1);
 					  		} catch (IOException e) {
@@ -228,6 +231,10 @@ public class Commands implements CommandExecutor {
 				String name = args[1];
 				if(!player.hasPermission("cl.showall")&&!player.hasPermission("cl.show."+name)) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowMessage:").replace("[crate]", name)));
+					return true;
+				}
+				if(!Other.data.getBoolean("Info."+name+".check")) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
 					return true;
 				}
     			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
@@ -487,7 +494,7 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage("§c未设置箱子");
 							return true;
 						}
-						ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
+						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateItem"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
@@ -524,7 +531,7 @@ public class Commands implements CommandExecutor {
 							return true;
 						}
 						a=0;
-						ItemStack item = GetItemStack(Other.data.getString("CrateKey"));
+						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
@@ -570,6 +577,10 @@ public class Commands implements CommandExecutor {
 				}
 				Player player = Bukkit.getPlayer(args[2]);
 				String name = args[1];
+				if(!Other.data.getBoolean("Info."+name+".check")) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
+					return true;
+				}
     			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
 				Gui.showcrate(player, name);
 				return true;
@@ -802,7 +813,7 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 					Player player = Bukkit.getServer().getPlayer(args[2]);
-					a=0;						ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
+					a=0;						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateItem"));
 					ItemMeta meta = item.getItemMeta();
 					meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 					item.setItemMeta(meta);
@@ -840,7 +851,7 @@ public class Commands implements CommandExecutor {
 						}
 						Player player = Bukkit.getServer().getPlayer(args[2]);
 						a=0;
-						ItemStack item = GetItemStack(Other.data.getString("CrateKey"));
+						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
@@ -996,7 +1007,7 @@ public class Commands implements CommandExecutor {
 						}
 						Player player = Bukkit.getServer().getPlayer(args[2]);
 						a=0;
-						ItemStack item = GetItemStack(Other.data.getString("CrateKey"));
+						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
@@ -1044,7 +1055,7 @@ public class Commands implements CommandExecutor {
 					}
 					Player player = Bukkit.getServer().getPlayer(args[2]);
 					a=0;						
-					ItemStack item = GetItemStack(Other.data.getString("CrateItem"));
+					ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateItem"));
 					ItemMeta meta = item.getItemMeta();
 					meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 					item.setItemMeta(meta);
@@ -1139,24 +1150,5 @@ public class Commands implements CommandExecutor {
 			sender.sendMessage("§cNull");
 			return true;
 		}
-	}
-//	ItemStack转String
-	public String GetItemData(ItemStack item) {
-		String a;
-		try {
-		    a = new StreamSerializer().serializeItemStack(item);
-		} catch (Exception e) {
-		    a = null;
-		}
-		return a;
-	}
-//	String转ItemStack
-	public ItemStack GetItemStack(String data) {
-		try {
-			return new StreamSerializer().deserializeItemStack(data);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

@@ -25,11 +25,10 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import com.comphenix.protocol.utility.StreamSerializer;
 
 import pers.tany.crateslottery.Main;
 import pers.tany.crateslottery.Other;
-import pers.tany.crateslottery.Way;
+import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.conversation.Name;
 import pers.tany.crateslottery.gui.Gui;
 import pers.tany.crateslottery.task.NineWingTask;
@@ -98,7 +97,7 @@ public class Event implements Listener  {
 		if(evt.isCancelled())
 			return;
 		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
-			if(Way.getPlaceHand(evt)) {
+			if(CommonlyWay.getPlaceHand(evt)) {
 				return;
 			}
 		}
@@ -133,7 +132,7 @@ public class Event implements Listener  {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent evt) {
 		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
-			if(Way.getInteractHand(evt)) {
+			if(CommonlyWay.getInteractHand(evt)) {
 				return;
 			}
 		}
@@ -180,7 +179,13 @@ public class Event implements Listener  {
 			if(Other.data.getBoolean("Info."+name+".unpackanytime")) {
 				if(evt.getAction().equals(Action.LEFT_CLICK_AIR)) {
 					if(!(evt.getPlayer().hasPermission("cl.checkall")||evt.getPlayer().hasPermission("cl.check."+name))) {
+						evt.setCancelled(true);
 						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoCheckMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+						return;
+					}
+					if(!Other.data.getBoolean("Info."+name+".check")) {
+						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
+						evt.setCancelled(true);
 						return;
 					}
         			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
@@ -423,6 +428,12 @@ public class Event implements Listener  {
 	    			if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
 						if(!(evt.getPlayer().hasPermission("cl.checkall")||evt.getPlayer().hasPermission("cl.check."+name))) {
 							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoCheckMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
+							evt.setCancelled(true);
+							return;
+						}
+						if(!Other.data.getBoolean("Info."+name+".check")) {
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
+							evt.setCancelled(true);
 							return;
 						}
 	        			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
@@ -1136,6 +1147,33 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
+			if(player.getCurrentItem().getItemMeta().getDisplayName().startsWith("§a修改这个抽奖箱是否可以查看奖池内容")) {
+				if(Other.data.getBoolean("Info."+name+".check")) {
+					Other.data.set("Info."+name+".check", false);
+					p.sendMessage("§2成功修改为：§c未启用");
+				}
+				else {
+					Other.data.set("Info."+name+".check", true);
+					p.sendMessage("§2成功修改为：§a启用");
+				}
+		  		try {
+		  			Other.data.save(file);
+		  		} catch (IOException e) {
+		  			e.printStackTrace();
+	        	}
+		  		for(Player players:Bukkit.getOnlinePlayers()) {
+		  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+		  				String titles = players.getOpenInventory().getTitle();
+		  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+		  				players.closeInventory();
+		  				Gui.cratelist(players, type);
+		  			} else if(players.getOpenInventory().getTitle().equals(title)) {
+	  					players.closeInventory();
+	  					Gui.choose(players, name);
+		  			}
+		  		}
+		  		return;
+			}
 			if(player.getCurrentItem().getItemMeta().getDisplayName().equals("§c删除这个箱子")) {
 				Other.data.set("Info."+name, null);
 		  		Other.data.set("backup."+name, null);
@@ -1172,91 +1210,72 @@ public class Event implements Listener  {
 	}
 
 	@EventHandler
-public void Close(InventoryCloseEvent evt) {
-    if(evt.getInventory().getTitle().startsWith("§2抽奖箱")) {
-    	String title = ChatColor.stripColor(evt.getInventory().getTitle().replace("§2抽奖箱", "").replace("§2设置", ""));
-    	ArrayList<String> data = new ArrayList<String>();
-  		int a=0;
-  		while(a<54) {
-  			String item = null;
-  			if(evt.getInventory().getItem(a)==null||evt.getInventory().getItem(a).getType()==Material.AIR)
-  			item = "null";
-  			else
-  			item = GetItemData(evt.getInventory().getItem(a));
-  			data.add(a+":"+item);
-  			a++;
-  		}
-  		a=0;
-  		List<String> exist = Other.data.getStringList("Info."+title+".data");
-  		if(exist.size()==0) {
-  			Other.data.set("Info."+title+".color", "§f");
-  			Other.data.set("Info."+title+".animation", true);
-  			Other.data.set("Info."+title+".nineanimation", true);
-  			Other.data.set("Info."+title+".announcement", "无");
-  			Other.data.set("Info."+title+".nine", "无");
-  			Other.data.set("Info."+title+".number", -1);
-  			Other.data.set("Info."+title+".cd", -1);
-  			Other.data.set("Info."+title+".ninenumber", -1);
-  			Other.data.set("Info."+title+".ninecd", -1);
-  			Other.data.set("Info."+title+".type", "normal");
-  			Other.data.set("Info."+title+".ninetype", "normal");
-  			Other.data.set("Info."+title+".clear", false);
-  			Other.data.set("Info."+title+".info", false);
-  			Other.data.set("Info."+title+".nineinfo", false);
-  			Other.data.set("Info."+title+".backup", false);
-  			Other.data.set("Info."+title+".unpackanytime", false);
-  			crate = null;
-  		}
-  		Other.data.set("backup."+title, data);
-  		Other.data.set("Info."+title+".data", data);
-  		try {
-  			Other.data.save(file);
-  		} catch (IOException e) {
-  			e.printStackTrace();
-    	}
-  		Player player = (Player) evt.getPlayer();
-  		player.sendMessage("§a保存成功");
-  		for(Player players:Bukkit.getOnlinePlayers()) {
-  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
-  				String titles = players.getOpenInventory().getTitle();
-  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
-  				players.closeInventory();
-  				Gui.cratelist(players, type);
+	public void Close(InventoryCloseEvent evt) {
+	    if(evt.getInventory().getTitle().startsWith("§2抽奖箱")) {
+	    	String title = ChatColor.stripColor(evt.getInventory().getTitle().replace("§2抽奖箱", "").replace("§2设置", ""));
+	    	ArrayList<String> data = new ArrayList<String>();
+	  		int a=0;
+	  		while(a<54) {
+	  			String item = null;
+	  			if(evt.getInventory().getItem(a)==null||evt.getInventory().getItem(a).getType()==Material.AIR)
+	  			item = "null";
+	  			else
+	  			item = CommonlyWay.GetItemData(evt.getInventory().getItem(a));
+	  			data.add(a+":"+item);
+	  			a++;
+	  		}
+	  		a=0;
+	  		List<String> exist = Other.data.getStringList("Info."+title+".data");
+	  		if(exist.size()==0) {
+	  			Other.data.set("Info."+title+".color", "§f");
+	  			Other.data.set("Info."+title+".animation", true);
+	  			Other.data.set("Info."+title+".nineanimation", true);
+	  			Other.data.set("Info."+title+".announcement", "无");
+	  			Other.data.set("Info."+title+".nine", "无");
+	  			Other.data.set("Info."+title+".number", -1);
+	  			Other.data.set("Info."+title+".cd", -1);
+	  			Other.data.set("Info."+title+".ninenumber", -1);
+	  			Other.data.set("Info."+title+".ninecd", -1);
+	  			Other.data.set("Info."+title+".type", "normal");
+	  			Other.data.set("Info."+title+".ninetype", "normal");
+	  			Other.data.set("Info."+title+".clear", false);
+	  			Other.data.set("Info."+title+".info", false);
+	  			Other.data.set("Info."+title+".nineinfo", false);
+	  			Other.data.set("Info."+title+".backup", false);
+	  			Other.data.set("Info."+title+".unpackanytime", false);
+	  			Other.data.set("Info."+title+".check", true);
+	  			crate = null;
+	  		}
+	  		Other.data.set("backup."+title, data);
+	  		Other.data.set("Info."+title+".data", data);
+	  		try {
+	  			Other.data.save(file);
+	  		} catch (IOException e) {
+	  			e.printStackTrace();
+	    	}
+	  		Player player = (Player) evt.getPlayer();
+	  		player.sendMessage("§a保存成功");
+	  		for(Player players:Bukkit.getOnlinePlayers()) {
+	  			if(players.getOpenInventory().getTitle().startsWith("§a抽奖箱§2列表§5：§d第§e")) {
+	  				String titles = players.getOpenInventory().getTitle();
+	  				int type = Integer.parseInt(titles.replace("§a抽奖箱§2列表§5：§d第§e", "").replace("§d页", ""));
+	  				players.closeInventory();
+	  				Gui.cratelist(players, type);
+				}
 			}
-		}
-    	return;
-    }
-    if(evt.getInventory().getTitle().contains("§c九连开箱结果")||evt.getInventory().getTitle().contains("§a开箱结果")) {
-    	for(ItemStack item:evt.getInventory().getContents()) {
-    		if(item==null||item.getType() == Material.AIR) {
-    			continue;
-    		}
-    		if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName()&&(item.getItemMeta().getDisplayName().contains("领取你的奖励吧！")||item.getItemMeta().getDisplayName().equals("§2仅展示")||item.getItemMeta().getDisplayName().contains("领取你的战利品吧！"))) {
-    			continue;
-    		}
-    		Way.GiveItem((Player) evt.getPlayer(), item);
-    	}
-    	return;
-    }
-}
-
-//	ItemStack转String
-	public String GetItemData(ItemStack item) {
-		String a;
-		try {
-		    a = new StreamSerializer().serializeItemStack(item);
-		} catch (Exception e) {
-		    a = null;
-		}
-		return a;
-	}
-//	String转ItemStack
-	public ItemStack GetItemStack(String data) {
-		try {
-			return new StreamSerializer().deserializeItemStack(data);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	    	return;
+	    }
+	    if(evt.getInventory().getTitle().contains("§c九连开箱结果")||evt.getInventory().getTitle().contains("§a开箱结果")) {
+	    	for(ItemStack item:evt.getInventory().getContents()) {
+	    		if(item==null||item.getType() == Material.AIR) {
+	    			continue;
+	    		}
+	    		if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName()&&(item.getItemMeta().getDisplayName().contains("领取你的奖励吧！")||item.getItemMeta().getDisplayName().equals("§2仅展示")||item.getItemMeta().getDisplayName().contains("领取你的战利品吧！"))) {
+	    			continue;
+	    		}
+	    		CommonlyWay.GiveItem((Player) evt.getPlayer(), item);
+	    	}
+	    	return;
+	    }
 	}
 }
