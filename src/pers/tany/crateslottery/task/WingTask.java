@@ -10,16 +10,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import pers.tany.crateslottery.CommonlyWay;
+import pers.tany.crateslottery.Main;
 import pers.tany.crateslottery.Other;
 import pers.tany.crateslottery.gui.Preset;
 
 public class WingTask extends BukkitRunnable  {
-    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-    File file1=new File(config.getDataFolder(),"data.yml");
 	int a=0;
 	int b=0;
 	int c=0;
@@ -36,7 +34,11 @@ public class WingTask extends BukkitRunnable  {
 			c=0;
 		c++;
 		if(a>=b) {
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			}
 			if(Other.data.getString("Info."+Crate+".type").equals("normal"))
 				Preset.wing(player, Crate);
 			else if(Other.data.getString("Info."+Crate+".type").equals("random"))
@@ -100,8 +102,9 @@ public class WingTask extends BukkitRunnable  {
 				  		}
 				  		a=0;
 			  		}
+			  	    File file=new File(Main.plugin.getDataFolder(),"data.yml");
 			  		try {
-			  			Other.data.save(file1);
+			  			Other.data.save(file);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 			    	}
@@ -111,10 +114,19 @@ public class WingTask extends BukkitRunnable  {
 			}
 			return;
 		}
-		if(Other.config.getBoolean("ChangeSoundTimbre"))
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), c);
-		else
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+		if(Other.config.getBoolean("ChangeSoundTimbre")) {
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), Other.config.getInt("SoundSize"), c);
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("ORB_PICKUP"), Other.config.getInt("SoundSize"), c);
+			}
+		} else {
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			}
+		}
 		a++;
 		if(Other.data.getString("Info."+Crate+".type").equals("repeatedly")||Other.data.getString("Info."+Crate+".type").equals("show")) {
 			Random random = new Random();

@@ -3,8 +3,12 @@ package pers.tany.crateslottery;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -14,8 +18,6 @@ import org.bukkit.inventory.ItemStack;
 import com.comphenix.protocol.utility.StreamSerializer;
 
 public class CommonlyWay {
-	
-		static boolean again = true;
 //		命令判断是否为OP，不是则true
 		public static boolean OpUseCommand(CommandSender player) {
 			if(player.isOp()) {
@@ -26,15 +28,7 @@ public class CommonlyWay {
 			
 		}
 		
-//		判断玩家是否为OP，不是则true
-		public static boolean OpUse(Player player) {
-			if(player.isOp())
-			return false;
-			else
-			return true;
-		}
-		
-//		命令判断是否为控制台，不是则true
+//		命令判断是否为控制台，是则true
 		public static boolean ConsoleUse(CommandSender sender) {
 			if(sender instanceof Player){
 				return false;
@@ -176,51 +170,75 @@ public class CommonlyWay {
 //					}
 //				}	
 				
-//				遍历数组，替换数组字符串
-				public static java.util.List<String> ListReplace(java.util.List<String> list,String WasReplaced,String replace){
-					ArrayList<String> news = new ArrayList<>();
-					for(String s:list) {
-						news.add(s.replace(WasReplaced, replace));
-					}
-					return news;
+//			遍历数组，替换数组字符串
+			public static java.util.List<String> ListReplace(java.util.List<String> list,String WasReplaced,String replace){
+				ArrayList<String> news = new ArrayList<>();
+				for(String s:list) {
+					news.add(s.replace(WasReplaced, replace));
 				}
+				return news;
+			}
+			
+//	  		判断交互手
+	  		public static boolean getInteractHand(PlayerInteractEvent evt)
+	  		{
+	  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
+				return true;
+	  			else
+	  			return false;
+	  		}
+	  		
+//	  		判断放置手
+	  		public static boolean getPlaceHand(BlockPlaceEvent evt)
+	  		{
+	  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
+				return true;
+	  			else
+	  			return false;
+	  		}
+	  		
+//			把几率%转化为真正的百分比
+			public static double PercentageNumber(String percentage) {
+				double a = 0;
+				try {
+					a = Double.parseDouble(percentage.replace("%", ""))/100;
+				} catch (Exception b) {
+					return 9.99;
+				}
+				return a;
+			}
+			
+//			把几率%转化为真正的百分比,并且进行乘法计算
+			public static double Percentage(double number,String percentage) {
+				try {
+					number = number * (Double.parseDouble(percentage.replace("%", ""))/100);
+				} catch (Exception a) {
+					return 9.99;
+				}
+				return number;
+			}
+			
+//			把玩家传送到这个区块位置
+			public static void  TelePortChunk(Player player,World world,Chunk chunk) {
+				Location location = player.getLocation();
+				location.setWorld(world);
+				double x = chunk.getX()*16;
+				double z = chunk.getZ()*16;
+				location.setX(x);
+				location.setZ(z);
+				location.setY(world.getHighestBlockAt(location).getY());
+				player.teleport(location);
+			}
+			
+//			返回这个世界的玩家数
+			public static int PlayerNumber(World world) {
+				int i = 0;
+				for(Entity entity:world.getEntities()) {
+					if(entity instanceof Player) {
+						i++;
+					}
+				}
+				return i;
+			}
 				
-//		  		判断交互手
-		  		public static boolean getInteractHand(PlayerInteractEvent evt)
-		  		{
-		  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
-					return true;
-		  			else
-		  			return false;
-		  		}
-		  		
-//		  		判断放置手
-		  		public static boolean getPlaceHand(BlockPlaceEvent evt)
-		  		{
-		  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
-					return true;
-		  			else
-		  			return false;
-		  		}
-		  		
-//				把几率%转化为真正的百分比
-				public static double PercentageNumber(String percentage) {
-					double a = 0;
-					try {
-						a = Double.parseDouble(percentage.replace("%", ""))/100;
-					} catch (Exception b) {
-						return 9.99;
-					}
-					return a;
-				}
-				
-//				把几率%转化为真正的百分比,并且进行乘法计算
-				public static double Percentage(double number,String percentage) {
-					try {
-						number = number * (Double.parseDouble(percentage.replace("%", ""))/100);
-					} catch (Exception a) {
-						return 9.99;
-					}
-					return number;
-				}
 }

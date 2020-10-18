@@ -1,6 +1,5 @@
 package pers.tany.crateslottery;
 
-import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,19 +10,12 @@ import pers.tany.crateslottery.placeholderapi.PlaceholderAPI;
 public class Main extends JavaPlugin{
 		public static Plugin plugin = null;
 		public void onEnable() {
-			
-			Bukkit.getConsoleSender().sendMessage("§a[Crates§2Lottery]§a插件已加载");
-		    if (!new File(getDataFolder(), "config.yml").exists()) 
-		    	saveDefaultConfig();
-		    
-		    if (!new File(getDataFolder(), "data.yml").exists())
-		    	saveResource("data.yml",false);
-		    
-		    if (!new File(getDataFolder(), "message.yml").exists())
-		    	saveResource("message.yml",false);
-		    
 		    plugin = this;
-		    getCommand("crateslottery").setExecutor(new Commands());
+			Bukkit.getConsoleSender().sendMessage("§a[Crates§2Lottery]§a插件已加载");
+			saveResource("config.yml",false);
+	    	saveResource("data.yml",false);
+	    	saveResource("message.yml",false);
+			new BasicLibrary();
 		    getCommand("cl").setExecutor(new Commands());
 		    getServer().getPluginManager().registerEvents(new Event(), this);
 	        new PlaceholderAPI(this).register();

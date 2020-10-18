@@ -25,7 +25,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
 			a=0;
 			b=0;
 			while(a<=35) {
-				if(player.getInventory().getItem(a)!=null&&player.getInventory().getItem(a).getTypeId()==id&&player.getInventory().getItem(a).getDurability()==durability) {
+				if(player.getInventory().getItem(a)!=null&&player.getInventory().getItem(a).getType().getId()==id&&player.getInventory().getItem(a).getDurability()==durability) {
 					b=b+player.getInventory().getItem(a).getAmount();
 				}
 				a++;

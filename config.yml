@@ -17,15 +17,6 @@ NineWingSpaceTime: 0.125
 #当玩家获得抽奖钥匙时，是否提示它？
 KeyMessage: true
 
-#声音名
-#默认声音支持1.9+
-#如果你版本是1.9以下，请把下面的注释解除，并且把上面两行注释掉
-#不然你后台会快乐到死
-SoundName: 'ENTITY_EXPERIENCE_ORB_PICKUP'
-SoundsName: 'ENTITY_PLAYER_LEVELUP'
-#SoundName: 'ORB_PICKUP'
-#SoundsName: 'LEVEL_UP'
-
 #音响
 SoundSize: 1
 #音色

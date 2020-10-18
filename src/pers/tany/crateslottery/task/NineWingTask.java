@@ -44,7 +44,11 @@ public class NineWingTask extends BukkitRunnable  {
     		else if(Other.data.getString("Info."+Crate+".ninetype").equals("show"))
         		Preset.showninewing(player, Crate);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), 2f, 2f);
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			}
 			a=0;
 			b=0;
 			cancel();
@@ -98,10 +102,19 @@ public class NineWingTask extends BukkitRunnable  {
 		    	a--;
 		    }
 		}
-		if(Other.config.getBoolean("ChangeSoundTimbre"))
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), c);
-		else
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundName")), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+		if(Other.config.getBoolean("ChangeSoundTimbre")) {
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), Other.config.getInt("SoundSize"), c);
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("ORB_PICKUP"), Other.config.getInt("SoundSize"), c);
+			}
+		} else {
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("ORB_PICKUP"), Other.config.getInt("SoundSize"), Other.config.getInt("SoundTimbre"));
+			}
+		}
 		if(Other.data.getString("Info."+Crate+".ninetype").equals("normal"))
 		Preset.ninewinging(player, Crate);
 		else if(Other.data.getString("Info."+Crate+".ninetype").equals("random"))

@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import pers.tany.crateslottery.BasicLibrary;
 import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.Other;
 
@@ -47,9 +48,9 @@ public class Gui {
 	public static void cratelist(Player player,Integer type) {
 		Inventory gui = Bukkit.createInventory(null, 54, "§a抽奖箱§2列表§5：§d第§e"+type+"§d页");
 		ItemStack chest = new ItemStack(Material.CHEST);
-		ItemStack xiaye = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack shangye = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack jieshao = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack xiaye = BasicLibrary.stainedglass.get(14);
+		ItemStack shangye = BasicLibrary.stainedglass.get(11);
+		ItemStack jieshao = BasicLibrary.stainedglass.get(1);
 		
 	    if(Other.data.getConfigurationSection("Info").getKeys(false).size()<(type-1)*45+1) {
 	    	if(type>1) {
@@ -57,9 +58,9 @@ public class Gui {
 	    		Gui.cratelist(player, --type);
 	    		return;
 	    	}else {
-	    	Gui.gui(player);
-	    	player.sendMessage("§c没有创建过任何箱子");
-	    	return;
+		    	Gui.gui(player);
+		    	player.sendMessage("§c没有创建过任何箱子");
+		    	return;
 	    	}
 	    }
 	    
@@ -72,21 +73,18 @@ public class Gui {
 	    
 	    abc.setDisplayName("§a下一页");
 	    lore.add("§c查看下一页");
-	    xiaye.setDurability((short) 14);
 	    abc.setLore(lore);
 	    xiaye.setItemMeta(abc);
 	    lore.clear();
 	    
 	    abc.setDisplayName("§a下一页");
 	    lore.add("§c返回下一页");
-	    shangye.setDurability((short) 11);
 	    abc.setLore(lore);
 	    shangye.setItemMeta(abc);
 	    lore.clear();
 	    
 	    abc.setDisplayName("§a这里是§b第§2"+type+"§b页！");
 	    lore.add("§a点击你要编辑的箱子");
-	    jieshao.setDurability((short) 1);
 	    abc.setLore(lore);
 	    jieshao.setItemMeta(abc);
 	    lore.clear();
@@ -229,17 +227,23 @@ public class Gui {
 	}
 
 	public static void choose(Player player,String name) {
-	    
-	    
-	    
 		Inventory gui = Bukkit.createInventory(null, 36, "§3想对"+Other.data.getString("Info."+name+".color")+name+"§3进行什么操作？");
-		ItemStack set = new ItemStack(Material.ENCHANTMENT_TABLE);
-		ItemStack color = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack set;
+		try {
+			set = new ItemStack(Material.valueOf("ENCHANTMENT_TABLE"));
+		} catch (Exception a) {
+			set = new ItemStack(Material.valueOf("LEGACY_ENCHANTMENT_TABLE"));
+		}
+		ItemStack color = BasicLibrary.stainedglass.get(1);
 		ItemStack remove = new ItemStack(Material.TRAPPED_CHEST);
 		ItemStack way = new ItemStack(Material.BOOK);
-		ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack back= new ItemStack(Material.EYE_OF_ENDER);
-		
+		ItemStack frame = BasicLibrary.stainedglass.get(3);
+		ItemStack back;
+		try {
+			back = new ItemStack(Material.valueOf("EYE_OF_ENDER"));
+		} catch (Exception a) {
+			back = new ItemStack(Material.valueOf("ENDER_EYE"));
+		}
 		ItemMeta setdata = set.getItemMeta();
 		ItemMeta colordata = color.getItemMeta();
 		ItemMeta removedata = remove.getItemMeta();
@@ -262,7 +266,6 @@ public class Gui {
         
         colordata.setDisplayName("§6设置颜色");
         lore.add("§e设置箱子的显示颜色");
-        color.setDurability((short) 1);
         colordata.setLore(lore);
         color.setItemMeta(colordata);
         lore.clear();
@@ -275,7 +278,6 @@ public class Gui {
         
         framedata.setDisplayName("§a单独设置箱子属性");
         lore.add("§d选择对应的项目，点击快速修改吧！");
-        color.setDurability((short) 3);
         framedata.setLore(lore);
         frame.setItemMeta(framedata);
         lore.clear();
@@ -379,21 +381,26 @@ public class Gui {
 	
 	public static void color(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 27, "§3设置"+Other.data.getString("Info."+name+".color")+name+"§3显示的颜色");	
-		ItemStack red = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack yellow = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack blue = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack green = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack purple = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack orange = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack white = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack lightgreen = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack lightpurple = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack lightred = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack gray = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack lightblue = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack black = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack drakblue = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack back= new ItemStack(Material.EYE_OF_ENDER);
+		ItemStack red = BasicLibrary.stainedglass.get(14);
+		ItemStack yellow = BasicLibrary.stainedglass.get(4);
+		ItemStack blue = BasicLibrary.stainedglass.get(9);
+		ItemStack green = BasicLibrary.stainedglass.get(5);
+		ItemStack purple = BasicLibrary.stainedglass.get(10);
+		ItemStack orange = BasicLibrary.stainedglass.get(1);
+		ItemStack white = BasicLibrary.stainedglass.get(0);
+		ItemStack lightgreen = BasicLibrary.stainedglass.get(13);
+		ItemStack lightpurple = BasicLibrary.stainedglass.get(2);
+		ItemStack lightred = BasicLibrary.stainedglass.get(6);
+		ItemStack gray = BasicLibrary.stainedglass.get(7);
+		ItemStack lightblue = BasicLibrary.stainedglass.get(3);
+		ItemStack black = BasicLibrary.stainedglass.get(15);
+		ItemStack drakblue = BasicLibrary.stainedglass.get(11);
+		ItemStack back;
+		try {
+			back = new ItemStack(Material.valueOf("EYE_OF_ENDER"));
+		} catch (Exception a) {
+			back = new ItemStack(Material.valueOf("ENDER_EYE"));
+		}
 		
 		ItemMeta data = red.getItemMeta();
 		ItemMeta datas = back.getItemMeta();
@@ -401,98 +408,84 @@ public class Gui {
             
         data.setDisplayName("§4红色");
         lore.add("§a设置名字颜色");
-        red.setDurability((short) 14);
         data.setLore(lore);
         red.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§e黄色");
         lore.add("§a设置名字颜色");
-        yellow.setDurability((short) 4);
         data.setLore(lore);
         yellow.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§6橙色");
         lore.add("§a设置名字颜色");
-        orange.setDurability((short) 1);
         data.setLore(lore);
         orange.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§3蓝色");
         lore.add("§a设置名字颜色");
-        blue.setDurability((short) 9);
         data.setLore(lore);
         blue.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§2绿色");
         lore.add("§a设置名字颜色");
-        green.setDurability((short) 5);
         data.setLore(lore);
         green.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§5紫色");
         lore.add("§a设置名字颜色");
-        purple.setDurability((short) 10);
         data.setLore(lore);
         purple.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§f白色");
         lore.add("§a设置名字颜色");
-        white.setDurability((short) 0);
         data.setLore(lore);
         white.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§a浅绿色");
         lore.add("§a设置名字颜色");
-        lightgreen.setDurability((short) 13);
         data.setLore(lore);
         lightgreen.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§7灰色");
         lore.add("§a设置名字颜色");
-        gray.setDurability((short) 7);
         data.setLore(lore);
         gray.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§c粉红色");
         lore.add("§a设置名字颜色");
-        lightred.setDurability((short) 6);
         data.setLore(lore);
         lightred.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§d亮紫色");
         lore.add("§a设置名字颜色");
-        lightpurple.setDurability((short) 2);
         data.setLore(lore);
         lightpurple.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§b天蓝色");
         lore.add("§a设置名字颜色");
-        lightblue.setDurability((short) 3);
         data.setLore(lore);
         lightblue.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§1深蓝色");
         lore.add("§a设置名字颜色");
-        drakblue.setDurability((short) 11);
         data.setLore(lore);
         drakblue.setItemMeta(data);
         lore.clear();
         
         data.setDisplayName("§0黑色");
         lore.add("§a设置名字颜色");
-        black.setDurability((short) 15);
         data.setLore(lore);
         black.setItemMeta(data);
         lore.clear();
@@ -528,18 +521,37 @@ public class Gui {
 		ItemStack normal = new ItemStack(Material.CHEST);
 		ItemStack random = new ItemStack(Material.FURNACE);
 		ItemStack order = new ItemStack(Material.ENDER_CHEST);
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
-		ItemStack embellishment = new ItemStack(Material.ENCHANTMENT_TABLE);
+		ItemStack glass = BasicLibrary.stainedglass.get(1);
+		ItemStack embellishment;
+		try {
+			embellishment = new ItemStack(Material.valueOf("ENCHANTMENT_TABLE"));
+		} catch (Exception a) {
+			embellishment = new ItemStack(Material.valueOf("LEGACY_ENCHANTMENT_TABLE"));
+		}
 		ItemStack gradient = new ItemStack(Material.COMPASS);
 		ItemStack repeatedly= new ItemStack(Material.ENDER_PEARL);
-		ItemStack horse= new ItemStack(Material.GOLD_BARDING);
-		ItemStack ninehorse= new ItemStack(Material.DIAMOND_BARDING);
-		ItemStack back= new ItemStack(Material.EYE_OF_ENDER);
+		ItemStack horse;
+		try {
+			horse = new ItemStack(Material.valueOf("GOLD_BARDING"));
+		} catch (Exception a) {
+			horse = new ItemStack(Material.valueOf("LEGACY_GOLD_BARDING"));
+		}
+		ItemStack ninehorse;
+		try {
+			ninehorse = new ItemStack(Material.valueOf("DIAMOND_BARDING"));
+		} catch (Exception a) {
+			ninehorse = new ItemStack(Material.valueOf("LEGACY_DIAMOND_BARDING"));
+		}
+		ItemStack back;
+		try {
+			back = new ItemStack(Material.valueOf("EYE_OF_ENDER"));
+		} catch (Exception a) {
+			back = new ItemStack(Material.valueOf("ENDER_EYE"));
+		}
 		
 		ItemMeta glassdata = glass.getItemMeta();
 		glassdata.setDisplayName("§6点击对应的方块，设置对应的开箱动画");
 		lore.add("§a上面为单抽，下面为§c九连抽");
-		glass.setDurability((short) 1);
 		glassdata.setLore(lore);
 		lore.clear();
 		glass.setItemMeta(glassdata);

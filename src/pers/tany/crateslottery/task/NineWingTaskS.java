@@ -1,23 +1,16 @@
 package pers.tany.crateslottery.task;
 
-import java.io.File;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import pers.tany.crateslottery.Other;
 import pers.tany.crateslottery.gui.Preset;
 
 public class NineWingTaskS extends BukkitRunnable  {
-    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-    File file=new File(config.getDataFolder(),"config.yml");
-    File file1=new File(config.getDataFolder(),"data.yml");
-    File file2=new File(config.getDataFolder(),"message.yml");
 	public Player player;
 	public String Crate;
 	public NineWingTaskS(Player p,String s) {
@@ -39,7 +32,11 @@ public class NineWingTaskS extends BukkitRunnable  {
     		else if(Other.data.getString("Info."+Crate+".ninetype").equals("show"))
         	Preset.showninewing(player, Crate);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), 2f, 2f);
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_PLAYER_LEVELUP"), 2f, 2f);
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("LEVEL_UP"), 2f, 2f);
+			}
 			cancel();
 			if(Other.data.getBoolean("Info."+Crate+".nineinfo")){
 				int size = player.getOpenInventory().getBottomInventory().getSize()-1;

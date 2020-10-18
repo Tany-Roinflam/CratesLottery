@@ -4,11 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="G:/plugin/ProtocolLib.jar"/>
 	<classpathentry kind="lib" path="G:/plugin/PlaceholderAPI-2.10.5.jar"/>
-	<classpathentry kind="lib" path="G:/plugin/Spigot-1.12.2.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/G:/plugin/API/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="G:/plugin/Mohist-1.12.2-b704e64-server.jar"/>
+	<classpathentry kind="lib" path="G:/plugin/spigot-1.15.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

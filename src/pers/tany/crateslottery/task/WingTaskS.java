@@ -8,16 +8,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import pers.tany.crateslottery.CommonlyWay;
+import pers.tany.crateslottery.Main;
 import pers.tany.crateslottery.Other;
 import pers.tany.crateslottery.gui.Preset;
 
 public class WingTaskS extends BukkitRunnable  {
-    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-    File file1=new File(config.getDataFolder(),"data.yml");
 	public Player player;
 	public String Crate;
 	public WingTaskS(Player p,String s) {
@@ -39,7 +37,11 @@ public class WingTaskS extends BukkitRunnable  {
 			else if(Other.data.getString("Info."+Crate+".type").equals("show"))
 				Preset.showwing(player, Crate);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WingMessage")));
-			player.playSound(player.getLocation(), Sound.valueOf(Other.config.getString("SoundsName")), 2f, 2f);
+			try {
+				player.playSound(player.getLocation(), Sound.valueOf("ENTITY_PLAYER_LEVELUP"), 2f, 2f);
+			} catch (Exception a) {
+				player.playSound(player.getLocation(), Sound.valueOf("LEVEL_UP"), 2f, 2f);
+			}
 			cancel();
 			List<String> list = Other.data.getStringList("Info."+Crate+".data");
 			if(Other.data.getBoolean("Info."+Crate+".info")) {
@@ -88,8 +90,9 @@ public class WingTaskS extends BukkitRunnable  {
 				  		}
 				  		a=0;
 			  		}
+			  	    File file=new File(Main.plugin.getDataFolder(),"data.yml");
 			  		try {
-			  			Other.data.save(file1);
+			  			Other.data.save(file);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
 			    	}

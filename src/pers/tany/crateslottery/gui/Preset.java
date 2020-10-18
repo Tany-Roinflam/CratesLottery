@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import pers.tany.crateslottery.BasicLibrary;
 import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.Other;
 
@@ -23,7 +24,7 @@ public class Preset {
 	static HashMap<String, Boolean> law = new HashMap<String, Boolean>();
 	public static void winging(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -37,9 +38,9 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
+		glass = BasicLibrary.stainedglass.get(durability);
         data.setDisplayName("§"+color+"抽奖§"+colors+"中");
         lore.add("§"+color+"抽奖一时爽§a，§"+colors+"一直抽奖一直爽");
-        glass.setDurability((short) durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -62,7 +63,7 @@ public class Preset {
 	
 	public static void wing(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -78,7 +79,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
         data.setDisplayName("§"+color+"领取你的奖励吧！");
         lore.add("§"+color+"开箱§"+colors+"结果");
-        glass.setDurability((short) durability);
+        glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -101,7 +102,7 @@ public class Preset {
 	
 	public static void ninewinging(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -117,7 +118,7 @@ public class Preset {
         data.setDisplayName("§"+color+"§c九连§4抽奖§"+colors+"中");
         lore.add("§"+color+"搏一搏，单车变摩托");
         lore.add("§"+colors+"抽奖ing");
-        glass.setDurability((short) durability);
+        glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -170,7 +171,7 @@ public class Preset {
 	
 	public static void ninewing(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -186,7 +187,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
         data.setDisplayName("§"+color+"领取你的战利品吧！");
         lore.add("§"+color+"九连开箱§"+colors+"结果");
-        glass.setDurability((short) durability);
+        glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -240,7 +241,7 @@ public class Preset {
 	
 	public static void randomwinging(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
 	    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -257,7 +258,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
 	    data.setDisplayName("§"+color+"抽奖§"+colors+"中");
 	    lore.add("§"+color+"抽奖一时爽§a，§"+colors+"一直抽奖一直爽");
-	    glass.setDurability((short) durability);
+	    glass = BasicLibrary.stainedglass.get(durability);
 	    data.setLore(lore);
 	    glass.setItemMeta(data);
 	    lore.clear();
@@ -284,7 +285,7 @@ public class Preset {
 	public static void randomwing(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
 		
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
@@ -302,7 +303,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
         data.setDisplayName("§"+color+"领取你的奖励吧！");
         lore.add("§"+color+"开箱§"+colors+"结果");
-        glass.setDurability((short) durability);
+        glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -330,7 +331,7 @@ public class Preset {
 	public static void randomninewinging(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -347,7 +348,7 @@ public class Preset {
         data.setDisplayName("§"+color+"§c九连§4抽奖§"+colors+"中");
         lore.add("§"+color+"搏一搏，单车变摩托");
         lore.add("§"+colors+"抽奖ing");
-        glass.setDurability((short) durability);
+        glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -381,7 +382,7 @@ public class Preset {
 	public static void randomninewing(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
 		
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -398,7 +399,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
         data.setDisplayName("§"+color+"领取你的战利品吧！");
         lore.add("§"+color+"九连开箱§"+colors+"结果");
-        glass.setDurability((short) durability);
+        glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -434,7 +435,7 @@ public class Preset {
 	public static void orderwinging(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 		
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
 	    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -450,7 +451,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
 	    data.setDisplayName("§"+color+"抽奖§"+colors+"中");
 	    lore.add("§"+color+"抽奖一时爽§a，§"+colors+"一直抽奖一直爽");
-	    glass.setDurability((short) durability);
+	    glass = BasicLibrary.stainedglass.get(durability);
 	    data.setLore(lore);
 	    glass.setItemMeta(data);
 	    lore.clear();
@@ -474,7 +475,7 @@ public class Preset {
 
 		public static void orderwing(Player player,String name) {
 		Inventory gui = Bukkit.createInventory(null, 45, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
 	    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -490,7 +491,7 @@ public class Preset {
 		int colors = (short) random.nextInt(9)+1;
 	    data.setDisplayName("§"+color+"领取你的奖励吧！");
 	    lore.add("§"+color+"开箱§"+colors+"结果");
-	    glass.setDurability((short) durability);
+	    glass = BasicLibrary.stainedglass.get(durability);
 	    data.setLore(lore);
 	    glass.setItemMeta(data);
 	    lore.clear();
@@ -517,7 +518,7 @@ public class Preset {
 		public static void orderninewinging(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
 			
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -535,7 +536,7 @@ public class Preset {
 		    data.setDisplayName("§"+color+"§c九连§4抽奖§"+colors+"中");
 		    lore.add("§"+color+"搏一搏，单车变摩托");
 		    lore.add("§"+colors+"抽奖ing");
-		    glass.setDurability((short) durability);
+		    glass = BasicLibrary.stainedglass.get(durability);
 		    data.setLore(lore);
 		    glass.setItemMeta(data);
 		    lore.clear();
@@ -565,7 +566,7 @@ public class Preset {
 		public static void orderninewing(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
 			
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -582,7 +583,7 @@ public class Preset {
 			int colors = (short) random.nextInt(9)+1;
 		    data.setDisplayName("§"+color+"领取你的战利品吧！");
 		    lore.add("§"+color+"九连开箱§"+colors+"结果");
-		    glass.setDurability((short) durability);
+		    glass = BasicLibrary.stainedglass.get(durability);
 		    data.setLore(lore);
 		    glass.setItemMeta(data);
 		    lore.clear();
@@ -665,8 +666,8 @@ public class Preset {
 			f=0;
 			g=0;
 			
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
-			ItemStack glasss = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
+			ItemStack glasss = BasicLibrary.stainedglass.get(0);
 			
 			ItemMeta data = glass.getItemMeta();
 			ItemMeta datas = glasss.getItemMeta();
@@ -677,7 +678,7 @@ public class Preset {
 	        data.setDisplayName("§f抽奖§d中");
 	        lore.add("§f抽奖一时爽§a，§2一直抽奖一直爽");
 	        data.setLore(lore);
-	        glass.setDurability((short) 8);
+	        glass = BasicLibrary.stainedglass.get(8);
 	        glass.setItemMeta(data);
 	        lore.clear();
 	        gui.setItem(i, glass);
@@ -705,7 +706,7 @@ public class Preset {
 			}
 		    
 	        datas.setDisplayName("§7抽奖§d中");
-	        glasss.setDurability((short) 14);
+	        glasss = BasicLibrary.stainedglass.get(14);
 	        lore.add("§8抽奖一时爽§a，§2一直抽奖一直爽");
 	        datas.setLore(lore);
 			datas.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
@@ -794,8 +795,8 @@ public class Preset {
 			f=0;
 			g=0;
 			
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
-			ItemStack glasss = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
+			ItemStack glasss = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 			ItemMeta datas = glasss.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -806,7 +807,7 @@ public class Preset {
 	        data.setDisplayName("§f领取你的奖励吧！");
 	        lore.add("§f开箱§a结果");
 	        data.setLore(lore);
-	        glass.setDurability((short) 8);
+	        glass = BasicLibrary.stainedglass.get(8);
 	        glass.setItemMeta(data);
 	        lore.clear();
 	        gui.setItem(i, glass);
@@ -837,7 +838,7 @@ public class Preset {
 	        lore.add("§8开箱§2结果");
 	        datas.setLore(lore);
 	        datas.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
-	        glasss.setDurability((short) 14);
+	        glasss = BasicLibrary.stainedglass.get(14);
 	        glasss.setItemMeta(datas);
 	        lore.clear();
 		    
@@ -869,7 +870,7 @@ public class Preset {
 
 		public static void gradientwinging(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 45, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 	        ArrayList<String> lore = new ArrayList<String>();
 	        List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -886,7 +887,7 @@ public class Preset {
 		        data.setDisplayName("§"+color+"§c九连§4抽奖§"+colors+"中");
 		        lore.add("§"+color+"搏一搏，单车变摩托");
 		        lore.add("§"+colors+"抽奖ing");
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
 		        lore.clear();
@@ -998,7 +999,7 @@ public class Preset {
 
 		public static void gradientwing(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 45, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 	        ArrayList<String> lore = new ArrayList<String>();
 	        List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1014,7 +1015,7 @@ public class Preset {
 			int colors = (short) random.nextInt(9)+1;
 	        data.setDisplayName("§"+color+"领取你的战利品吧！");
 	        lore.add("§"+color+"九连开箱§"+colors+"结果");
-	        glass.setDurability((short) durability);
+	        glass = BasicLibrary.stainedglass.get(durability);
 	        data.setLore(lore);
 	        glass.setItemMeta(data);
 	        lore.clear();
@@ -1119,7 +1120,7 @@ public class Preset {
 		
 		public static void repeatedlywinging(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 54, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1135,7 +1136,7 @@ public class Preset {
 				int colors = (short) random.nextInt(9)+1;
 			    data.setDisplayName("§"+color+"抽奖§"+colors+"中");
 			    lore.add("§"+color+"抽奖一时爽§a，§"+colors+"一直抽奖一直爽");
-			    glass.setDurability((short) durability);
+			    glass = BasicLibrary.stainedglass.get(durability);
 			    data.setLore(lore);
 			    glass.setItemMeta(data);
 			    lore.clear();
@@ -1185,7 +1186,7 @@ public class Preset {
 		
 		public static void repeatedlywing(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 54, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1201,7 +1202,7 @@ public class Preset {
 				int colors = (short) random.nextInt(9)+1;
 		        data.setDisplayName("§"+color+"领取你的奖励吧！");
 		        lore.add("§"+color+"开箱§"+colors+"结果");
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
 		        lore.clear();
@@ -1234,7 +1235,7 @@ public class Preset {
 		
 		public static void repeatedlyninewinging(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 54, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1251,7 +1252,7 @@ public class Preset {
 		        data.setDisplayName("§"+color+"§c九连§4抽奖§"+colors+"中");
 		        lore.add("§"+color+"搏一搏，单车变摩托");
 		        lore.add("§"+colors+"抽奖ing");
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
 		        lore.clear();
@@ -1305,7 +1306,7 @@ public class Preset {
 		
 		public static void repeatedlyninewing(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 54, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1321,7 +1322,7 @@ public class Preset {
 				int colors = (short) random.nextInt(9)+1;
 		        data.setDisplayName("§"+color+"领取你的战利品吧！");
 		        lore.add("§"+color+"九连开箱§"+colors+"结果");
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
 		        lore.clear();
@@ -1364,7 +1365,7 @@ public class Preset {
 		
 		public static void showninewinging(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 27, "§c正在九连§a开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1385,7 +1386,7 @@ public class Preset {
 		        data.setDisplayName("§"+color+"§c九连§4抽奖§"+colors+"中");
 		        lore.add("§"+color+"搏一搏，单车变摩托");
 		        lore.add("§"+colors+"抽奖ing");
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
 		        lore.clear();
@@ -1428,7 +1429,12 @@ public class Preset {
 		    	gui.setItem(9+b, item);
 		    	b++;
 		    }
-		    ItemStack chooseglass = new ItemStack(Material.THIN_GLASS);
+			ItemStack chooseglass;
+			try {
+				chooseglass = new ItemStack(Material.valueOf("THIN_GLASS"));
+			} catch (Exception a) {
+				chooseglass = new ItemStack(Material.valueOf("LEGACY_THIN_GLASS"));
+			}
 		    ItemMeta chooseglassmeta = chooseglass.getItemMeta();
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
@@ -1453,7 +1459,7 @@ public class Preset {
 
 		public static void showninewing(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 27, "§c抽奖§6箱："+Other.data.getString("Info."+name+".color")+name+"§c九连开箱结果");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1473,7 +1479,7 @@ public class Preset {
 			int colors = (short) random.nextInt(9)+1;
 		    data.setDisplayName("§"+color+"领取你的战利品吧！");
 		    lore.add("§"+color+"九连开箱§"+colors+"结果");
-		    glass.setDurability((short) durability);
+		    glass = BasicLibrary.stainedglass.get(durability);
 		    data.setLore(lore);
 		    glass.setItemMeta(data);
 		    lore.clear();
@@ -1506,7 +1512,12 @@ public class Preset {
 		    	gui.setItem(9+b, item);
 		    	b++;
 		    }
-		    ItemStack chooseglass = new ItemStack(Material.THIN_GLASS);
+			ItemStack chooseglass;
+			try {
+				chooseglass = new ItemStack(Material.valueOf("THIN_GLASS"));
+			} catch (Exception a) {
+				chooseglass = new ItemStack(Material.valueOf("LEGACY_THIN_GLASS"));
+			}
 		    ItemMeta chooseglassmeta = chooseglass.getItemMeta();
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
@@ -1526,7 +1537,7 @@ public class Preset {
 
 		public static void showwinging(Player player,String name) {
 			Inventory gui = Bukkit.createInventory(null, 27, "§a正在开箱"+Other.data.getString("Info."+name+".color")+name+"§d中");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1547,7 +1558,7 @@ public class Preset {
 		        data.setDisplayName("§"+color+"抽奖§"+colors+"中");
 		        lore.add("§"+color+"抽奖一时爽§a，§"+colors+"一直抽奖一直爽");
 		        data.setLore(lore);
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        glass.setItemMeta(data);
 		        lore.clear();
 		        gui.setItem(i, glass);
@@ -1585,7 +1596,12 @@ public class Preset {
 		    	gui.setItem(9+b, item);
 		    	b++;
 		    }
-		    ItemStack chooseglass = new ItemStack(Material.THIN_GLASS);
+			ItemStack chooseglass;
+			try {
+				chooseglass = new ItemStack(Material.valueOf("THIN_GLASS"));
+			} catch (Exception a) {
+				chooseglass = new ItemStack(Material.valueOf("LEGACY_THIN_GLASS"));
+			}
 		    ItemMeta chooseglassmeta = chooseglass.getItemMeta();
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
@@ -1610,7 +1626,7 @@ public class Preset {
 
 		public static void showwing(Player player,String name) {
 			 Inventory gui = Bukkit.createInventory(null, 27, "§6抽奖箱§c："+Other.data.getString("Info."+name+".color")+name+"§a开箱结果");
-			ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
+			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
 		    List<String> list = Other.data.getStringList("Info."+name+".data");
@@ -1631,7 +1647,7 @@ public class Preset {
 		        data.setDisplayName("§"+color+"领取你的奖励吧！");
 		        lore.add("§"+color+"开箱§"+colors+"结果");
 		        data.setLore(lore);
-		        glass.setDurability((short) durability);
+		        glass = BasicLibrary.stainedglass.get(durability);
 		        glass.setItemMeta(data);
 		        lore.clear();
 		        gui.setItem(i, glass);
@@ -1673,7 +1689,12 @@ public class Preset {
 		    	gui.setItem(9+b, item);
 		    	b++;
 		    }
-		    ItemStack chooseglass = new ItemStack(Material.THIN_GLASS);
+			ItemStack chooseglass;
+			try {
+				chooseglass = new ItemStack(Material.valueOf("THIN_GLASS"));
+			} catch (Exception a) {
+				chooseglass = new ItemStack(Material.valueOf("LEGACY_THIN_GLASS"));
+			}
 		    ItemMeta chooseglassmeta = chooseglass.getItemMeta();
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;

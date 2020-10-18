@@ -26,9 +26,6 @@ import pers.tany.crateslottery.task.NineWingTask;
 import pers.tany.crateslottery.task.NineWingTaskS;
 import pers.tany.crateslottery.task.WingTask;
 import pers.tany.crateslottery.task.WingTaskS;
-import red.mohist.api.PlayerAPI;
-import red.mohist.api.ServerAPI;
-import red.mohist.forge.MohistMod;
 
 public class Commands implements CommandExecutor {
     Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
