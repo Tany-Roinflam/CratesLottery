@@ -52,7 +52,7 @@ public class BasicLibrary {
 		}catch (Exception a) {
 			
 		}
-//		如果需要使用请在plugin.yml里加上api-version: 1.13
+//		濡傛灉闇�瑕佷娇鐢ㄨ鍦╬lugin.yml閲屽姞涓奱pi-version: 1.13
 		try {
 			stainedglass.add(new ItemStack(Material.valueOf("WHITE_STAINED_GLASS_PANE")));
 			stainedglass.add(new ItemStack(Material.valueOf("ORANGE_STAINED_GLASS_PANE")));
@@ -81,30 +81,30 @@ public class BasicLibrary {
 			}
 		}
 		try {
-			stainedglass.add(new ItemStack(Material.valueOf("WHITE_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("ORANGE_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("MAGENTA_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("LIGHT_BLUE_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("YELLOW_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("LIME_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("WHITE_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("ORANGE_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("MAGENTA_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("LIGHT_BLUE_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("YELLOW_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("LIME_WOOL")));
 			
-			stainedglass.add(new ItemStack(Material.valueOf("PINK_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("GRAY_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("LIGHT_GRAY_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("CYAN_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("PURPLE_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("BLUE_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("PINK_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("GRAY_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("LIGHT_GRAY_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("CYAN_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("PURPLE_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("BLUE_WOOL")));
 			
-			stainedglass.add(new ItemStack(Material.valueOf("BROWN_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("GREEN_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("RED_WOOL")));
-			stainedglass.add(new ItemStack(Material.valueOf("BLACK_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("BROWN_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("GREEN_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("RED_WOOL")));
+			stainedwool.add(new ItemStack(Material.valueOf("BLACK_WOOL")));
 		} catch (Exception a) {
 			for(int i = 0;i<=15;i++)
 			{
 				ItemStack wool = new ItemStack(Material.valueOf("WOOL"));
 				wool.setDurability((short) i);
-				stainedglass.add(wool);
+				stainedwool.add(wool);
 			}
 		}
 	}
