@@ -28,10 +28,6 @@ import pers.tany.crateslottery.task.WingTask;
 import pers.tany.crateslottery.task.WingTaskS;
 
 public class Commands implements CommandExecutor {
-    Plugin config = Bukkit.getPluginManager().getPlugin("CratesLottery");
-    File file=new File(config.getDataFolder(),"config.yml");
-    File file1=new File(config.getDataFolder(),"data.yml");
-    File file2=new File(config.getDataFolder(),"message.yml");
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(args.length==1) {
@@ -54,6 +50,9 @@ public class Commands implements CommandExecutor {
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("reload")) {
+			    File file=new File(Main.plugin.getDataFolder(),"config.yml");
+			    File file1=new File(Main.plugin.getDataFolder(),"data.yml");
+			    File file2=new File(Main.plugin.getDataFolder(),"message.yml");
 				Other.config = YamlConfiguration.loadConfiguration(file);
 				Other.data = YamlConfiguration.loadConfiguration(file1);
 				Other.message = YamlConfiguration.loadConfiguration(file2);
@@ -129,11 +128,12 @@ public class Commands implements CommandExecutor {
 						  int amount = item.getAmount();
 						  item.setAmount(1);
 						  Other.data.set("CrateItem", CommonlyWay.GetItemData(item));
-					  		try {
-					  			Other.data.save(file1);
-					  		} catch (IOException e) {
-					  			e.printStackTrace();
-				        	}
+						  try {
+					  		File file1=new File(Main.plugin.getDataFolder(),"data.yml");
+					  	  Other.data.save(file1);
+					  	  } catch (IOException e) {
+					  		  e.printStackTrace();
+					  	  }
 						  item.setAmount(amount);
 						  item.setItemMeta(metas);
 						  sender.sendMessage("§a成功重新设置箱子");
@@ -153,30 +153,31 @@ public class Commands implements CommandExecutor {
 						if(p.getInventory().getItemInHand() == null || p.getInventory().getItemInHand().getType() == Material.AIR) {
 						  p.sendMessage("§c手上不能为空气");
 						  return true;
-						  }
-						  item = p.getInventory().getItemInHand();
-						  ItemMeta meta = item.getItemMeta();
-						  ItemMeta metas = item.getItemMeta();
-						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")));
-						  List<String> lore = Other.message.getStringList("KeyLore");
-						  ArrayList<String> lores = new ArrayList<String>();
-						  for(String loreadd:lore) {
-							  lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
-						  }
-						  meta.setLore(lores);
-						  item.setItemMeta(meta);
-						  int amount = item.getAmount();
-						  item.setAmount(1);
-						  Other.data.set("CrateKey", CommonlyWay.GetItemData(item));
-					  		try {
-					  			Other.data.save(file1);
-					  		} catch (IOException e) {
-					  			e.printStackTrace();
-				        	}
-					  	  item.setAmount(amount);
-					  	  item.setItemMeta(metas);
-						  sender.sendMessage("§a成功重新设置开箱钥匙");
-						  return true;
+						}
+					    item = p.getInventory().getItemInHand();
+					    ItemMeta meta = item.getItemMeta();
+					    ItemMeta metas = item.getItemMeta();
+					    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")));
+					    List<String> lore = Other.message.getStringList("KeyLore");
+					    ArrayList<String> lores = new ArrayList<String>();
+					    for(String loreadd:lore) {
+						   lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
+					    }
+					    meta.setLore(lores);
+					    item.setItemMeta(meta);
+					    int amount = item.getAmount();
+					    item.setAmount(1);
+					    Other.data.set("CrateKey", CommonlyWay.GetItemData(item));
+				  		try {
+				  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
+				  			Other.data.save(file1);
+				  		} catch (IOException e) {
+				  			e.printStackTrace();
+			        	}
+					  	item.setAmount(amount);
+					  	item.setItemMeta(metas);
+						sender.sendMessage("§a成功重新设置开箱钥匙");
+						return true;
 					}
 					sender.sendMessage("§c你没有权限使用此指令");
 					return true;
@@ -530,6 +531,14 @@ public class Commands implements CommandExecutor {
 						a=0;
 						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
+						ArrayList<String> newlist = new ArrayList<String>();
+						newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock"))+args[1]);
+						if(item.getItemMeta().hasLore()) {
+							for(String s:item.getItemMeta().getLore()) {
+								newlist.add(s);
+							}
+						}
+						meta.setLore(newlist);
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
 						item.setItemMeta(meta);
 						((Player) sender).getInventory().addItem(item);
@@ -740,6 +749,7 @@ public class Commands implements CommandExecutor {
 						Other.data.set("Info."+args[1]+".announcement", args[2]);
 					}
 			  		try {
+			  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
 			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
@@ -775,6 +785,7 @@ public class Commands implements CommandExecutor {
 						Other.data.set("Info."+args[1]+".nine", args[2]);
 					}
 			  		try {
+			  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
 			  			Other.data.save(file1);
 			  		} catch (IOException e) {
 			  			e.printStackTrace();
@@ -851,6 +862,14 @@ public class Commands implements CommandExecutor {
 						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
+						ArrayList<String> newlist = new ArrayList<String>();
+						newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock"))+args[1]);
+						if(item.getItemMeta().hasLore()) {
+							for(String s:item.getItemMeta().getLore()) {
+								newlist.add(s);
+							}
+						}
+						meta.setLore(newlist);
 						item.setItemMeta(meta);
 						player.getInventory().addItem(item);
 						if(Other.config.getBoolean("KeyMessage"))
@@ -906,6 +925,7 @@ public class Commands implements CommandExecutor {
 						Other.data.set("Info."+args[1]+".number", number);
 						Other.data.set("Info."+args[1]+".cd", cd);
 				  		try {
+				  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
 				  			Other.data.save(file1);
 				  		} catch (IOException e) {
 				  			e.printStackTrace();
@@ -959,6 +979,7 @@ public class Commands implements CommandExecutor {
 						Other.data.set("Info."+args[1]+".ninenumber", number);
 						Other.data.set("Info."+args[1]+".ninecd", cd);
 				  		try {
+				  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
 				  			Other.data.save(file1);
 				  		} catch (IOException e) {
 				  			e.printStackTrace();
@@ -1007,6 +1028,14 @@ public class Commands implements CommandExecutor {
 						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
+						ArrayList<String> newlist = new ArrayList<String>();
+						newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock"))+args[1]);
+						if(item.getItemMeta().hasLore()) {
+							for(String s:item.getItemMeta().getLore()) {
+								newlist.add(s);
+							}
+						}
+						meta.setLore(newlist);
 						item.setItemMeta(meta);
 						item.setAmount(amount);
 						player.getInventory().addItem(item);

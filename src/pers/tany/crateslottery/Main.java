@@ -1,5 +1,7 @@
 package pers.tany.crateslottery;
 
+import java.io.File;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,9 +14,15 @@ public class Main extends JavaPlugin{
 		public void onEnable() {
 		    plugin = this;
 			Bukkit.getConsoleSender().sendMessage("°Ïa[Crates°Ï2Lottery]°Ïa≤Âº˛“—º”‘ÿ");
-			saveResource("config.yml",false);
-	    	saveResource("data.yml",false);
-	    	saveResource("message.yml",false);
+	        if (!new File(getDataFolder(), "config.yml").exists()) {
+	        	saveResource("config.yml", false);
+	        }
+	        if (!new File(getDataFolder(), "data.yml").exists()) {
+	            saveResource("data.yml", false);
+	        }
+	        if (!new File(getDataFolder(), "message.yml").exists()) {
+	            saveResource("message.yml", false);
+	        }
 			new BasicLibrary();
 		    getCommand("cl").setExecutor(new Commands());
 		    getServer().getPluginManager().registerEvents(new Event(), this);

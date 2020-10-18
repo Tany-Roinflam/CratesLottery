@@ -219,7 +219,7 @@ public class CommonlyWay {
 			}
 			
 //			把玩家传送到这个区块位置
-			public static void  TelePortChunk(Player player,World world,Chunk chunk) {
+			public static void TelePortChunk(Player player,World world,Chunk chunk) {
 				Location location = player.getLocation();
 				location.setWorld(world);
 				double x = chunk.getX()*16;
@@ -240,5 +240,4 @@ public class CommonlyWay {
 				}
 				return i;
 			}
-				
 }

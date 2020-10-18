@@ -82,3 +82,5 @@ KeyLore:
   
   
 NoShowCrates: '&c这个奖池无法查看内容！'
+
+WarnMessage: '&c请勿乱改钥匙的名字'

@@ -168,6 +168,10 @@ public class Event implements Listener  {
 		if(evt.getItem()!=null&&evt.getItem().hasItemMeta()&&evt.getItem().getItemMeta().hasDisplayName()&&evt.getItem().getItemMeta().getDisplayName().startsWith(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")))) {
 			evt.setCancelled(true);
 			String name = ChatColor.stripColor(evt.getItem().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), ""));
+			if(!evt.getItem().getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock")+name))) {
+				evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WarnMessage")));
+				return;
+			}
 			if(Other.data.getString("Info."+name+".color")==null) {
 				evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearKeyMessage")));
 				evt.getPlayer().getInventory().setItemInHand(null);
@@ -315,20 +319,23 @@ public class Event implements Listener  {
 						}else if(!ChatColor.stripColor(evt.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName().replace(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")), "")).equals(name)) {
 							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrateMessage").replace("[key]", Other.data.getString("Info."+name+".color")+name)));
 							return;
+						} else	if(!evt.getItem().getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock")+name))) {
+							evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("WarnMessage")));
+							return;
 						}
     				if(Sneak.contains(evt.getPlayer().getName())) {
-    					if(!evt.getPlayer().hasPermission("cl.ninelottery")) {
-    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
-    						return;
-    					}
-    					if(Other.data.getBoolean("Info."+name+".clear")) {
-    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
-    						return;
-    					}
-    					if(!evt.getPlayer().hasPermission("cl.allcrate")&&!evt.getPlayer().hasPermission("cl.crate."+name)) {
-    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
-    						return;
-    					}
+	    					if(!evt.getPlayer().hasPermission("cl.ninelottery")) {
+	    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
+	    						return;
+	    					}
+	    					if(Other.data.getBoolean("Info."+name+".clear")) {
+	    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
+	    						return;
+	    					}
+	    					if(!evt.getPlayer().hasPermission("cl.allcrate")&&!evt.getPlayer().hasPermission("cl.crate."+name)) {
+	    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
+	    						return;
+	    					}
         					List<String> itemlist = Other.data.getStringList("Info."+name+".data");
         					int a=1;
         					if(itemlist.size()==0) {
@@ -368,7 +375,7 @@ public class Event implements Listener  {
         						new NineWingTaskS(evt.getPlayer(), name).runTaskTimer(Main.plugin, 0, 0);
         					}
             				return;
-	    				}else {
+	    				} else {
 	    					if(!evt.getPlayer().hasPermission("cl.lottery")) {
 	    						evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
 	    						return;

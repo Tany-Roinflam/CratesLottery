@@ -1,6 +1,6 @@
 name: CratesLottery
 main: pers.tany.crateslottery.Main
-version: 2.1.0
+version: 2.1.1
 author: tany
 depend: [ProtocolLib]
 api-version: 1.13
