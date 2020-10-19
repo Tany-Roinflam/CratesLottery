@@ -74,7 +74,7 @@ public class Event implements Listener  {
 				if(block.getBlockX()==x&&block.getBlockY()==y&&block.getBlockZ()==z&&block.getWorld().equals(Bukkit.getWorld(world))) {
 					if(evt.getPlayer().hasPermission("cl.break")) {
 						if(Sneak.contains(evt.getPlayer().getName())) {
-							evt.getPlayer().sendMessage("¡ìa³É¹¦ÆÆ»µ³é½±Ïä£¡");
+							evt.getPlayer().sendMessage("Â§aæˆåŠŸç ´åæŠ½å¥–ç®±ï¼");
 							Location.remove(location);
 							Other.data.set("Location", Location);
 					  		try {
@@ -130,7 +130,7 @@ public class Event implements Listener  {
 	    }
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onInteract(PlayerInteractEvent evt) {
 		if(!(Bukkit.getVersion().contains("1.7.")||Bukkit.getVersion().contains("1.8."))) {
 			if(CommonlyWay.getInteractHand(evt)) {
@@ -239,7 +239,7 @@ public class Event implements Listener  {
         	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
         	    			else
 							evt.getPlayer().getInventory().setItemInHand(null);
-    	    			if(!Other.data.getString("Info."+name+".nine").equals("ÎŞ"))
+    	    			if(!Other.data.getString("Info."+name+".nine").equals("æ— "))
     	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[evt]", evt.getPlayer().getName())));
     	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
     					if(Other.data.getBoolean("Info."+name+".nineanimation")) {
@@ -282,7 +282,7 @@ public class Event implements Listener  {
         	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
         	    			else
 							evt.getPlayer().getInventory().setItemInHand(null);
-    	    			if(!Other.data.getString("Info."+name+".announcement").equals("ÎŞ"))
+    	    			if(!Other.data.getString("Info."+name+".announcement").equals("æ— "))
     	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[evt]", evt.getPlayer().getName())));
     	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
     					if(Other.data.getBoolean("Info."+name+".animation")) {
@@ -363,7 +363,7 @@ public class Event implements Listener  {
             	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
             	    			else
   								evt.getPlayer().getInventory().setItemInHand(null);
-        	    			if(!Other.data.getString("Info."+name+".nine").equals("ÎŞ"))
+        	    			if(!Other.data.getString("Info."+name+".nine").equals("æ— "))
         	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[evt]", evt.getPlayer().getName())));
         	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
         					if(Other.data.getBoolean("Info."+name+".nineanimation")) {
@@ -406,7 +406,7 @@ public class Event implements Listener  {
 	        	    			evt.getPlayer().getInventory().getItemInHand().setAmount(amount);
 	        	    			else
 								evt.getPlayer().getInventory().setItemInHand(null);
-	    	    			if(!Other.data.getString("Info."+name+".announcement").equals("ÎŞ"))
+	    	    			if(!Other.data.getString("Info."+name+".announcement").equals("æ— "))
 	    	    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[evt]", evt.getPlayer().getName())));
 	    	    			evt.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
 	    					if(Other.data.getBoolean("Info."+name+".animation")) {
@@ -465,73 +465,73 @@ public class Event implements Listener  {
 		}
 	    Player p = (Player) evt.getWhoClicked();
 	    if(!p.getOpenInventory().getTitle().equals(evt.getView().getTitle())&&evt.getInventory().getType() == InventoryType.PLAYER) {
-	    	if(p.getOpenInventory().getTitle().startsWith("¡ìcÑ¡¡ì4Ôñ")||p.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")||p.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä£º")) {
+	    	if(p.getOpenInventory().getTitle().startsWith("Â§cé€‰Â§4æ‹©")||p.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")||p.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±ï¼š")) {
 	    		evt.setCancelled(true);
-	    	}else if(p.getOpenInventory().getTitle().startsWith("¡ì3ÉèÖÃ")||p.getOpenInventory().getTitle().startsWith("¡ì3Ïë¶Ô")) {
+	    	}else if(p.getOpenInventory().getTitle().startsWith("Â§3è®¾ç½®")||p.getOpenInventory().getTitle().startsWith("Â§3æƒ³å¯¹")) {
 	    		evt.setCancelled(true);
-	    	}else if(p.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")||p.getOpenInventory().getTitle().startsWith("¡ìaÕıÔÚ¿ªÏä")||p.getOpenInventory().getTitle().startsWith("¡ì6³é½±ÏäÉèÖÃ¡ìb£º")||p.getOpenInventory().getTitle().startsWith("¡ìdÉèÖÃ³é½±Ïä")) {
+	    	}else if(p.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")||p.getOpenInventory().getTitle().startsWith("Â§aæ­£åœ¨å¼€ç®±")||p.getOpenInventory().getTitle().startsWith("Â§6æŠ½å¥–ç®±è®¾ç½®Â§bï¼š")||p.getOpenInventory().getTitle().startsWith("Â§dè®¾ç½®æŠ½å¥–ç®±")) {
 	    		evt.setCancelled(true);
 	    	}
 	    }
-	    if(evt.getView().getTitle().equals("¡ìcÑ¡¡ì4Ôñ")) {
+	    if(evt.getView().getTitle().equals("Â§cé€‰Â§4æ‹©")) {
 	    	evt.setCancelled(true);
 			if(evt.getCurrentItem() == null || evt.getCurrentItem().getType() == Material.AIR || !evt.getCurrentItem().getItemMeta().hasDisplayName()) {
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì5´´½¨Ò»¸öĞÂµÄ³é½±Ïä")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§5åˆ›å»ºä¸€ä¸ªæ–°çš„æŠ½å¥–ç®±")) {
 				p.closeInventory();
 	            Conversation conversation = new Conversation(Main.plugin, p, new Name());
 	            p.beginConversation(conversation);
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìa½øÈëÒÑÓĞµÄ³é½±ÏäÉèÖÃ")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§aè¿›å…¥å·²æœ‰çš„æŠ½å¥–ç®±è®¾ç½®")) {
 				p.closeInventory();
 				Gui.cratelist(p, 1);
 			}
 	    }
-	    if(evt.getView().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+	    if(evt.getView().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 	    	evt.setCancelled(true);
 			String title = evt.getView().getTitle();
-			int type = Integer.parseInt(title.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+			int type = Integer.parseInt(title.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 			if(evt.getCurrentItem() == null || evt.getCurrentItem().getType() == Material.AIR || !evt.getCurrentItem().getItemMeta().hasDisplayName()) {
 				return;
 			}
-			if (evt.getSlot() == 53&&evt.getView().getItem(53).getItemMeta().getDisplayName().equals("¡ìaÏÂÒ»Ò³")) {
+			if (evt.getSlot() == 53&&evt.getView().getItem(53).getItemMeta().getDisplayName().equals("Â§aä¸‹ä¸€é¡µ")) {
 				Gui.cratelist(p,++type);
 			}
-			if (evt.getSlot() == 45&&evt.getView().getItem(45).getItemMeta().getDisplayName().equals("¡ìaÉÏÒ»Ò³")) {
+			if (evt.getSlot() == 45&&evt.getView().getItem(45).getItemMeta().getDisplayName().equals("Â§aä¸Šä¸€é¡µ")) {
 				Gui.cratelist(p,--type);
 			}
 			if(evt.getSlot() >44) {
 				return;
 			}
-			String cratename = ChatColor.stripColor(evt.getCurrentItem().getItemMeta().getDisplayName().replace("¡ì6³é½±ÏäÉèÖÃ¡ìb£º", ""));
+			String cratename = ChatColor.stripColor(evt.getCurrentItem().getItemMeta().getDisplayName().replace("Â§6æŠ½å¥–ç®±è®¾ç½®Â§bï¼š", ""));
 			Gui.choose(p, cratename);
 			return;
 	    }
-	    if(evt.getView().getTitle().startsWith("¡ìa³é½±Ïä£º")||evt.getView().getTitle().startsWith("¡ìaÕıÔÚ¿ªÏä")||evt.getView().getTitle().startsWith("¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä")) {
+	    if(evt.getView().getTitle().startsWith("Â§aæŠ½å¥–ç®±ï¼š")||evt.getView().getTitle().startsWith("Â§aæ­£åœ¨å¼€ç®±")||evt.getView().getTitle().startsWith("Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±")) {
 	    	evt.setCancelled(true);
 	    	return;
 	    }
-	    if(evt.getView().getTitle().startsWith("¡ì6³é½±Ïä¡ìc£º")) {
-	    	if(evt.getCurrentItem()!=null&&evt.getCurrentItem().hasItemMeta()&&evt.getCurrentItem().getItemMeta().hasDisplayName()&&(evt.getCurrentItem().getItemMeta().getDisplayName().contains("ÁìÈ¡ÄãµÄ½±Àø°É£¡")||evt.getCurrentItem().getItemMeta().getDisplayName().contains("¡ì2½öÕ¹Ê¾")))
+	    if(evt.getView().getTitle().startsWith("Â§6æŠ½å¥–ç®±Â§cï¼š")) {
+	    	if(evt.getCurrentItem()!=null&&evt.getCurrentItem().hasItemMeta()&&evt.getCurrentItem().getItemMeta().hasDisplayName()&&(evt.getCurrentItem().getItemMeta().getDisplayName().contains("é¢†å–ä½ çš„å¥–åŠ±å§ï¼")||evt.getCurrentItem().getItemMeta().getDisplayName().contains("Â§2ä»…å±•ç¤º")))
 	        	evt.setCancelled(true);
 	    		return;
 	    }
-	    if(evt.getView().getTitle().startsWith("¡ìc³é½±¡ì6Ïä£º")) {
-	    	if(evt.getCurrentItem()!=null&&evt.getCurrentItem().hasItemMeta()&&evt.getCurrentItem().getItemMeta().hasDisplayName()&&(evt.getCurrentItem().getItemMeta().getDisplayName().contains("ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡")||evt.getCurrentItem().getItemMeta().getDisplayName().contains("¡ì2½öÕ¹Ê¾")))
+	    if(evt.getView().getTitle().startsWith("Â§cæŠ½å¥–Â§6ç®±ï¼š")) {
+	    	if(evt.getCurrentItem()!=null&&evt.getCurrentItem().hasItemMeta()&&evt.getCurrentItem().getItemMeta().hasDisplayName()&&(evt.getCurrentItem().getItemMeta().getDisplayName().contains("é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼")||evt.getCurrentItem().getItemMeta().getDisplayName().contains("Â§2ä»…å±•ç¤º")))
 	        	evt.setCancelled(true);
 	    		return;
 	    }
-	    if(evt.getView().getTitle().startsWith("¡ì3ÉèÖÃ")) {
+	    if(evt.getView().getTitle().startsWith("Â§3è®¾ç½®")) {
 	    	evt.setCancelled(true);
 	    	String title = evt.getView().getTitle();
-	    	String name = title.replace("¡ì3ÉèÖÃ", "").replace("¡ì3ÏÔÊ¾µÄÑÕÉ«", "");
+	    	String name = title.replace("Â§3è®¾ç½®", "").replace("Â§3æ˜¾ç¤ºçš„é¢œè‰²", "");
 	    	name = ChatColor.stripColor(name);
 			if(evt.getCurrentItem() == null || evt.getCurrentItem().getType() == Material.AIR || !evt.getCurrentItem().getItemMeta().hasDisplayName()) {
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì4ºìÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì4");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§4çº¢è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§4");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -541,8 +541,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìe»ÆÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ìe");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§eé»„è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§e");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -552,8 +552,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì3À¶É«")) {
-				Other.data.set("Info."+name+".color", "¡ì3");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§3è“è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§3");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -563,8 +563,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì1ÉîÀ¶É«")) {
-				Other.data.set("Info."+name+".color", "¡ì1");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§1æ·±è“è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§1");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -574,8 +574,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì0ºÚÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì0");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§0é»‘è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§0");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -585,8 +585,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì5×ÏÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì5");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§5ç´«è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§5");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -596,8 +596,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì6³ÈÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì6");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§6æ©™è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§6");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -607,8 +607,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìf°×É«")) {
-				Other.data.set("Info."+name+".color", "¡ìf");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§fç™½è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§f");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -618,8 +618,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìaÇ³ÂÌÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ìa");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§aæµ…ç»¿è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§a");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -629,8 +629,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì2ÂÌÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì2");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§2ç»¿è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§2");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -640,8 +640,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì6³ÈÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì6");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§6æ©™è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§6");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -651,8 +651,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìbÌìÀ¶É«")) {
-				Other.data.set("Info."+name+".color", "¡ìb");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§bå¤©è“è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§b");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -662,8 +662,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc·ÛºìÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ìc");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cç²‰çº¢è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§c");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -673,8 +673,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìdÁÁ×ÏÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ìd");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§däº®ç´«è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§d");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -684,8 +684,8 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì7»ÒÉ«")) {
-				Other.data.set("Info."+name+".color", "¡ì7");
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§7ç°è‰²")) {
+				Other.data.set("Info."+name+".color", "Â§7");
 		  		try {
 		  			Other.data.save(file);
 		  		} catch (IOException e) {
@@ -695,23 +695,23 @@ public class Event implements Listener  {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìa·µ»ØÉèÖÃÁĞ±í")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§aè¿”å›è®¾ç½®åˆ—è¡¨")) {
 				p.closeInventory();
 				Gui.choose(p, name);
 				return;
 			}
 		}
-	    if(evt.getView().getTitle().startsWith("¡ìdÉèÖÃ³é½±Ïä")) {
+	    if(evt.getView().getTitle().startsWith("Â§dè®¾ç½®æŠ½å¥–ç®±")) {
 	    	evt.setCancelled(true);
 			String title = evt.getView().getTitle();
-			String name = ChatColor.stripColor(title.replace("ÉèÖÃ³é½±Ïä", "").replace("µÄ¿ªÏä·½Ê½", ""));
+			String name = ChatColor.stripColor(title.replace("è®¾ç½®æŠ½å¥–ç®±", "").replace("çš„å¼€ç®±æ–¹å¼", ""));
 			if(evt.getCurrentItem() == null || evt.getCurrentItem().getType() == Material.AIR || !evt.getCurrentItem().getItemMeta().hasDisplayName()) {
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("¡ì6µã»÷¶ÔÓ¦µÄ·½¿é£¬ÉèÖÃ¶ÔÓ¦µÄ¿ªÏä¶¯»­")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("Â§6ç‚¹å‡»å¯¹åº”çš„æ–¹å—ï¼Œè®¾ç½®å¯¹åº”çš„å¼€ç®±åŠ¨ç”»")) {
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìa¹Ì¶¨ÖĞ¼ä³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§aå›ºå®šä¸­é—´æŠ½å¥–")) {
 				Other.data.set("Info."+name+".type", "normal");
 		  		try {
 		  			Other.data.save(file);
@@ -719,17 +719,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc¾ÅÁ¬³é¡ìd£º¡ìa¹Ì¶¨ÖĞ¼ä³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cä¹è¿æŠ½Â§dï¼šÂ§aå›ºå®šä¸­é—´æŠ½å¥–")) {
 				Other.data.set("Info."+name+".ninetype", "normal");
 		  		try {
 		  			Other.data.save(file);
@@ -737,17 +737,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìeËæ»úÎ»ÖÃ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§eéšæœºä½ç½®æŠ½å¥–")) {
 				Other.data.set("Info."+name+".type", "random");
 		  		try {
 		  			Other.data.save(file);
@@ -755,17 +755,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc¾ÅÁ¬³é¡ìd£º¡ìeËæ»úÎ»ÖÃ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cä¹è¿æŠ½Â§dï¼šÂ§eéšæœºä½ç½®æŠ½å¥–")) {
 				Other.data.set("Info."+name+".ninetype", "random");
 		  		try {
 		  			Other.data.save(file);
@@ -773,17 +773,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìb·¶Î§Î»ÖÃÄÚ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§bèŒƒå›´ä½ç½®å†…æŠ½å¥–")) {
 				Other.data.set("Info."+name+".type", "order");
 		  		try {
 		  			Other.data.save(file);
@@ -791,17 +791,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc¾ÅÁ¬³é¡ìd£º¡ìb·¶Î§Î»ÖÃÄÚ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cä¹è¿æŠ½Â§dï¼šÂ§bèŒƒå›´ä½ç½®å†…æŠ½å¥–")) {
 				Other.data.set("Info."+name+".ninetype", "order");
 		  		try {
 		  			Other.data.save(file);
@@ -809,17 +809,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìbÓĞÎïÆ·µÄËæ»ú³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§bæœ‰ç‰©å“çš„éšæœºæŠ½å¥–")) {
 				Other.data.set("Info."+name+".type", "embellishment");
 		  		try {
 		  			Other.data.save(file);
@@ -827,17 +827,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc·´¸´ºáÌø³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cåå¤æ¨ªè·³æŠ½å¥–")) {
 				Other.data.set("Info."+name+".type", "repeatedly");
 		  		try {
 		  			Other.data.save(file);
@@ -845,17 +845,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc¾ÅÁ¬³é¡ìd£º¡ìc·´¸´ºáÌø³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cä¹è¿æŠ½Â§dï¼šÂ§cåå¤æ¨ªè·³æŠ½å¥–")) {
 				Other.data.set("Info."+name+".ninetype", "repeatedly");
 		  		try {
 		  			Other.data.save(file);
@@ -863,17 +863,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc¾ÅÁ¬³é¡ìd£º¡ì6¿ìÀÖ¾ØĞÎ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cä¹è¿æŠ½Â§dï¼šÂ§6å¿«ä¹çŸ©å½¢æŠ½å¥–")) {
 				Other.data.set("Info."+name+".ninetype", "gradient");
 		  		try {
 		  			Other.data.save(file);
@@ -881,17 +881,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì3ÅÜÂíµÆ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§3è·‘é©¬ç¯æŠ½å¥–")) {
 				Other.data.set("Info."+name+".type", "show");
 		  		try {
 		  			Other.data.save(file);
@@ -899,17 +899,17 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìc¾ÅÁ¬³é¡ìd£º¡ì3ÅÜÂíµÆ³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cä¹è¿æŠ½Â§dï¼šÂ§3è·‘é©¬ç¯æŠ½å¥–")) {
 				Other.data.set("Info."+name+".ninetype", "show");
 		  		try {
 		  			Other.data.save(file);
@@ -917,58 +917,58 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			}
 		  		}
-		  		p.sendMessage("¡ìa³É¹¦ÉèÖÃ");
+		  		p.sendMessage("Â§aæˆåŠŸè®¾ç½®");
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìa·µ»ØÉèÖÃÁĞ±í")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§aè¿”å›è®¾ç½®åˆ—è¡¨")) {
 				p.closeInventory();
 				Gui.choose(p, name);
 				return;
 			}
 	    	return;
 	    }
-	    if(evt.getView().getTitle().startsWith("¡ì3Ïë¶Ô")) {
+	    if(evt.getView().getTitle().startsWith("Â§3æƒ³å¯¹")) {
 	    	evt.setCancelled(true);
 			String title = evt.getView().getTitle();
-			String name = ChatColor.stripColor(title.replace("¡ì3Ïë¶Ô", "").replace("¡ì3½øĞĞÊ²Ã´²Ù×÷£¿", ""));
+			String name = ChatColor.stripColor(title.replace("Â§3æƒ³å¯¹", "").replace("Â§3è¿›è¡Œä»€ä¹ˆæ“ä½œï¼Ÿ", ""));
 			if(evt.getCurrentItem() == null || evt.getCurrentItem().getType() == Material.AIR || !evt.getCurrentItem().getItemMeta().hasDisplayName()) {
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìaµ¥¶ÀÉèÖÃÏä×ÓÊôĞÔ")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§aå•ç‹¬è®¾ç½®ç®±å­å±æ€§")) {
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì5ĞŞ¸Ä½±³Ø½±Àø")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§5ä¿®æ”¹å¥–æ± å¥–åŠ±")) {
 				Gui.setcrate(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ì6ÉèÖÃÑÕÉ«")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§6è®¾ç½®é¢œè‰²")) {
 				Gui.color(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaÉèÖÃ")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aè®¾ç½®")) {
 				Gui.way(p, name);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìa·µ»ØÑ¡ÏîÁĞ±í")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aè¿”å›é€‰é¡¹åˆ—è¡¨")) {
 				p.closeInventory();
 				Gui.cratelist(p, 1);
 				return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñÆôÓÃµ¥³é¶¯»­")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å¯ç”¨å•æŠ½åŠ¨ç”»")) {
 				if(Other.data.getBoolean("Info."+name+".animation")) {
 					Other.data.set("Info."+name+".animation", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".animation", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -976,9 +976,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -988,14 +988,14 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñÆôÓÃ¡ìc¾ÅÁ¬³é¡ìa¶¯»­")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å¯ç”¨Â§cä¹è¿æŠ½Â§aåŠ¨ç”»")) {
 				if(Other.data.getBoolean("Info."+name+".nineanimation")) {
 					Other.data.set("Info."+name+".nineanimation", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".nineanimation", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1003,9 +1003,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1015,14 +1015,14 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñÆôÓÃ¹«¸æµ¥³éµ½µÄÎïÆ·")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å¯ç”¨å…¬å‘Šå•æŠ½åˆ°çš„ç‰©å“")) {
 				if(Other.data.getBoolean("Info."+name+".info")) {
 					Other.data.set("Info."+name+".info", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".info", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1030,9 +1030,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1042,14 +1042,14 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñÆôÓÃ¹«¸æ¡ìc¾ÅÁ¬³é¡ìaµ½µÄÎïÆ·")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å¯ç”¨å…¬å‘ŠÂ§cä¹è¿æŠ½Â§aåˆ°çš„ç‰©å“")) {
 				if(Other.data.getBoolean("Info."+name+".nineinfo")) {
 					Other.data.set("Info."+name+".nineinfo", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".nineinfo", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1057,9 +1057,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1069,15 +1069,15 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñµ¥³éÏä×ÓÇåÀí³éµ½µÄÎïÆ·¹¦ÄÜ")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å•æŠ½ç®±å­æ¸…ç†æŠ½åˆ°çš„ç‰©å“åŠŸèƒ½")) {
 				if(Other.data.getBoolean("Info."+name+".clear")) {
 					Other.data.set("Info."+name+".backup", false);
 					Other.data.set("Info."+name+".clear", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".clear", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1085,9 +1085,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1097,18 +1097,18 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñÆôÓÃÌî³äÒòclearÇå¿ÕÍêÄÚÈİµÄÏä×ÓÄÚÈİ")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å¯ç”¨å¡«å……å› clearæ¸…ç©ºå®Œå†…å®¹çš„ç®±å­å†…å®¹")) {
 				if(!Other.data.getBoolean("Info."+name+".clear")) {
-					p.sendMessage("¡ìcÕâ¸öÏä×ÓÃ»ÓĞ¿ªÆôÒ»´ÎĞÔ³é½±¹¦ÄÜ£¡");
+					p.sendMessage("Â§cè¿™ä¸ªç®±å­æ²¡æœ‰å¼€å¯ä¸€æ¬¡æ€§æŠ½å¥–åŠŸèƒ½ï¼");
 					return;
 				}
 				if(Other.data.getBoolean("Info."+name+".backup")) {
 					Other.data.set("Info."+name+".backup", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".backup", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1116,9 +1116,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1128,14 +1128,14 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÊÇ·ñÆôÓÃÕâ¸ö³é½±ÏäÎŞĞè¶ÔÏä¼´¿É³é½±")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹æ˜¯å¦å¯ç”¨è¿™ä¸ªæŠ½å¥–ç®±æ— éœ€å¯¹ç®±å³å¯æŠ½å¥–")) {
 				if(Other.data.getBoolean("Info."+name+".unpackanytime")) {
 					Other.data.set("Info."+name+".unpackanytime", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".unpackanytime", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1143,9 +1143,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1155,14 +1155,14 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("¡ìaĞŞ¸ÄÕâ¸ö³é½±ÏäÊÇ·ñ¿ÉÒÔ²é¿´½±³ØÄÚÈİ")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().startsWith("Â§aä¿®æ”¹è¿™ä¸ªæŠ½å¥–ç®±æ˜¯å¦å¯ä»¥æŸ¥çœ‹å¥–æ± å†…å®¹")) {
 				if(Other.data.getBoolean("Info."+name+".check")) {
 					Other.data.set("Info."+name+".check", false);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìcÎ´ÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§cæœªå¯ç”¨");
 				}
 				else {
 					Other.data.set("Info."+name+".check", true);
-					p.sendMessage("¡ì2³É¹¦ĞŞ¸ÄÎª£º¡ìaÆôÓÃ");
+					p.sendMessage("Â§2æˆåŠŸä¿®æ”¹ä¸ºï¼šÂ§aå¯ç”¨");
 				}
 		  		try {
 		  			Other.data.save(file);
@@ -1170,9 +1170,9 @@ public class Event implements Listener  {
 		  			e.printStackTrace();
 	        	}
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
 		  			} else if(evts.getOpenInventory().getTitle().equals(title)) {
@@ -1182,7 +1182,7 @@ public class Event implements Listener  {
 		  		}
 		  		return;
 			}
-			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("¡ìcÉ¾³ıÕâ¸öÏä×Ó")) {
+			if(evt.getCurrentItem().getItemMeta().getDisplayName().equals("Â§cåˆ é™¤è¿™ä¸ªç®±å­")) {
 				Other.data.set("Info."+name, null);
 		  		Other.data.set("backup."+name, null);
 		  		try {
@@ -1192,26 +1192,26 @@ public class Event implements Listener  {
 	        	}
 				p.closeInventory();
 		  		for(Player evts:Bukkit.getOnlinePlayers()) {
-		  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+		  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 		  				String titles = evts.getOpenInventory().getTitle();
-		  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+		  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 		  				evts.closeInventory();
 		  				Gui.cratelist(evts, type);
-		  			}else if(evts.getOpenInventory().getTitle().startsWith("¡ì2³é½±Ïä"+Other.data.getString("Info."+name+".color")+name)) {
+		  			}else if(evts.getOpenInventory().getTitle().startsWith("Â§2æŠ½å¥–ç®±"+Other.data.getString("Info."+name+".color")+name)) {
 		  					evts.closeInventory();
-		  					evts.sendMessage("¡ìaÕâ¸ö³é½±Ïä±»¡ìc"+p.getName()+"¡ìaÉ¾³ı£¡");
+		  					evts.sendMessage("Â§aè¿™ä¸ªæŠ½å¥–ç®±è¢«Â§c"+p.getName()+"Â§aåˆ é™¤ï¼");
 		  			}else if(evts.getOpenInventory().getTitle().equals(title)) {
 	  					evts.closeInventory();
-	  					evts.sendMessage("¡ìaÕâ¸ö³é½±Ïä±»¡ìc"+p.getName()+"¡ìaÉ¾³ı£¡");
-		  			}else if(evts.getOpenInventory().getTitle().startsWith(ChatColor.stripColor("ÉèÖÃ"+Other.data.getString("Info."+name+".color")+name+"ÏÔÊ¾µÄÑÕÉ«"))) {
+	  					evts.sendMessage("Â§aè¿™ä¸ªæŠ½å¥–ç®±è¢«Â§c"+p.getName()+"Â§aåˆ é™¤ï¼");
+		  			}else if(evts.getOpenInventory().getTitle().startsWith(ChatColor.stripColor("è®¾ç½®"+Other.data.getString("Info."+name+".color")+name+"æ˜¾ç¤ºçš„é¢œè‰²"))) {
 	  					evts.closeInventory();
-	  					evts.sendMessage("¡ìaÕâ¸ö³é½±Ïä±»¡ìc"+p.getName()+"¡ìaÉ¾³ı£¡");
-		  			}else if(evt.getView().getTitle().startsWith(ChatColor.stripColor("¡ìdÉèÖÃ³é½±Ïä"+Other.data.getString("Info."+name+".color")+name+"µÄ¿ªÏä·½Ê½"))) {
+	  					evts.sendMessage("Â§aè¿™ä¸ªæŠ½å¥–ç®±è¢«Â§c"+p.getName()+"Â§aåˆ é™¤ï¼");
+		  			}else if(evt.getView().getTitle().startsWith(ChatColor.stripColor("Â§dè®¾ç½®æŠ½å¥–ç®±"+Other.data.getString("Info."+name+".color")+name+"çš„å¼€ç®±æ–¹å¼"))) {
 	  					evts.closeInventory();
-	  					evts.sendMessage("¡ìaÕâ¸ö³é½±Ïä±»¡ìc"+p.getName()+"¡ìaÉ¾³ı£¡");
+	  					evts.sendMessage("Â§aè¿™ä¸ªæŠ½å¥–ç®±è¢«Â§c"+p.getName()+"Â§aåˆ é™¤ï¼");
 		  			}
 		  		}
-				p.sendMessage("¡ìcÉ¾³ı¡ìa"+name+"¡ìc³É¹¦");
+				p.sendMessage("Â§cåˆ é™¤Â§a"+name+"Â§cæˆåŠŸ");
 				return;
 			}
 	    }
@@ -1219,8 +1219,8 @@ public class Event implements Listener  {
 
 	@EventHandler
 	public void Close(InventoryCloseEvent evt) {
-	    if(evt.getView().getTitle().startsWith("¡ì2³é½±Ïä")) {
-	    	String title = ChatColor.stripColor(evt.getView().getTitle().replace("¡ì2³é½±Ïä", "").replace("¡ì2ÉèÖÃ", ""));
+	    if(evt.getView().getTitle().startsWith("Â§2æŠ½å¥–ç®±")) {
+	    	String title = ChatColor.stripColor(evt.getView().getTitle().replace("Â§2æŠ½å¥–ç®±", "").replace("Â§2è®¾ç½®", ""));
 	    	ArrayList<String> data = new ArrayList<String>();
 	  		int a=0;
 	  		while(a<54) {
@@ -1235,11 +1235,11 @@ public class Event implements Listener  {
 	  		a=0;
 	  		List<String> exist = Other.data.getStringList("Info."+title+".data");
 	  		if(exist.size()==0) {
-	  			Other.data.set("Info."+title+".color", "¡ìf");
+	  			Other.data.set("Info."+title+".color", "Â§f");
 	  			Other.data.set("Info."+title+".animation", true);
 	  			Other.data.set("Info."+title+".nineanimation", true);
-	  			Other.data.set("Info."+title+".announcement", "ÎŞ");
-	  			Other.data.set("Info."+title+".nine", "ÎŞ");
+	  			Other.data.set("Info."+title+".announcement", "æ— ");
+	  			Other.data.set("Info."+title+".nine", "æ— ");
 	  			Other.data.set("Info."+title+".number", -1);
 	  			Other.data.set("Info."+title+".cd", -1);
 	  			Other.data.set("Info."+title+".ninenumber", -1);
@@ -1262,23 +1262,23 @@ public class Event implements Listener  {
 	  			e.printStackTrace();
 	    	}
 	  		Player player = (Player) evt.getPlayer();
-	  		player.sendMessage("¡ìa±£´æ³É¹¦");
+	  		player.sendMessage("Â§aä¿å­˜æˆåŠŸ");
 	  		for(Player evts:Bukkit.getOnlinePlayers()) {
-	  			if(evts.getOpenInventory().getTitle().startsWith("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe")) {
+	  			if(evts.getOpenInventory().getTitle().startsWith("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e")) {
 	  				String titles = evts.getOpenInventory().getTitle();
-	  				int type = Integer.parseInt(titles.replace("¡ìa³é½±Ïä¡ì2ÁĞ±í¡ì5£º¡ìdµÚ¡ìe", "").replace("¡ìdÒ³", ""));
+	  				int type = Integer.parseInt(titles.replace("Â§aæŠ½å¥–ç®±Â§2åˆ—è¡¨Â§5ï¼šÂ§dç¬¬Â§e", "").replace("Â§dé¡µ", ""));
 	  				evts.closeInventory();
 	  				Gui.cratelist(evts, type);
 				}
 			}
 	    	return;
 	    }
-	    if(evt.getView().getTitle().contains("¡ìc¾ÅÁ¬¿ªÏä½á¹û")||evt.getView().getTitle().contains("¡ìa¿ªÏä½á¹û")) {
+	    if(evt.getView().getTitle().contains("Â§cä¹è¿å¼€ç®±ç»“æœ")||evt.getView().getTitle().contains("Â§aå¼€ç®±ç»“æœ")) {
 	    	for(ItemStack item:evt.getInventory().getContents()) {
 	    		if(item==null||item.getType() == Material.AIR) {
 	    			continue;
 	    		}
-	    		if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName()&&(item.getItemMeta().getDisplayName().contains("ÁìÈ¡ÄãµÄ½±Àø°É£¡")||item.getItemMeta().getDisplayName().equals("¡ì2½öÕ¹Ê¾")||item.getItemMeta().getDisplayName().contains("ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡"))) {
+	    		if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName()&&(item.getItemMeta().getDisplayName().contains("é¢†å–ä½ çš„å¥–åŠ±å§ï¼")||item.getItemMeta().getDisplayName().equals("Â§2ä»…å±•ç¤º")||item.getItemMeta().getDisplayName().contains("é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼"))) {
 	    			continue;
 	    		}
 	    		CommonlyWay.GiveItem((Player) evt.getPlayer(), item);
