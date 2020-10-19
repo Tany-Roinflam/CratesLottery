@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import com.comphenix.protocol.utility.StreamSerializer;
 
 public class CommonlyWay {
-//		ÃüÁîÅĞ¶ÏÊÇ·ñÎªOP£¬²»ÊÇÔòtrue
+//		å‘½ä»¤åˆ¤æ–­æ˜¯å¦ä¸ºOPï¼Œä¸æ˜¯åˆ™true
 		public static boolean OpUseCommand(CommandSender player) {
 			if(player.isOp()) {
 				return false;
@@ -28,7 +28,7 @@ public class CommonlyWay {
 			
 		}
 		
-//		ÃüÁîÅĞ¶ÏÊÇ·ñÎª¿ØÖÆÌ¨£¬ÊÇÔòtrue
+//		å‘½ä»¤åˆ¤æ–­æ˜¯å¦ä¸ºæ§åˆ¶å°ï¼Œæ˜¯åˆ™true
 		public static boolean ConsoleUse(CommandSender sender) {
 			if(sender instanceof Player){
 				return false;
@@ -37,21 +37,18 @@ public class CommonlyWay {
 			}
 		}
 		
-//		ĞòÁĞ»¯ItemStack
+//		åºåˆ—åŒ–ItemStack
 		public static String GetItemData(ItemStack item) {
 			String a;
-			int amount = item.getAmount();
-			item.setAmount(1);
 			try {
 			    a = new StreamSerializer().serializeItemStack(item);
 			} catch (Exception e) {
 			    a = null;
 			}
-			item.setAmount(amount);
 			return a;
 		}
 		
-//		·´ĞòÁĞ»¯ItemStack
+//		ååºåˆ—åŒ–ItemStack
 		public static ItemStack GetItemStack(String data) {
 			try {
 				return new StreamSerializer().deserializeItemStack(data);
@@ -61,7 +58,7 @@ public class CommonlyWay {
 			return null;
 		}
 		
-//		Éú³É³¤¶È¹Ì¶¨µÄËæ»ú×Ö·û´®
+//		ç”Ÿæˆé•¿åº¦å›ºå®šçš„éšæœºå­—ç¬¦ä¸²
 	    public static String CreateRandomString(int length)
 	    {
 	        String number = "";
@@ -82,7 +79,7 @@ public class CommonlyWay {
 	        return number;
 	    }
 		
-//		»ñÈ¡Íæ¼Ò±³°ü¿Õ¸ñÊı
+//		è·å–ç©å®¶èƒŒåŒ…ç©ºæ ¼æ•°
 		public static int BackpackEmptyNumber(Player player) {
 			int number=0;
 			int empty=0;
@@ -95,7 +92,7 @@ public class CommonlyWay {
 			return empty;
 		}
 		
-//		Ôö¼Ó/¿Û³ıÍæ¼ÒµÄ¾­Ñé£¨Ö§³Ö¸ºÊı½µ¼¶£©
+//		å¢åŠ /æ‰£é™¤ç©å®¶çš„ç»éªŒï¼ˆæ”¯æŒè´Ÿæ•°é™çº§ï¼‰
 		public static  void GiveExp(Player player, int xp) {
 			int level = player.getLevel();
 			int toNextLevel = GetUpgradeExp(level);
@@ -122,7 +119,7 @@ public class CommonlyWay {
   			return (int) (level < 17 ? level * (level + 6) : level < 31 ? level * (level * 2.5 - 40.5) + 360 : level * (level * 4.5 - 162.5) + 2220);
   		}
   		
-//		¸øÓèÍæ¼ÒÎïÆ·£¬Èç¹û±³°üÂúÔòÔÚÔ­µØÉú³ÉµôÂäÎï
+//		ç»™äºˆç©å®¶ç‰©å“ï¼Œå¦‚æœèƒŒåŒ…æ»¡åˆ™åœ¨åŸåœ°ç”Ÿæˆæ‰è½ç‰©
 		public static void GiveItem(Player player,ItemStack item) {
 			if(player.getInventory().firstEmpty()==-1) {
 				player.getWorld().dropItemNaturally(player.getLocation(), item);
@@ -131,7 +128,7 @@ public class CommonlyWay {
 			}
 		}
 		
-//		ÅĞ¶ÏÍæ¼ÒÊÇ·ñÎª¿ÕÊÖ£¬¿ÕÊÖÔòtrue
+//		åˆ¤æ–­ç©å®¶æ˜¯å¦ä¸ºç©ºæ‰‹ï¼Œç©ºæ‰‹åˆ™true
 		public static Boolean EmptyItem(Player player) {
 			if(player.getInventory().getItemInHand()==null||player.getInventory().getItemInHand().getType() == Material.AIR) {
 				return true;
@@ -140,8 +137,8 @@ public class CommonlyWay {
 		}
 
 		
-//				·µ»ØÕâ¸öÎïÆ·µÄNBT
-//				Ğè·´Éä
+//				è¿”å›è¿™ä¸ªç‰©å“çš„NBT
+//				éœ€åå°„
 //				public static Class<?> nbttagcompound;
 //				public static Class<?> itemstack;
 //				public static Method asNMSCopy;
@@ -170,7 +167,7 @@ public class CommonlyWay {
 //					}
 //				}	
 				
-//			±éÀúÊı×é£¬Ìæ»»Êı×é×Ö·û´®
+//			éå†æ•°ç»„ï¼Œæ›¿æ¢æ•°ç»„å­—ç¬¦ä¸²
 			public static java.util.List<String> ListReplace(java.util.List<String> list,String WasReplaced,String replace){
 				ArrayList<String> news = new ArrayList<>();
 				for(String s:list) {
@@ -179,7 +176,7 @@ public class CommonlyWay {
 				return news;
 			}
 			
-//	  		ÅĞ¶Ï½»»¥ÊÖ
+//	  		åˆ¤æ–­äº¤äº’æ‰‹
 	  		public static boolean getInteractHand(PlayerInteractEvent evt)
 	  		{
 	  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
@@ -188,7 +185,7 @@ public class CommonlyWay {
 	  			return false;
 	  		}
 	  		
-//	  		ÅĞ¶Ï·ÅÖÃÊÖ
+//	  		åˆ¤æ–­æ”¾ç½®æ‰‹
 	  		public static boolean getPlaceHand(BlockPlaceEvent evt)
 	  		{
 	  			if(evt.getHand()==null||!evt.getHand().equals(EquipmentSlot.HAND))
@@ -197,7 +194,7 @@ public class CommonlyWay {
 	  			return false;
 	  		}
 	  		
-//			°Ñ¼¸ÂÊ%×ª»¯ÎªÕæÕıµÄ°Ù·Ö±È
+//			æŠŠå‡ ç‡%è½¬åŒ–ä¸ºçœŸæ­£çš„ç™¾åˆ†æ¯”
 			public static double PercentageNumber(String percentage) {
 				double a = 0;
 				try {
@@ -208,7 +205,7 @@ public class CommonlyWay {
 				return a;
 			}
 			
-//			°Ñ¼¸ÂÊ%×ª»¯ÎªÕæÕıµÄ°Ù·Ö±È,²¢ÇÒ½øĞĞ³Ë·¨¼ÆËã
+//			æŠŠå‡ ç‡%è½¬åŒ–ä¸ºçœŸæ­£çš„ç™¾åˆ†æ¯”,å¹¶ä¸”è¿›è¡Œä¹˜æ³•è®¡ç®—
 			public static double Percentage(double number,String percentage) {
 				try {
 					number = number * (Double.parseDouble(percentage.replace("%", ""))/100);
@@ -218,7 +215,7 @@ public class CommonlyWay {
 				return number;
 			}
 			
-//			°ÑÍæ¼Ò´«ËÍµ½Õâ¸öÇø¿éÎ»ÖÃ
+//			æŠŠç©å®¶ä¼ é€åˆ°è¿™ä¸ªåŒºå—ä½ç½®
 			public static void TelePortChunk(Player player,World world,Chunk chunk) {
 				Location location = player.getLocation();
 				location.setWorld(world);
@@ -230,7 +227,7 @@ public class CommonlyWay {
 				player.teleport(location);
 			}
 			
-//			·µ»ØÕâ¸öÊÀ½çµÄÍæ¼ÒÊı
+//			è¿”å›è¿™ä¸ªä¸–ç•Œçš„ç©å®¶æ•°
 			public static int PlayerNumber(World world) {
 				int i = 0;
 				for(Entity entity:world.getEntities()) {
