@@ -8,50 +8,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 public class BasicLibrary {
-	public static List<EntityType> uselessentitylist = new ArrayList<EntityType>();
 	public static List<ItemStack> stainedglass = new ArrayList<ItemStack>();
 	public static List<ItemStack> stainedwool = new ArrayList<ItemStack>();
 	
 	BasicLibrary(){
-		uselessentitylist.add(EntityType.ZOMBIE);
-		uselessentitylist.add(EntityType.ZOMBIE_VILLAGER);
-		uselessentitylist.add(EntityType.PIG_ZOMBIE);
-		uselessentitylist.add(EntityType.SKELETON);
-		uselessentitylist.add(EntityType.SPIDER);
-		uselessentitylist.add(EntityType.CAVE_SPIDER);
-		uselessentitylist.add(EntityType.BAT);
-		uselessentitylist.add(EntityType.ARROW);
-		uselessentitylist.add(EntityType.SPLASH_POTION);
-		uselessentitylist.add(EntityType.WITHER);
-		uselessentitylist.add(EntityType.WITHER_SKULL);
-		uselessentitylist.add(EntityType.CREEPER);
-		uselessentitylist.add(EntityType.ENDERMAN);
-		uselessentitylist.add(EntityType.SQUID);
-		try {
-			uselessentitylist.add(EntityType.RABBIT);
-		}catch (Exception a) {
-			
-		}
-		try {
-			uselessentitylist.add(EntityType.valueOf("FLAMMPFEIL.SLASHBLADE_SUMMONEDSWORDATM"));
-		}catch (Exception a) {
-			
-		}
-		try {
-			uselessentitylist.add(EntityType.valueOf("FLAMMPFEIL.SLASHBLADE_WITHERSWORD"));
-		}catch (Exception a) {
-			
-		}
-		try {
-			uselessentitylist.add(EntityType.valueOf("FLAMMPFEIL.SLASHBLADE_SUMMONEDSWORDBASE"));
-		}catch (Exception a) {
-			
-		}
-		try {
-			uselessentitylist.add(EntityType.valueOf("ESSENTIALCRAFT_COMMONENTITYMRUPRESENCE"));
-		}catch (Exception a) {
-			
-		}
 //		如果需要使用请在plugin.yml里加上api-version: 1.13
 		try {
 			stainedglass.add(new ItemStack(Material.valueOf("WHITE_STAINED_GLASS_PANE")));
