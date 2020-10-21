@@ -23,7 +23,7 @@ public class Preset {
 	static HashMap<String, int[]> item = new HashMap<String, int[]>();
 	static HashMap<String, Boolean> law = new HashMap<String, Boolean>();
 	public static void winging(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
@@ -39,8 +39,8 @@ public class Preset {
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
 		glass = BasicLibrary.stainedglass.get(durability);
-        data.setDisplayName("¡ì"+color+"³é½±¡ì"+colors+"ÖĞ");
-        lore.add("¡ì"+color+"³é½±Ò»Ê±Ë¬¡ìa£¬¡ì"+colors+"Ò»Ö±³é½±Ò»Ö±Ë¬");
+        data.setDisplayName("Â§"+color+"æŠ½å¥–Â§"+colors+"ä¸­");
+        lore.add("Â§"+color+"æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§"+colors+"ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
         data.setLore(lore);
         glass.setItemMeta(data);
         lore.clear();
@@ -62,7 +62,7 @@ public class Preset {
 	}
 	
 	public static void wing(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
@@ -77,8 +77,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-        lore.add("¡ì"+color+"¿ªÏä¡ì"+colors+"½á¹û");
+        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+        lore.add("Â§"+color+"å¼€ç®±Â§"+colors+"ç»“æœ");
         glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
@@ -101,7 +101,7 @@ public class Preset {
 	}
 	
 	public static void ninewinging(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
@@ -115,9 +115,9 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-        data.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-        lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-        lore.add("¡ì"+colors+"³é½±ing");
+        data.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+        lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+        lore.add("Â§"+colors+"æŠ½å¥–ing");
         glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
@@ -170,7 +170,7 @@ public class Preset {
 	}
 	
 	public static void ninewing(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìc³é½±¡ì6Ïä£º"+Other.data.getString("Info."+name+".color")+name+"¡ìc¾ÅÁ¬¿ªÏä½á¹û");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§cæŠ½å¥–Â§6ç®±ï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§cä¹è¿å¼€ç®±ç»“æœ");
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
@@ -185,8 +185,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-        lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+        lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
         glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
@@ -240,7 +240,7 @@ public class Preset {
 	}
 	
 	public static void randomwinging(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
@@ -256,8 +256,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-	    data.setDisplayName("¡ì"+color+"³é½±¡ì"+colors+"ÖĞ");
-	    lore.add("¡ì"+color+"³é½±Ò»Ê±Ë¬¡ìa£¬¡ì"+colors+"Ò»Ö±³é½±Ò»Ö±Ë¬");
+	    data.setDisplayName("Â§"+color+"æŠ½å¥–Â§"+colors+"ä¸­");
+	    lore.add("Â§"+color+"æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§"+colors+"ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 	    glass = BasicLibrary.stainedglass.get(durability);
 	    data.setLore(lore);
 	    glass.setItemMeta(data);
@@ -283,7 +283,7 @@ public class Preset {
 	}
 
 	public static void randomwing(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 		
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		
@@ -301,8 +301,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-        lore.add("¡ì"+color+"¿ªÏä¡ì"+colors+"½á¹û");
+        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+        lore.add("Â§"+color+"å¼€ç®±Â§"+colors+"ç»“æœ");
         glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
@@ -329,7 +329,7 @@ public class Preset {
 	}
 	
 	public static void randomninewinging(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 		
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
@@ -345,9 +345,9 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-        data.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-        lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-        lore.add("¡ì"+colors+"³é½±ing");
+        data.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+        lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+        lore.add("Â§"+colors+"æŠ½å¥–ing");
         glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
@@ -380,7 +380,7 @@ public class Preset {
 	}
 	
 	public static void randomninewing(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìc³é½±¡ì6Ïä£º"+Other.data.getString("Info."+name+".color")+name+"¡ìc¾ÅÁ¬¿ªÏä½á¹û");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§cæŠ½å¥–Â§6ç®±ï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§cä¹è¿å¼€ç®±ç»“æœ");
 		
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
@@ -397,8 +397,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-        lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+        lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
         glass = BasicLibrary.stainedglass.get(durability);
         data.setLore(lore);
         glass.setItemMeta(data);
@@ -433,7 +433,7 @@ public class Preset {
 	}
 	
 	public static void orderwinging(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 		
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
@@ -449,8 +449,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-	    data.setDisplayName("¡ì"+color+"³é½±¡ì"+colors+"ÖĞ");
-	    lore.add("¡ì"+color+"³é½±Ò»Ê±Ë¬¡ìa£¬¡ì"+colors+"Ò»Ö±³é½±Ò»Ö±Ë¬");
+	    data.setDisplayName("Â§"+color+"æŠ½å¥–Â§"+colors+"ä¸­");
+	    lore.add("Â§"+color+"æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§"+colors+"ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 	    glass = BasicLibrary.stainedglass.get(durability);
 	    data.setLore(lore);
 	    glass.setItemMeta(data);
@@ -474,7 +474,7 @@ public class Preset {
 	}
 
 		public static void orderwing(Player player,String name) {
-		Inventory gui = Bukkit.createInventory(null, 45, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+		Inventory gui = Bukkit.createInventory(null, 45, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 		ItemStack glass = BasicLibrary.stainedglass.get(0);
 		ItemMeta data = glass.getItemMeta();
 	    ArrayList<String> lore = new ArrayList<String>();
@@ -489,8 +489,8 @@ public class Preset {
 		}
 		int color = (short) random.nextInt(9)+1;
 		int colors = (short) random.nextInt(9)+1;
-	    data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-	    lore.add("¡ì"+color+"¿ªÏä¡ì"+colors+"½á¹û");
+	    data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+	    lore.add("Â§"+color+"å¼€ç®±Â§"+colors+"ç»“æœ");
 	    glass = BasicLibrary.stainedglass.get(durability);
 	    data.setLore(lore);
 	    glass.setItemMeta(data);
@@ -516,7 +516,7 @@ public class Preset {
 	}
 
 		public static void orderninewinging(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 45, "¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+			Inventory gui = Bukkit.createInventory(null, 45, "Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			
@@ -533,9 +533,9 @@ public class Preset {
 			}
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-		    data.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-		    lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-		    lore.add("¡ì"+colors+"³é½±ing");
+		    data.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+		    lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+		    lore.add("Â§"+colors+"æŠ½å¥–ing");
 		    glass = BasicLibrary.stainedglass.get(durability);
 		    data.setLore(lore);
 		    glass.setItemMeta(data);
@@ -564,7 +564,7 @@ public class Preset {
 		}
 
 		public static void orderninewing(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 45, "¡ìc³é½±¡ì6Ïä£º"+Other.data.getString("Info."+name+".color")+name+"¡ìc¾ÅÁ¬¿ªÏä½á¹û");
+			Inventory gui = Bukkit.createInventory(null, 45, "Â§cæŠ½å¥–Â§6ç®±ï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§cä¹è¿å¼€ç®±ç»“æœ");
 			
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			
@@ -581,8 +581,8 @@ public class Preset {
 			}
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-		    data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-		    lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+		    data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+		    lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
 		    glass = BasicLibrary.stainedglass.get(durability);
 		    data.setLore(lore);
 		    glass.setItemMeta(data);
@@ -611,7 +611,7 @@ public class Preset {
 		}
 
 		public static void embellishmentwinging(Player player,String name) {
-		    Inventory gui = Bukkit.createInventory(null, 54, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+		    Inventory gui = Bukkit.createInventory(null, 54, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			List<String> list = Other.data.getStringList("Info."+name+".data");
 			int a=0;
 			int c=0;
@@ -641,19 +641,19 @@ public class Preset {
 			int size=54;
 			if(c==9) {
 				size=45;
-				gui = Bukkit.createInventory(null, 45, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+				gui = Bukkit.createInventory(null, 45, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 				if(d==9) {
 					size=36;
-					gui = Bukkit.createInventory(null, 36, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+					gui = Bukkit.createInventory(null, 36, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 					if(e==9) {
 						size=27;
-						gui = Bukkit.createInventory(null, 27, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+						gui = Bukkit.createInventory(null, 27, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 						if(f==9) {
 							size=18;
-							gui = Bukkit.createInventory(null, 18, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+							gui = Bukkit.createInventory(null, 18, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 							if(g==9) {
 								size=9;
-								gui = Bukkit.createInventory(null, 9, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+								gui = Bukkit.createInventory(null, 9, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 							}
 						}
 					}
@@ -675,8 +675,8 @@ public class Preset {
 		    List<String> lists = Other.data.getStringList("Info."+name+".data");
 	        int i=0;
 	        while(i<size) {
-	        data.setDisplayName("¡ìf³é½±¡ìdÖĞ");
-	        lore.add("¡ìf³é½±Ò»Ê±Ë¬¡ìa£¬¡ì2Ò»Ö±³é½±Ò»Ö±Ë¬");
+	        data.setDisplayName("Â§fæŠ½å¥–Â§dä¸­");
+	        lore.add("Â§fæŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§2ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 	        data.setLore(lore);
 	        glass = BasicLibrary.stainedglass.get(8);
 	        glass.setItemMeta(data);
@@ -696,18 +696,18 @@ public class Preset {
 				}
 				stack = CommonlyWay.GetItemStack(item);
 				ItemMeta stackdata = stack.getItemMeta();
-				lore.add("¡ìaÓÖÃ»³éÖĞÎÒ£¬¿´ÎÒ¸ÉÊ²Ã´");
+				lore.add("Â§aåˆæ²¡æŠ½ä¸­æˆ‘ï¼Œçœ‹æˆ‘å¹²ä»€ä¹ˆ");
 				stackdata.setLore(lore);
 				lore.clear();
-				stackdata.setDisplayName("¡ì2½öÕ¹Ê¾");
+				stackdata.setDisplayName("Â§2ä»…å±•ç¤º");
 				stack.setItemMeta(stackdata);
 				gui.setItem(b, stack);
 				a++;
 			}
 		    
-	        datas.setDisplayName("¡ì7³é½±¡ìdÖĞ");
+	        datas.setDisplayName("Â§7æŠ½å¥–Â§dä¸­");
 	        glasss = BasicLibrary.stainedglass.get(14);
-	        lore.add("¡ì8³é½±Ò»Ê±Ë¬¡ìa£¬¡ì2Ò»Ö±³é½±Ò»Ö±Ë¬");
+	        lore.add("Â§8æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§2ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 	        datas.setLore(lore);
 			datas.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 	        glasss.setItemMeta(datas);
@@ -740,7 +740,7 @@ public class Preset {
 		}
 
 		public static void embellishmentwing(Player player,String name) {
-		    Inventory gui = Bukkit.createInventory(null, 54, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+		    Inventory gui = Bukkit.createInventory(null, 54, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 			List<String> list = Other.data.getStringList("Info."+name+".data");
 			int a=0;
 			int c=0;
@@ -770,19 +770,19 @@ public class Preset {
 			int size=54;
 			if(c==9) {
 				size=45;
-				gui = Bukkit.createInventory(null, 45, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+				gui = Bukkit.createInventory(null, 45, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 				if(d==9) {
 					size=36;
-					gui = Bukkit.createInventory(null, 36, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+					gui = Bukkit.createInventory(null, 36, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 					if(e==9) {
 						size=27;
-						gui = Bukkit.createInventory(null, 27, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+						gui = Bukkit.createInventory(null, 27, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 						if(f==9) {
 							size=18;
-							gui = Bukkit.createInventory(null, 18, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+							gui = Bukkit.createInventory(null, 18, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 							if(g==9) {
 								size=9;
-								gui = Bukkit.createInventory(null, 9, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+								gui = Bukkit.createInventory(null, 9, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 							}
 						}
 					}
@@ -804,8 +804,8 @@ public class Preset {
 		    
 	        int i=0;
 	        while(i<size) {
-	        data.setDisplayName("¡ìfÁìÈ¡ÄãµÄ½±Àø°É£¡");
-	        lore.add("¡ìf¿ªÏä¡ìa½á¹û");
+	        data.setDisplayName("Â§fé¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+	        lore.add("Â§få¼€ç®±Â§aç»“æœ");
 	        data.setLore(lore);
 	        glass = BasicLibrary.stainedglass.get(8);
 	        glass.setItemMeta(data);
@@ -825,17 +825,17 @@ public class Preset {
 				}
 				stack = CommonlyWay.GetItemStack(item);
 				ItemMeta stackdata = stack.getItemMeta();
-				lore.add("¡ìaÓÖÃ»³éÖĞÎÒ£¬¿´ÎÒ¸ÉÊ²Ã´");
+				lore.add("Â§aåˆæ²¡æŠ½ä¸­æˆ‘ï¼Œçœ‹æˆ‘å¹²ä»€ä¹ˆ");
 				stackdata.setLore(lore);
 				lore.clear();
-				stackdata.setDisplayName("¡ì2½öÕ¹Ê¾");
+				stackdata.setDisplayName("Â§2ä»…å±•ç¤º");
 				stack.setItemMeta(stackdata);
 				gui.setItem(b, stack);
 				a++;
 			}
 			
-	        datas.setDisplayName("¡ì7ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-	        lore.add("¡ì8¿ªÏä¡ì2½á¹û");
+	        datas.setDisplayName("Â§7é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+	        lore.add("Â§8å¼€ç®±Â§2ç»“æœ");
 	        datas.setLore(lore);
 	        datas.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 	        glasss = BasicLibrary.stainedglass.get(14);
@@ -869,7 +869,7 @@ public class Preset {
 		}
 
 		public static void gradientwinging(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 45, "¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+			Inventory gui = Bukkit.createInventory(null, 45, "Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 	        ArrayList<String> lore = new ArrayList<String>();
@@ -884,9 +884,9 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-		        lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-		        lore.add("¡ì"+colors+"³é½±ing");
+		        data.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+		        lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+		        lore.add("Â§"+colors+"æŠ½å¥–ing");
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
@@ -998,7 +998,7 @@ public class Preset {
 		}
 
 		public static void gradientwing(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 45, "¡ìc³é½±¡ì6Ïä£º"+Other.data.getString("Info."+name+".color")+name+"¡ìc¾ÅÁ¬¿ªÏä½á¹û");
+			Inventory gui = Bukkit.createInventory(null, 45, "Â§cæŠ½å¥–Â§6ç®±ï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§cä¹è¿å¼€ç®±ç»“æœ");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 	        ArrayList<String> lore = new ArrayList<String>();
@@ -1013,8 +1013,8 @@ public class Preset {
 			}
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-	        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-	        lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+	        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+	        lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
 	        glass = BasicLibrary.stainedglass.get(durability);
 	        data.setLore(lore);
 	        glass.setItemMeta(data);
@@ -1119,7 +1119,7 @@ public class Preset {
 		}
 		
 		public static void repeatedlywinging(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 54, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+			Inventory gui = Bukkit.createInventory(null, 54, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1134,8 +1134,8 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-			    data.setDisplayName("¡ì"+color+"³é½±¡ì"+colors+"ÖĞ");
-			    lore.add("¡ì"+color+"³é½±Ò»Ê±Ë¬¡ìa£¬¡ì"+colors+"Ò»Ö±³é½±Ò»Ö±Ë¬");
+			    data.setDisplayName("Â§"+color+"æŠ½å¥–Â§"+colors+"ä¸­");
+			    lore.add("Â§"+color+"æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§"+colors+"ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 			    glass = BasicLibrary.stainedglass.get(durability);
 			    data.setLore(lore);
 			    glass.setItemMeta(data);
@@ -1185,7 +1185,7 @@ public class Preset {
 		}
 		
 		public static void repeatedlywing(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 54, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+			Inventory gui = Bukkit.createInventory(null, 54, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1200,8 +1200,8 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-		        lore.add("¡ì"+color+"¿ªÏä¡ì"+colors+"½á¹û");
+		        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+		        lore.add("Â§"+color+"å¼€ç®±Â§"+colors+"ç»“æœ");
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
@@ -1234,7 +1234,7 @@ public class Preset {
 		}
 		
 		public static void repeatedlyninewinging(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 54, "¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+			Inventory gui = Bukkit.createInventory(null, 54, "Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1249,9 +1249,9 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-		        lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-		        lore.add("¡ì"+colors+"³é½±ing");
+		        data.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+		        lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+		        lore.add("Â§"+colors+"æŠ½å¥–ing");
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
@@ -1305,7 +1305,7 @@ public class Preset {
 		}
 		
 		public static void repeatedlyninewing(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 54, "¡ìc³é½±¡ì6Ïä£º"+Other.data.getString("Info."+name+".color")+name+"¡ìc¾ÅÁ¬¿ªÏä½á¹û");
+			Inventory gui = Bukkit.createInventory(null, 54, "Â§cæŠ½å¥–Â§6ç®±ï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§cä¹è¿å¼€ç®±ç»“æœ");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1320,8 +1320,8 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-		        lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+		        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+		        lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
@@ -1364,7 +1364,7 @@ public class Preset {
 		}
 		
 		public static void showninewinging(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 27, "¡ìcÕıÔÚ¾ÅÁ¬¡ìa¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+			Inventory gui = Bukkit.createInventory(null, 27, "Â§cæ­£åœ¨ä¹è¿Â§aå¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1383,9 +1383,9 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-		        lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-		        lore.add("¡ì"+colors+"³é½±ing");
+		        data.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+		        lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+		        lore.add("Â§"+colors+"æŠ½å¥–ing");
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        data.setLore(lore);
 		        glass.setItemMeta(data);
@@ -1420,9 +1420,9 @@ public class Preset {
 				Random random = new Random();
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        itemdata.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-		        lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-		        lore.add("¡ì"+colors+"³é½±ing");
+		        itemdata.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+		        lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+		        lore.add("Â§"+colors+"æŠ½å¥–ing");
 		        itemdata.setLore(lore);
 		        item.setItemMeta(itemdata);
 		        lore.clear();
@@ -1439,9 +1439,9 @@ public class Preset {
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-			chooseglassmeta.setDisplayName("¡ì"+color+"¡ìc¾ÅÁ¬¡ì4³é½±¡ì"+colors+"ÖĞ");
-		    lore.add("¡ì"+color+"²«Ò»²«£¬µ¥³µ±äÄ¦ÍĞ");
-		    lore.add("¡ì"+colors+"³é½±ing");
+			chooseglassmeta.setDisplayName("Â§"+color+"Â§cä¹è¿Â§4æŠ½å¥–Â§"+colors+"ä¸­");
+		    lore.add("Â§"+color+"æä¸€æï¼Œå•è½¦å˜æ‘©æ‰˜");
+		    lore.add("Â§"+colors+"æŠ½å¥–ing");
 		    chooseglassmeta.setLore(lore);
 		    chooseglass.setItemMeta(chooseglassmeta);
 		    gui.setItem(0+location, chooseglass);
@@ -1458,7 +1458,7 @@ public class Preset {
 		}
 
 		public static void showninewing(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 27, "¡ìc³é½±¡ì6Ïä£º"+Other.data.getString("Info."+name+".color")+name+"¡ìc¾ÅÁ¬¿ªÏä½á¹û");
+			Inventory gui = Bukkit.createInventory(null, 27, "Â§cæŠ½å¥–Â§6ç®±ï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§cä¹è¿å¼€ç®±ç»“æœ");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1477,8 +1477,8 @@ public class Preset {
 			}
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-		    data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-		    lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+		    data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+		    lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
 		    glass = BasicLibrary.stainedglass.get(durability);
 		    data.setLore(lore);
 		    glass.setItemMeta(data);
@@ -1522,8 +1522,8 @@ public class Preset {
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-			chooseglassmeta.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄÕ½ÀûÆ·°É£¡");
-		    lore.add("¡ì"+color+"¾ÅÁ¬¿ªÏä¡ì"+colors+"½á¹û");
+			chooseglassmeta.setDisplayName("Â§"+color+"é¢†å–ä½ çš„æˆ˜åˆ©å“å§ï¼");
+		    lore.add("Â§"+color+"ä¹è¿å¼€ç®±Â§"+colors+"ç»“æœ");
 		    chooseglassmeta.setLore(lore);
 		    chooseglass.setItemMeta(chooseglassmeta);
 		    gui.setItem(0+location, chooseglass);
@@ -1536,7 +1536,7 @@ public class Preset {
 		}
 
 		public static void showwinging(Player player,String name) {
-			Inventory gui = Bukkit.createInventory(null, 27, "¡ìaÕıÔÚ¿ªÏä"+Other.data.getString("Info."+name+".color")+name+"¡ìdÖĞ");
+			Inventory gui = Bukkit.createInventory(null, 27, "Â§aæ­£åœ¨å¼€ç®±"+Other.data.getString("Info."+name+".color")+name+"Â§dä¸­");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1555,8 +1555,8 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"³é½±¡ì"+colors+"ÖĞ");
-		        lore.add("¡ì"+color+"³é½±Ò»Ê±Ë¬¡ìa£¬¡ì"+colors+"Ò»Ö±³é½±Ò»Ö±Ë¬");
+		        data.setDisplayName("Â§"+color+"æŠ½å¥–Â§"+colors+"ä¸­");
+		        lore.add("Â§"+color+"æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§"+colors+"ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 		        data.setLore(lore);
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        glass.setItemMeta(data);
@@ -1588,8 +1588,8 @@ public class Preset {
 		    for(int a:item.get(player.getName())) {
 		    	ItemStack item = CommonlyWay.GetItemStack(list.get(a).split(":")[1]);
 		    	ItemMeta itemdata = item.getItemMeta();
-		        data.setDisplayName("¡ìf³é½±¡ìdÖĞ");
-		        lore.add("¡ìf³é½±Ò»Ê±Ë¬¡ìa£¬¡ì2Ò»Ö±³é½±Ò»Ö±Ë¬");
+		        data.setDisplayName("Â§fæŠ½å¥–Â§dä¸­");
+		        lore.add("Â§fæŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§2ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 		        itemdata.setLore(lore);
 		        item.setItemMeta(itemdata);
 		        lore.clear();
@@ -1606,8 +1606,8 @@ public class Preset {
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-			chooseglassmeta.setDisplayName("¡ì"+color+"³é½±¡ì"+colors+"ÖĞ");
-	        lore.add("¡ì"+color+"³é½±Ò»Ê±Ë¬¡ìa£¬¡ì"+colors+"Ò»Ö±³é½±Ò»Ö±Ë¬");
+			chooseglassmeta.setDisplayName("Â§"+color+"æŠ½å¥–Â§"+colors+"ä¸­");
+	        lore.add("Â§"+color+"æŠ½å¥–ä¸€æ—¶çˆ½Â§aï¼ŒÂ§"+colors+"ä¸€ç›´æŠ½å¥–ä¸€ç›´çˆ½");
 	        chooseglassmeta.setLore(lore);
 	        chooseglass.setItemMeta(chooseglassmeta);
 	        lore.clear();
@@ -1625,7 +1625,7 @@ public class Preset {
 		}
 
 		public static void showwing(Player player,String name) {
-			 Inventory gui = Bukkit.createInventory(null, 27, "¡ì6³é½±Ïä¡ìc£º"+Other.data.getString("Info."+name+".color")+name+"¡ìa¿ªÏä½á¹û");
+			 Inventory gui = Bukkit.createInventory(null, 27, "Â§6æŠ½å¥–ç®±Â§cï¼š"+Other.data.getString("Info."+name+".color")+name+"Â§aå¼€ç®±ç»“æœ");
 			ItemStack glass = BasicLibrary.stainedglass.get(0);
 			ItemMeta data = glass.getItemMeta();
 		    ArrayList<String> lore = new ArrayList<String>();
@@ -1644,8 +1644,8 @@ public class Preset {
 				}
 				int color = (short) random.nextInt(9)+1;
 				int colors = (short) random.nextInt(9)+1;
-		        data.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-		        lore.add("¡ì"+color+"¿ªÏä¡ì"+colors+"½á¹û");
+		        data.setDisplayName("Â§"+color+"é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+		        lore.add("Â§"+color+"å¼€ç®±Â§"+colors+"ç»“æœ");
 		        data.setLore(lore);
 		        glass = BasicLibrary.stainedglass.get(durability);
 		        glass.setItemMeta(data);
@@ -1678,13 +1678,13 @@ public class Preset {
 		    	ItemStack item = CommonlyWay.GetItemStack(list.get(a).split(":")[1]);
 		    	if(b!=location) {
 					ItemMeta stackdata = item.getItemMeta();
-					lore.add("¡ìaÓÖÃ»³éÖĞÎÒ£¬¿´ÎÒ¸ÉÊ²Ã´");
+					lore.add("Â§aåˆæ²¡æŠ½ä¸­æˆ‘ï¼Œçœ‹æˆ‘å¹²ä»€ä¹ˆ");
 					stackdata.setLore(lore);
 					lore.clear();
-					stackdata.setDisplayName("¡ì2½öÕ¹Ê¾");
+					stackdata.setDisplayName("Â§2ä»…å±•ç¤º");
 					item.setItemMeta(stackdata);
 		    	} else {
-		    		Preset.location=location;
+		    		Preset.location=a;
 		    	}
 		    	gui.setItem(9+b, item);
 		    	b++;
@@ -1699,8 +1699,8 @@ public class Preset {
 			Random random = new Random();
 			int color = (short) random.nextInt(9)+1;
 			int colors = (short) random.nextInt(9)+1;
-			chooseglassmeta.setDisplayName("¡ì"+color+"ÁìÈ¡ÄãµÄ½±Àø°É£¡");
-	        lore.add("¡ì"+color+"¿ªÏä¡ì"+colors+"½á¹û");
+			chooseglassmeta.setDisplayName("Â§"+color+"é¢†å–ä½ çš„å¥–åŠ±å§ï¼");
+	        lore.add("Â§"+color+"å¼€ç®±Â§"+colors+"ç»“æœ");
 	        chooseglassmeta.setLore(lore);
 	        chooseglass.setItemMeta(chooseglassmeta);
 	        lore.clear();
