@@ -5,38 +5,37 @@ import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
-
 import pers.tany.crateslottery.Other;
 import pers.tany.crateslottery.gui.Gui;
 import pers.tany.crateslottery.listenevent.Event;
 
 public class Name extends StringPrompt {
-	@Override
-	public Prompt acceptInput(ConversationContext context, String input) {
-		Player player = (Player) context.getForWhom();
-		if(input.equals(Event.crate)) {
-			return this;
-		}
-		if(input.contains("&")) {
-			return this;
-		}
-		if(input.contains("¡ì")) {
-			return this;
-		}
-		if(Other.data.getConfigurationSection("Info").getKeys(false).size()!=0) {
-			for(String cratesname:Other.data.getConfigurationSection("Info").getKeys(false)) {
-				if(cratesname.equals(input)) {
-					return this;
-				}
-			}
-		}
-		Event.crate=input;
-		Gui.createcrate(player, input);
-		return END_OF_CONVERSATION;
-	}
+    @Override
+    public Prompt acceptInput(ConversationContext context, String input) {
+        Player player = (Player) context.getForWhom();
+        if (input.equals(Event.crate)) {
+            return this;
+        }
+        if (input.contains("&")) {
+            return this;
+        }
+        if (input.contains("Â§")) {
+            return this;
+        }
+        if (Other.data.getConfigurationSection("Info").getKeys(false).size() != 0) {
+            for (String cratesname : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                if (cratesname.equals(input)) {
+                    return this;
+                }
+            }
+        }
+        Event.crate = input;
+        Gui.createcrate(player, input);
+        return END_OF_CONVERSATION;
+    }
 
-	@Override
-	public String getPromptText(ConversationContext context) {
-		return "¡ìaÇëÊäÈëÒ»¸ö²»ÓëÏÈÇ°³é½±Ïä³åÍ»µÄÃû³Æ£¡";
-	}
+    @Override
+    public String getPromptText(ConversationContext context) {
+        return "Â§aè¯·è¾“å…¥ä¸€ä¸ªä¸ä¸å…ˆå‰æŠ½å¥–ç®±å†²çªçš„åç§°ï¼";
+    }
 }

@@ -1,10 +1,5 @@
 package pers.tany.crateslottery.command;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,8 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.Plugin;
-
 import pers.tany.crateslottery.CommonlyWay;
 import pers.tany.crateslottery.Main;
 import pers.tany.crateslottery.Other;
@@ -27,1154 +20,1169 @@ import pers.tany.crateslottery.task.NineWingTaskS;
 import pers.tany.crateslottery.task.WingTask;
 import pers.tany.crateslottery.task.WingTaskS;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Commands implements CommandExecutor {
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(args.length==1) {
-			if(args[0].equalsIgnoreCase("help")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa[]==================¡ì2[°ïÖú¡ìa½çÃæ<1/3>]==================[]");
-					sender.sendMessage("¡ìa¡ìl³£ÓÃÖ¸Áî");
-					sender.sendMessage("¡ìa/cl help <Ò³Êı> ¡ì6Ê¹ÓÃÖ¸Áî°ïÖúÖĞĞÄ");
-					sender.sendMessage("");
-					sender.sendMessage("¡ìa/cl gui  ¡ì6´ò¿ªÖÆ×÷gui");
-					sender.sendMessage("¡ìa/cl reload  ¡ì6ÖØÔØ²å¼şÅäÖÃ/ÓïÑÔÎÄ¼ş");
-					sender.sendMessage("¡ìa/cl crate [Ïä×ÓÃû³Æ]  [Íæ¼Ò] [ÊıÁ¿]  ¡ì6¸øÓè³é½±·½¿é");
-					sender.sendMessage("¡ìa/cl key [Ïä×ÓÃû³Æ] [Íæ¼Ò] [ÊıÁ¿]  ¡ì6¸øÓè³é½±Ô¿³×");
-					sender.sendMessage("¡ìa/cl setcrate ¡ì6ÉèÖÃÊÖÉÏÎïÆ··ÅÖÃ³öµÄ·½¿é¼´Îª³é½±Ïä");
-					sender.sendMessage("¡ìa/cl setkey ¡ì6ÉèÖÃÊÖÉÏÎïÆ·Îª³é½±Ô¿³×");
-					sender.sendMessage("¡ìa[]=========================¡ì2==========================[]");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("reload")) {
-			    File file=new File(Main.plugin.getDataFolder(),"config.yml");
-			    File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-			    File file2=new File(Main.plugin.getDataFolder(),"message.yml");
-				Other.config = YamlConfiguration.loadConfiguration(file);
-				Other.data = YamlConfiguration.loadConfiguration(file1);
-				Other.message = YamlConfiguration.loadConfiguration(file2);
-				sender.sendMessage("¡ìaÖØÔØ³É¹¦");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("gui")) {
-				if(sender.isOp()) {
-					if(sender instanceof Player) {
-						Gui.gui((Player) sender);
-						return true;
-					}
-				sender.sendMessage("¡ìc¿ØÖÆÌ¨²»ÄÜÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9ninetime")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl 9ninetime ¡ì2[Ïä×ÓÃû³Æ]  [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ÎªÕâ¸öÏä×ÓµÄ¡ìc¾ÅÁ¬³é¡ì2¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("time")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl time ¡ì2[Ïä×ÓÃû³Æ]  [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ÎªÕâ¸öÏä×ÓµÄÆÕÍ¨¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9nine")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìaĞ´²å¼ş²»´øË½»õ£¬ÄÇºÍÏÌÓãÓĞÊ²Ã´Çø±ğ~");
-					sender.sendMessage("¡ìa9NineÌìÏÂµÚÒ»£¡£¡£¡£¡£¡");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("bc")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl bc [Ïä×ÓÃû³Æ] [¹«¸æ] ");
-					sender.sendMessage("¡ì2ÉèÖÃÏä×Ó¿ªÆôÊ±È«·ş¹«¸æ[Èç¹ûĞ´¡°ÎŞ¡±Ôò²»ÆôÓÃ]£¬[player]¿ªÏäÍæ¼Ò±äÁ¿");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("setcrate")) {
-				if(sender instanceof Player) {
-					if(sender.isOp()) {
-						Player p = (Player) sender;
-						ItemStack item=null;
-							  if(p.getInventory().getItemInHand() == null || p.getInventory().getItemInHand().getType() == Material.AIR) {
-								  p.sendMessage("¡ìcÊÖÉÏÇëÄÃÉÏÒªÉèÖÃ·½¿éµÄÎïÆ·×´Ì¬µÄÎïÆ·");
-								  return true;
-							  }
-						  item = p.getInventory().getItemInHand();
-						  ItemMeta meta = item.getItemMeta();
-						  ItemMeta metas = item.getItemMeta();
-						  meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")));
-						  List<String> lore = Other.message.getStringList("CrateLore");
-						  ArrayList<String> lores = new ArrayList<String>();
-						  for(String loreadd:lore) {
-							  lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
-						  }
-						  meta.setLore(lores);
-						  item.setItemMeta(meta);
-						  int amount = item.getAmount();
-						  item.setAmount(1);
-						  Other.data.set("CrateItem", CommonlyWay.GetItemData(item));
-						  try {
-					  		File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-					  	  Other.data.save(file1);
-					  	  } catch (IOException e) {
-					  		  e.printStackTrace();
-					  	  }
-						  item.setAmount(amount);
-						  item.setItemMeta(metas);
-						  sender.sendMessage("¡ìa³É¹¦ÖØĞÂÉèÖÃÏä×Ó");
-						  return true;
-					}
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-				}
-				sender.sendMessage("¡ìc¿ØÖÆÌ¨²»ÄÜÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("setkey")) {
-				if(sender instanceof Player) {
-					if(sender.isOp()) {
-						Player p = (Player) sender;
-						ItemStack item=null;
-						if(p.getInventory().getItemInHand() == null || p.getInventory().getItemInHand().getType() == Material.AIR) {
-						  p.sendMessage("¡ìcÊÖÉÏ²»ÄÜÎª¿ÕÆø");
-						  return true;
-						}
-					    item = p.getInventory().getItemInHand();
-					    ItemMeta meta = item.getItemMeta();
-					    ItemMeta metas = item.getItemMeta();
-					    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")));
-					    List<String> lore = Other.message.getStringList("KeyLore");
-					    ArrayList<String> lores = new ArrayList<String>();
-					    for(String loreadd:lore) {
-						   lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
-					    }
-					    meta.setLore(lores);
-					    item.setItemMeta(meta);
-					    int amount = item.getAmount();
-					    item.setAmount(1);
-					    Other.data.set("CrateKey", CommonlyWay.GetItemData(item));
-				  		try {
-				  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-				  			Other.data.save(file1);
-				  		} catch (IOException e) {
-				  			e.printStackTrace();
-			        	}
-					  	item.setAmount(amount);
-					  	item.setItemMeta(metas);
-						sender.sendMessage("¡ìa³É¹¦ÖØĞÂÉèÖÃ¿ªÏäÔ¿³×");
-						return true;
-					}
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-				}
-				sender.sendMessage("¡ìc¿ØÖÆÌ¨²»ÄÜÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("key")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl key [Ïä×ÓÃû³Æ] [Íæ¼Ò] [ÊıÁ¿]  ¡ì2¸øÓè³é½±Ô¿³×");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("crate")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl crate [Ïä×ÓÃû³Æ]  [Íæ¼Ò] [ ÊıÁ¿]  ¡ì2¸øÓè³é½±·½¿é£¨ÉèÖÃÊ±ÊÖÎÕµÄ£©");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			return true;
-		}
-		if(args.length==2) {
-			if(args[0].equalsIgnoreCase("show")) {
-				if(!(sender instanceof Player)) {
-					sender.sendMessage("¡ìc¿ØÖÆÌ¨²»ÄÜÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-				}
-				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
-					return true;
-				}
-				int a=0;
-				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
-					if(args[1].equals(name)) {
-						break;
-					}
-					a++;
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
-						return true;
-					}
-				}
-				a=0;
-				Player player = (Player) sender;
-				String name = args[1];
-				if(!player.hasPermission("cl.showall")&&!player.hasPermission("cl.show."+name)) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowMessage:").replace("[crate]", name)));
-					return true;
-				}
-				if(!Other.data.getBoolean("Info."+name+".check")) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
-					return true;
-				}
-    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-				Gui.showcrate(player, name);
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("start")) {
-				if(!(sender instanceof Player)) {
-					sender.sendMessage("¡ìc¿ØÖÆÌ¨²»ÄÜ³é½±");
-					return true;
-				}
-				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
-					return true;
-				}
-				int a=0;
-				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
-					if(args[1].equals(name)) {
-						break;
-					}
-					a++;
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
-						return true;
-					}
-				}
-				a=0;
-				if(!sender.hasPermission("cl.startall")&&!sender.hasPermission("cl.start."+args[1])) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoAuthorityMessage").replace("[crate]", args[1])));
-					return true;
-				}
-				String name = args[1];
-				Player player = (Player) sender;
-				if(!player.hasPermission("cl.lottery")) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
-					return true;
-				}
-				if(!player.hasPermission("cl.allcrate")&&!player.hasPermission("cl.crate."+name)) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
-					return true;
-				}
-				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
-				int g=1;
-				if(itemlist.size()==0) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				for(String item:itemlist) {
-				if(!item.split(":")[1].equals("null")) {
-					break;
-				}
-				if(g==itemlist.size()) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				g++;
-				}
-				g=1;
-    			if(!Other.data.getString("Info."+name+".announcement").equals("ÎŞ"))
-    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", player.getName())));
-    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-				if(Other.data.getBoolean("Info."+name+".animation")) {
-					if(Other.data.getDouble("Info."+name+".cd")<=0&&Other.data.getDouble("Info."+name+".number")<=0)
-					new WingTask(player, name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
-					else
-					new WingTask(player, name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
-				}else {
-					new WingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
-				}
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("ninestart")) {
-				if(!(sender instanceof Player)) {
-					sender.sendMessage("¡ìc¿ØÖÆÌ¨²»ÄÜ³é½±");
-					return true;
-				}
-				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
-					return true;
-				}
-				int a=0;
-				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
-					if(args[1].equals(name)) {
-						a=0;
-						break;
-					}
-					a++;
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
-						a=0;
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
-						return true;
-					}
-				}
-				if(!sender.hasPermission("cl.ninestartall")&&!sender.hasPermission("cl.ninestart."+args[1])) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineAuthorityMessage").replace("[crate]", args[1])));
-					return true;
-				}
-				String name = args[1];
-				Player player = (Player) sender;
-				if(!player.hasPermission("cl.ninelottery")) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
-					return true;
-				}
-				if(Other.data.getBoolean("Info."+name+".clear")) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
-					return true;
-				}
-				if(!player.hasPermission("cl.allcrate")&&!player.hasPermission("cl.crate."+name)) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info."+name+".color")+name))));
-					return true;
-				}
-				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
-				int g=1;
-				if(itemlist.size()==0) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				for(String item:itemlist) {
-				if(!item.split(":")[1].equals("null")) {
-					break;
-				}
-				if(g==itemlist.size()) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				g++;
-				}
-				g=1;
-				
-    			if(!Other.data.getString("Info."+name+".nine").equals("ÎŞ"))
-    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", player.getName())));
-    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-				if(Other.data.getBoolean("Info."+name+".nineanimation")) {
-					if(Other.data.getDouble("Info."+name+".ninecd")<=0&&Other.data.getDouble("Info."+name+".ninenumber")<=0)
-					new NineWingTask(player, name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
-					else
-					new NineWingTask(player, name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
-				} else {
-					new NineWingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
-				}
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("help")) {
-				if(sender.isOp()) {
-					int number = 1;
-					try {
-						number =Integer.parseInt(args[1]);
-					}catch(NumberFormatException e) {
-						sender.sendMessage("¡ìcÇëÊäÈëÊı×Ö");
-						return true;
-					}
-					if(number<=0) {
-						sender.sendMessage("¡ìcÃ»ÓĞÕâ¸öÒ³Êı£¡");
-						return true;
-					}
-					if(number==1) {
-						sender.sendMessage("¡ìa[]==================¡ì2[°ïÖú¡ìa½çÃæ<1/3>]==================[]");
-						sender.sendMessage("¡ìa¡ìl³£ÓÃÖ¸Áî");
-						sender.sendMessage("¡ìa/cl help <Ò³Êı> ¡ì6Ê¹ÓÃÖ¸Áî°ïÖúÖĞĞÄ");
-						sender.sendMessage("");
-						sender.sendMessage("¡ìa/cl gui  ¡ì6´ò¿ªÖÆ×÷gui");
-						sender.sendMessage("¡ìa/cl reload  ¡ì6ÖØÔØ²å¼şÅäÖÃ/ÓïÑÔÎÄ¼ş");
-						sender.sendMessage("¡ìa/cl crate [Ïä×ÓÃû³Æ]  [Íæ¼Ò] [ÊıÁ¿]  ¡ì6¸øÓè³é½±·½¿é");
-						sender.sendMessage("¡ìa/cl key [Ïä×ÓÃû³Æ] [Íæ¼Ò] [ÊıÁ¿]  ¡ì6¸øÓè³é½±Ô¿³×");
-						sender.sendMessage("¡ìa/cl setcrate ¡ì6ÉèÖÃÊÖÉÏÎïÆ··ÅÖÃ³öµÄ·½¿é¼´Îª³é½±Ïä");
-						sender.sendMessage("¡ìa/cl setkey ¡ì6ÉèÖÃÊÖÉÏÎïÆ·Îª³é½±Ô¿³×");
-						sender.sendMessage("¡ìa[]=========================¡ì2==========================[]");
-						return true;
-					}
-					if(number==2) {
-						sender.sendMessage("¡ìa[]==================¡ì2[°ïÖú¡ìa½çÃæ<2/3>]==================[]");
-						sender.sendMessage("¡ìa¡ìl×Ô¶¨ÒåÏà¹Ø");
-						sender.sendMessage("¡ìa/cl help <Ò³Êı> ¡ì6Ê¹ÓÃÖ¸Áî°ïÖúÖĞĞÄ");
-						sender.sendMessage("");
-						sender.sendMessage("¡ìa/cl bc [Ïä×ÓÃû³Æ] [¹«¸æ] ");
-						sender.sendMessage("¡ìa/cl 9nine [Ïä×ÓÃû³Æ] [¹«¸æ] ");
-						sender.sendMessage("¡ìa/cl time ¡ì2[Ïä×ÓÃû³Æ] [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ¡ì6ÆÕÍ¨¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-						sender.sendMessage("¡ìa/cl 9ninetime ¡ì2[Ïä×ÓÃû³Æ] [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ¡ìc¾ÅÁ¬³é¡ì6¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-						sender.sendMessage("¡ì6ÎªÕâ¸öÏä×Óµ¥¶ÀÉèÖÃÊ±¼ä£¬Ï¸¿´config.ymlÀïµÄ¡°¿ªÏä²¿·Ö¡±×ÔĞĞÀí½â");
-						sender.sendMessage("¡ìa[]=========================¡ì2==========================[]");
-						return true;
-					}
-					if(number==3) {
-						sender.sendMessage("¡ìa[]==================¡ì2[°ïÖú¡ìa½çÃæ<3/3>]==================[]");
-						sender.sendMessage("¡ìa¡ìlÖ¸Áî¿ªÏäÏà¹Ø");
-						sender.sendMessage("¡ìa/cl help <Ò³Êı> ¡ì6Ê¹ÓÃÖ¸Áî°ïÖúÖĞĞÄ");
-						sender.sendMessage("");
-						sender.sendMessage("¡ìa/cl start ¡ì2[Ïä×ÓÃû³Æ]  ¡ì6ÈÃ×Ô¼º¿ªÊ¼µ¥³éÕâ¸öÏä×Ó");
-						sender.sendMessage("¡ìa/cl ninestart ¡ì2[Ïä×ÓÃû³Æ]  ¡ì6ÈÃ×Ô¼º¿ªÊ¼¡ìc¾ÅÁ¬³é¡ì6Õâ¸öÏä×Ó");
-						sender.sendMessage("¡ìa/cl start ¡ì2[Ïä×ÓÃû³Æ] [Íæ¼Ò]  ¡ì6ÈÃÍæ¼Ò¿ªÊ¼µ¥³éÕâ¸öÏä×Ó");
-						sender.sendMessage("¡ìa/cl ninestart ¡ì2[Ïä×ÓÃû³Æ] [Íæ¼Ò]  ¡ì6ÈÃÍæ¼Ò¿ªÊ¼¡ìc¾ÅÁ¬³é¡ì6Õâ¸öÏä×Ó");
-						sender.sendMessage("¡ìa/cl show ¡ì2[Ïä×ÓÃû³Æ]  ¡ì6²é¿´Õâ¸öÏä×ÓµÄ½±³ØÄÚÈİ");
-						sender.sendMessage("¡ìa/cl show ¡ì2[Ïä×ÓÃû³Æ] [Íæ¼Ò]  ¡ì6ÈÃÍæ¼Ò²é¿´Õâ¸ö½±³ØµÄÄÚÈİ");
-						sender.sendMessage("¡ìa[]=========================¡ì2==========================[]");
-						return true;
-					}
-					sender.sendMessage("¡ìcÃ»ÓĞÕâ¸öÒ³Êı£¡");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9ninetime")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl 9ninetime ¡ì2[Ïä×ÓÃû³Æ] [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ÎªÕâ¸öÏä×ÓµÄ¡ìc¾ÅÁ¬³é¡ì2¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("time")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl time ¡ì2[Ïä×ÓÃû³Æ] [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ÎªÕâ¸öÏä×ÓµÄÆÕÍ¨¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9nine")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìaÎÒ´óµ÷É«°å½Å²ÈèÖ×ÓÉç£¬È­´òÖĞ¶şÉç£¬Í·¶¥°ËÔÂÉç");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("bc")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl bc [Ïä×ÓÃû³Æ] [¹«¸æ] ");
-					sender.sendMessage("¡ì2ÉèÖÃÏä×Ó¿ªÆôÊ±È«·ş¹«¸æ[Èç¹ûĞ´¡°ÎŞ¡±Ôò²»ÆôÓÃ]£¬[player]¿ªÏäÍæ¼Ò±äÁ¿");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("crate")) {
-				if(sender instanceof Player) {
-					if(sender.isOp()) {
-						if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-							sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-							return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-							if(crate.equals(args[1])) {
-								a=0;
-								break;
-							}
-							a++;
-							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-								sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-								a=0;
-								return true;
-							}
-						}
-						if(Other.data.getString("CrateItem")==null) {
-							sender.sendMessage("¡ìcÎ´ÉèÖÃÏä×Ó");
-							return true;
-						}
-						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateItem"));
-						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
-						item.setItemMeta(meta);
-						((Player) sender).getInventory().addItem(item);
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('¡ì', "¡ìa¸øÓè¡ìb"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìa³é½±Ïä³É¹¦"));
-						return true;
-					}
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-				}
-				sender.sendMessage("¡ìc²»ÄÜ¸ø¿ØÖÆÌ¨ÎïÆ·");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("key")) {
-				if(sender instanceof Player) {
-					if(sender.isOp()) {
-						if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-							sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-							return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-							if(crate.equals(args[1])) {
-								break;
-							}
-							a++;
-							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-								sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-								return true;
-							}
-						}
-						if(Other.data.getString("CrateKey") == null) {
-							sender.sendMessage("¡ìcÎ´ÉèÖÃÔ¿³×");
-							return true;
-						}
-						a=0;
-						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
-						ItemMeta meta = item.getItemMeta();
-						ArrayList<String> newlist = new ArrayList<String>();
-						newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock"))+args[1]);
-						if(item.getItemMeta().hasLore()) {
-							for(String s:item.getItemMeta().getLore()) {
-								newlist.add(s);
-							}
-						}
-						meta.setLore(newlist);
-						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
-						item.setItemMeta(meta);
-						((Player) sender).getInventory().addItem(item);
-						if(Other.config.getBoolean("KeyMessage"))
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info."+args[1]+".color")+args[1])));
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('¡ì', "¡ìa¸øÓè¡ìb"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaÔ¿³×³É¹¦"));
-						return true;
-					}
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-				}
-				sender.sendMessage("¡ìc²»ÄÜ¸ø¿ØÖÆÌ¨ÎïÆ·");
-				return true;
-			}
-			return true;
-		}
-		if(args.length==3) {
-			if(args[0].equalsIgnoreCase("show")) {
-				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
-					return true;
-				}
-				int a=0;
-				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
-					if(args[1].equals(name)) {
-						break;
-					}
-					a++;
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
-						return true;
-					}
-				}
-				a=0;
-				if(Bukkit.getPlayer(args[2])==null) {
-					sender.sendMessage("¡ìcÕâ¸öÍæ¼ÒÎ´ÔÚÏß");
-					return true;
-				}
-				if(!sender.isOp()) {
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÈÃÆäËûÈË³é½±");
-					return true;
-				}
-				Player player = Bukkit.getPlayer(args[2]);
-				String name = args[1];
-				if(!Other.data.getBoolean("Info."+name+".check")) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
-					return true;
-				}
-    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-				Gui.showcrate(player, name);
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("start")) {
-				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
-					return true;
-				}
-				int a=0;
-				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
-					if(args[1].equals(name)) {
-						a=0;
-						break;
-					}
-					a++;
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
-						a=0;
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
-						return true;
-					}
-				}
-				if(Bukkit.getPlayer(args[2])==null) {
-					sender.sendMessage("¡ìcÕâ¸öÍæ¼ÒÎ´ÔÚÏß");
-					return true;
-				}
-				if(!sender.isOp()) {
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÈÃÆäËûÈË³é½±");
-					return true;
-				}
-				String name = args[1];
-				Player player = Bukkit.getPlayer(args[2]);
-				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
-				int g=1;
-				if(itemlist.size()==0) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				for(String item:itemlist) {
-				if(!item.split(":")[1].equals("null")) {
-					break;
-				}
-				if(g==itemlist.size()) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				g++;
-				}
-				g=1;
-    			if(!Other.data.getString("Info."+name+".announcement").equals("ÎŞ"))
-    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".announcement").replace("[player]", player.getName())));
-    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-				if(Other.data.getBoolean("Info."+name+".animation")) {
-					if(Other.data.getDouble("Info."+name+".cd")<=0&&Other.data.getDouble("Info."+name+".number")<=0)
-					new WingTask(player, name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime")*20));
-					else
-					new WingTask(player, name, Other.data.getInt("Info."+name+".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".cd")*20));
-				}else {
-					new WingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
-				}
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("ninestart")) {
-				if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
-					return true;
-				}
-				int a=0;
-				for(String name:Other.data.getConfigurationSection("Info").getKeys(false)) {
-					if(args[1].equals(name)) {
-						a=0;
-						break;
-					}
-					a++;
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==a) {
-						a=0;
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
-						return true;
-					}
-				}
-				if(Bukkit.getPlayer(args[2])==null) {
-					sender.sendMessage("¡ìcÕâ¸öÍæ¼ÒÎ´ÔÚÏß");
-					return true;
-				}
-				if(!sender.isOp()) {
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÈÃÆäËûÈË³é½±");
-					return true;
-				}
-				String name = args[1];
-				Player player = Bukkit.getPlayer(args[2]);
-				List<String> itemlist = Other.data.getStringList("Info."+name+".data");
-				int g=1;
-				if(itemlist.size()==0) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				for(String item:itemlist) {
-				if(!item.split(":")[1].equals("null")) {
-					break;
-				}
-				if(g==itemlist.size()) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
-					return true;
-				}
-				g++;
-				}
-				g=1;
-    			if(!Other.data.getString("Info."+name+".nine").equals("ÎŞ"))
-    				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info."+name+".nine").replace("[player]", player.getName())));
-    			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info."+name+".color")+name)));
-				if(Other.data.getBoolean("Info."+name+".nineanimation")) {
-					if(Other.data.getDouble("Info."+name+".ninecd")<=0&&Other.data.getDouble("Info."+name+".ninenumber")<=0)
-					new NineWingTask(player, name,Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime")*20));
-					else
-					new NineWingTask(player, name,Other.data.getInt("Info."+name+".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info."+name+".ninecd")*20));
-				} else {
-					new NineWingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
-				}
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9ninetime")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl 9ninetime ¡ì2[Ïä×ÓÃû³Æ]  [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ÎªÕâ¸öÏä×ÓµÄ¡ìc¾ÅÁ¬³é¡ì2¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("time")) {
-				if(sender.isOp()) {
-					sender.sendMessage("¡ìa/cl time ¡ì2[Ïä×ÓÃû³Æ]  [±ä»Ã´ÎÊı] [±ä»ÃÊ±¼ä] ÎªÕâ¸öÏä×ÓµÄÆÕÍ¨¿ªÏäµ¥¶ÀÉèÖÃÊ±¼ä");
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("bc")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-							return true;
-						}
-					}
-					a=0;
-					if(args[2].equals("ÎŞ")) {
-						sender.sendMessage("¡ìa³É¹¦È¡Ïû"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìa¿ªÏäÊ±µÄ¹«¸æ");
-						Other.data.set("Info."+args[1]+".announcement", "ÎŞ");
-					}else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "¡ìa³É¹¦ÉèÖÃ"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìa¿ªÏäÊ±µÄ¹«¸æÎª"+args[2]));
-						Other.data.set("Info."+args[1]+".announcement", args[2]);
-					}
-			  		try {
-			  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		return true;	
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9Nine")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-					}
-					int a=0;
-					for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-							break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-							sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-							return true;
-						}
-					}
-					a=0;
-					if(args[2].equals("ÎŞ")) {
-						sender.sendMessage("¡ìa³É¹¦È¡Ïû"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìc¾ÅÁ¬¡ìa¿ªÏäÊ±µÄ¹«¸æ");
-						Other.data.set("Info."+args[1]+".nine", "ÎŞ");
-					}else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "¡ìa³É¹¦ÉèÖÃ"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìc¾ÅÁ¬¡ìa¿ªÏäÊ±µÄ¹«¸æÎª"+args[2]));
-						Other.data.set("Info."+args[1]+".nine", args[2]);
-					}
-			  		try {
-			  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-			  			Other.data.save(file1);
-			  		} catch (IOException e) {
-			  			e.printStackTrace();
-		        	}
-			  		return true;	
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("crate")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-						break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-						sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-						return true;
-						}
-					}
-					if(Other.data.getString("CrateItem")==null) {
-						sender.sendMessage("¡ìcÎ´ÉèÖÃÏä×Ó");
-						return true;
-					}
-					if(Bukkit.getServer().getPlayer(args[2]) == null) {
-						sender.sendMessage("¡ìcÕâ¸öÍæ¼Ò²»´æÔÚ/²»ÔÚÏß");
-						return true;
-					}
-					Player player = Bukkit.getServer().getPlayer(args[2]);
-					a=0;						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateItem"));
-					ItemMeta meta = item.getItemMeta();
-					meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
-					item.setItemMeta(meta);
-					player.getInventory().addItem(item);
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('¡ì', "¡ìa¸øÓè¡ìb"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìa³é½±Ïä³É¹¦"));
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("key")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-							if(crate.equals(args[1])) {
-								break;
-							}
-							a++;
-							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-								sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-								return true;
-							}
-						}
-						if(Other.data.getString("CrateKey")==null) {
-							sender.sendMessage("¡ìcÎ´ÉèÖÃÔ¿³×");
-							return true;
-						}
-						if(Bukkit.getServer().getPlayer(args[2]) == null) {
-							sender.sendMessage("¡ìcÕâ¸öÍæ¼Ò²»´æÔÚ/²»ÔÚÏß");
-							return true;
-						}
-						Player player = Bukkit.getServer().getPlayer(args[2]);
-						a=0;
-						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
-						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
-						ArrayList<String> newlist = new ArrayList<String>();
-						newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock"))+args[1]);
-						if(item.getItemMeta().hasLore()) {
-							for(String s:item.getItemMeta().getLore()) {
-								newlist.add(s);
-							}
-						}
-						meta.setLore(newlist);
-						item.setItemMeta(meta);
-						player.getInventory().addItem(item);
-						if(Other.config.getBoolean("KeyMessage"))
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info."+args[1]+".color")+args[1])));
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('¡ì', "¡ìa¸øÓè¡ìb"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaÔ¿³×³É¹¦"));
-						return true;
-					}
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-			}
-			return true;
-		}
-		if(args.length==4) {
-			if(args[0].equalsIgnoreCase("time")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-							if(crate.equals(args[1])) {
-								break;
-							}
-							a++;
-							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-								sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-								return true;
-							}
-						}
-						int number = 1;
-						try {
-							number =Integer.parseInt(args[2]);
-						}catch(NumberFormatException e) {
-							sender.sendMessage("¡ìc´ÎÊıÖ»ÄÜÎªÕûÊı");
-							return true;
-						}
-						double cd = 0.5;
-						try {
-							cd =Double.parseDouble(args[3]);
-						}catch(NumberFormatException e) {
-							sender.sendMessage("¡ìcÇëÊäÈëÊı×Ö");
-							return true;
-						}
-						if(number<=0) {
-							sender.sendMessage("¡ìc´ÎÊı²»ÄÜĞ¡ÓÚµÈÓÚ0£¡");
-							return true;
-						}
-						if(cd<=0) {
-							sender.sendMessage("¡ìcÊ±¼ä²»ÄÜĞ¡ÓÚµÈÓÚ0£¡");
-							return true;
-						}
-						Other.data.set("Info."+args[1]+".number", number);
-						Other.data.set("Info."+args[1]+".cd", cd);
-				  		try {
-				  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-				  			Other.data.save(file1);
-				  		} catch (IOException e) {
-				  			e.printStackTrace();
-			        	}
-				  		sender.sendMessage("¡ìa³É¹¦ÉèÖÃ³é½±Ïä"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaµÄ¿ªÏäÊ±³¤´ÎÊıÎª¡ì2"+number+"¡ìa´Î");
-				  		sender.sendMessage("¡ìa³É¹¦ÉèÖÃ³é½±Ïä"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaµÄÃ¿´Î±ä»ÃÏà²îÃëÊıÎª¡ì2"+cd+"¡ìaÃë");
-				  		return true;
-					}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("9ninetime")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-							if(crate.equals(args[1])) {
-								break;
-							}
-							a++;
-							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-								sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-								return true;
-							}
-						}
-						int number = 1;
-						try {
-							number =Integer.parseInt(args[2]);
-						}catch(NumberFormatException e) {
-							sender.sendMessage("¡ìc´ÎÊıÖ»ÄÜÎªÕûÊı");
-							return true;
-						}
-						double cd = 0.5;
-						try {
-							cd =Double.parseDouble(args[3]);
-						}catch(NumberFormatException e) {
-							sender.sendMessage("¡ìcÇëÊäÈëÊı×Ö");
-							return true;
-						}
-						if(number<=0) {
-							sender.sendMessage("¡ìc´ÎÊı²»ÄÜĞ¡ÓÚµÈÓÚ0£¡");
-							return true;
-						}
-						if(cd<=0) {
-							sender.sendMessage("¡ìcÊ±¼ä²»ÄÜĞ¡ÓÚµÈÓÚ0£¡");
-							return true;
-						}
-						Other.data.set("Info."+args[1]+".ninenumber", number);
-						Other.data.set("Info."+args[1]+".ninecd", cd);
-				  		try {
-				  			File file1=new File(Main.plugin.getDataFolder(),"data.yml");
-				  			Other.data.save(file1);
-				  		} catch (IOException e) {
-				  			e.printStackTrace();
-			        	}
-				  		sender.sendMessage("¡ìa³É¹¦ÉèÖÃ³é½±Ïä"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaµÄ¡ìc¾ÅÁ¬³é¡ìa¿ªÏäÊ±³¤´ÎÊıÎª¡ì2"+number+"¡ìa´Î");
-				  		sender.sendMessage("¡ìa³É¹¦ÉèÖÃ³é½±Ïä"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaµÄ¡ìc¾ÅÁ¬³é¡ìaÃ¿´Î±ä»ÃÏà²îÃëÊıÎª¡ì2"+cd+"¡ìaÃë");
-				  		return true;
-					}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("key")) {
-				if(sender.isOp()) {
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-							if(crate.equals(args[1])) {
-								break;
-							}
-							a++;
-							if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-								sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-								return true;
-							}
-						}
-						if(Other.data.getString("CrateKey")==null) {
-							sender.sendMessage("¡ìcÎ´ÉèÖÃÔ¿³×");
-							return true;
-						}
-						if(Bukkit.getServer().getPlayer(args[2]) == null) {
-							sender.sendMessage("¡ìcÕâ¸öÍæ¼Ò²»´æÔÚ/²»ÔÚÏß");
-							return true;
-						}
-						int amount = 1;
-						try {
-							amount =Integer.parseInt(args[3]);
-						}catch(NumberFormatException e) {
-							sender.sendMessage("¡ìcÇëÊäÈëÊı×Ö");
-							return true;
-						}
-						Player player = Bukkit.getServer().getPlayer(args[2]);
-						a=0;
-						ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateKey"));
-						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
-						ArrayList<String> newlist = new ArrayList<String>();
-						newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock"))+args[1]);
-						if(item.getItemMeta().hasLore()) {
-							for(String s:item.getItemMeta().getLore()) {
-								newlist.add(s);
-							}
-						}
-						meta.setLore(newlist);
-						item.setItemMeta(meta);
-						item.setAmount(amount);
-						player.getInventory().addItem(item);
-						if(Other.config.getBoolean("KeyMessage"))
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info."+args[1]+".color")+args[1])));
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('¡ì', "¡ìa¸øÓè¡ìb"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìaÔ¿³×³É¹¦"));
-						return true;
-					}
-					sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-					return true;
-			}
-			if(args[0].equalsIgnoreCase("crate")) {
-				if(sender.isOp()) {
-					if(Other.data.getString("CrateItem")==null) {
-						sender.sendMessage("¡ìcÎ´ÉèÖÃÏä×Ó");
-						return true;
-					}
-					if(Other.data.getConfigurationSection("Info").getKeys(false).size()==0) {
-						sender.sendMessage("¡ìcµ±Ç°Ã»ÓĞ´æÔÚÈÎºÎ³é½±Ïä");
-						return true;
-						}
-						int a=0;
-						for(String crate:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(crate.equals(args[1])) {
-						break;
-						}
-						a++;
-						if(a==Other.data.getConfigurationSection("Info").getKeys(false).size()) {
-						sender.sendMessage("¡ìc²»´æÔÚÕâ¸ö³é½±Ïä");
-						return true;
-						}
-					}
-					if(Bukkit.getServer().getPlayer(args[2]) == null) {
-						sender.sendMessage("¡ìcÕâ¸öÍæ¼Ò²»´æÔÚ/²»ÔÚÏß");
-						return true;
-					}
-					int amount = 1;
-					try {
-						amount =Integer.parseInt(args[3]);
-					}catch(NumberFormatException e) {
-						sender.sendMessage("¡ìcÇëÊäÈëÊı×Ö");
-						return true;
-					}
-					Player player = Bukkit.getServer().getPlayer(args[2]);
-					a=0;						
-					ItemStack item = CommonlyWay.GetItemStack(Other.data.getString("CrateItem"));
-					ItemMeta meta = item.getItemMeta();
-					meta.setDisplayName(meta.getDisplayName()+Other.data.getString("Info."+args[1]+".color")+args[1]);
-					item.setItemMeta(meta);
-					item.setAmount(amount);
-					player.getInventory().addItem(item);
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('¡ì', "¡ìa¸øÓè¡ìb"+Other.data.getString("Info."+args[1]+".color")+args[1]+"¡ìa³é½±Ïä³É¹¦"));
-					return true;
-				}
-				sender.sendMessage("¡ìcÄãÃ»ÓĞÈ¨ÏŞÊ¹ÓÃ´ËÖ¸Áî");
-				return true;
-			}
-			return true;
-		}
-		if(sender.isOp()) {
-			sender.sendMessage("¡ìa/cl help <Ò³Êı> ¡ì2Ê¹ÓÃÖ¸Áî°ïÖúÖĞĞÄ");
-			return true;
-		}else {
-			if(sender instanceof Player) {
-				Player player = (Player) sender;
-				boolean a = false;
-				if(player.hasPermission("cl.startall")) {
-					for(String p:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						a=true;
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowStart").replace("[crate]", Other.data.getString("Info."+p+".color")+p)));
-					}
-				} else {
-					for(PermissionAttachmentInfo p:sender.getEffectivePermissions()) {
-						if(p.getPermission().startsWith("cl.start.")) {
-							for(String b:Other.data.getConfigurationSection("Info").getKeys(false)) {
-								if(b.equals(p.getPermission().split("\\.")[2])) {
-									a=true;
-									player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowStart").replace("[crate]", Other.data.getString("Info."+p.getPermission().split("\\.")[2])+".color")+p.getPermission().split("\\.")[2]));
-								}
-							}
-						}
-					}
-				}
-				int c = 0;
-				if(player.hasPermission("cl.ninestartall")) {
-					for(String p:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						c++;
-						if(c==1&&a)
-							sender.sendMessage("");
-						a=true;
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowNineStart").replace("[crate]", Other.data.getString("Info."+p+".color")+p)));
-					}
-				} else {
-					for(PermissionAttachmentInfo p:sender.getEffectivePermissions()) {
-						if(p.getPermission().startsWith("cl.ninestart.")) {
-							for(String b:Other.data.getConfigurationSection("Info").getKeys(false)) {
-								if(b.equals(p.getPermission().split("\\.")[2])) {
-									c++;
-									if(c==1&&a)
-										sender.sendMessage("");
-									a=true;
-									player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowNineStart").replace("[crate]", Other.data.getString("Info."+p.getPermission().split("\\.")[2])+".color")+p.getPermission().split("\\.")[2]));
-								}
-							}
-						}
-					}
-				}
-				c=1;
-				if(player.hasPermission("cl.showall")) {
-					for(String p:Other.data.getConfigurationSection("Info").getKeys(false)) {
-						if(a&&c!=0) {
-							sender.sendMessage("");
-							c=0;
-						}
-						a=true;
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowMessage").replace("[crate]", Other.data.getString("Info."+p+".color")+p)));
-					}
-				} else {
-					for(PermissionAttachmentInfo p:sender.getEffectivePermissions()) {
-						if(p.getPermission().startsWith("cl.show.")) {
-							for(String b:Other.data.getConfigurationSection("Info").getKeys(false)) {
-								if(b.equals(p.getPermission().split("\\.")[2])) {
-									if(a&&c!=0) {
-										sender.sendMessage("");
-										c=0;
-									}
-									a=true;
-									player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowMessage").replace("[crate]", Other.data.getString("Info."+p.getPermission().split("\\.")[2])+".color")+p.getPermission().split("\\.")[2]));
-								}
-							}
-						}
-					}
-				}
-				if(!a)
-				sender.sendMessage("¡ìcNull");
-				return true;
-			}
-			sender.sendMessage("¡ìcNull");
-			return true;
-		}
-	}
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("help")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a[]==================Â§2[å¸®åŠ©Â§aç•Œé¢<1/3>]==================[]");
+                    sender.sendMessage("Â§aÂ§lå¸¸ç”¨æŒ‡ä»¤");
+                    sender.sendMessage("Â§a/cl help <é¡µæ•°> Â§6ä½¿ç”¨æŒ‡ä»¤å¸®åŠ©ä¸­å¿ƒ");
+                    sender.sendMessage("");
+                    sender.sendMessage("Â§a/cl gui  Â§6æ‰“å¼€åˆ¶ä½œgui");
+                    sender.sendMessage("Â§a/cl reload  Â§6é‡è½½æ’ä»¶é…ç½®/è¯­è¨€æ–‡ä»¶");
+                    sender.sendMessage("Â§a/cl crate [ç®±å­åç§°]  [ç©å®¶] [æ•°é‡]  Â§6ç»™äºˆæŠ½å¥–æ–¹å—");
+                    sender.sendMessage("Â§a/cl key [ç®±å­åç§°] [ç©å®¶] [æ•°é‡]  Â§6ç»™äºˆæŠ½å¥–é’¥åŒ™");
+                    sender.sendMessage("Â§a/cl setcrate Â§6è®¾ç½®æ‰‹ä¸Šç‰©å“æ”¾ç½®å‡ºçš„æ–¹å—å³ä¸ºæŠ½å¥–ç®±");
+                    sender.sendMessage("Â§a/cl setkey Â§6è®¾ç½®æ‰‹ä¸Šç‰©å“ä¸ºæŠ½å¥–é’¥åŒ™");
+                    sender.sendMessage("Â§a[]=========================Â§2==========================[]");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("reload")) {
+                File file = new File(Main.plugin.getDataFolder(), "config.yml");
+                File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                File file2 = new File(Main.plugin.getDataFolder(), "message.yml");
+                File file3 = new File(Main.plugin.getDataFolder(), "log.yml");
+                Other.config = YamlConfiguration.loadConfiguration(file);
+                Other.data = YamlConfiguration.loadConfiguration(file1);
+                Other.message = YamlConfiguration.loadConfiguration(file2);
+                Other.log = YamlConfiguration.loadConfiguration(file3);
+                sender.sendMessage("Â§aé‡è½½æˆåŠŸ");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("gui")) {
+                if (sender.isOp()) {
+                    if (sender instanceof Player) {
+                        Gui.gui((Player) sender);
+                        return true;
+                    }
+                    sender.sendMessage("Â§cæ§åˆ¶å°ä¸èƒ½ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9ninetime")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl 9ninetime Â§2[ç®±å­åç§°]  [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] ä¸ºè¿™ä¸ªç®±å­çš„Â§cä¹è¿æŠ½Â§2å¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("time")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl time Â§2[ç®±å­åç§°]  [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] ä¸ºè¿™ä¸ªç®±å­çš„æ™®é€šå¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9nine")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§aå†™æ’ä»¶ä¸å¸¦ç§è´§ï¼Œé‚£å’Œå’¸é±¼æœ‰ä»€ä¹ˆåŒºåˆ«~");
+                    sender.sendMessage("Â§a9Nineå¤©ä¸‹ç¬¬ä¸€ï¼ï¼ï¼ï¼ï¼");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("bc")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl bc [ç®±å­åç§°] [å…¬å‘Š] ");
+                    sender.sendMessage("Â§2è®¾ç½®ç®±å­å¼€å¯æ—¶å…¨æœå…¬å‘Š[å¦‚æœå†™â€œæ— â€åˆ™ä¸å¯ç”¨]ï¼Œ[player]å¼€ç®±ç©å®¶å˜é‡");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("setcrate")) {
+                if (sender instanceof Player) {
+                    if (sender.isOp()) {
+                        Player p = (Player) sender;
+                        ItemStack item = null;
+                        if (p.getInventory().getItemInHand() == null || p.getInventory().getItemInHand().getType() == Material.AIR) {
+                            p.sendMessage("Â§cæ‰‹ä¸Šè¯·æ‹¿ä¸Šè¦è®¾ç½®æ–¹å—çš„ç‰©å“çŠ¶æ€çš„ç‰©å“");
+                            return true;
+                        }
+                        item = p.getInventory().getItemInHand();
+                        ItemMeta meta = item.getItemMeta();
+                        ItemMeta metas = item.getItemMeta();
+                        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLottery")));
+                        List<String> lore = Other.message.getStringList("CrateLore");
+                        ArrayList<String> lores = new ArrayList<String>();
+                        for (String loreadd : lore) {
+                            lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
+                        }
+                        meta.setLore(lores);
+                        item.setItemMeta(meta);
+                        int amount = item.getAmount();
+                        item.setAmount(1);
+                        Other.data.set("CrateItem", CommonlyWay.getItemData(item));
+                        try {
+                            File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                            Other.data.save(file1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        item.setAmount(amount);
+                        item.setItemMeta(metas);
+                        sender.sendMessage("Â§aæˆåŠŸé‡æ–°è®¾ç½®ç®±å­");
+                        return true;
+                    }
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                    return true;
+                }
+                sender.sendMessage("Â§cæ§åˆ¶å°ä¸èƒ½ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("setkey")) {
+                if (sender instanceof Player) {
+                    if (sender.isOp()) {
+                        Player p = (Player) sender;
+                        ItemStack item = null;
+                        if (p.getInventory().getItemInHand() == null || p.getInventory().getItemInHand().getType() == Material.AIR) {
+                            p.sendMessage("Â§cæ‰‹ä¸Šä¸èƒ½ä¸ºç©ºæ°”");
+                            return true;
+                        }
+                        item = p.getInventory().getItemInHand();
+                        ItemMeta meta = item.getItemMeta();
+                        ItemMeta metas = item.getItemMeta();
+                        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Other.message.getString("CrateLotteryKey")));
+                        List<String> lore = Other.message.getStringList("KeyLore");
+                        ArrayList<String> lores = new ArrayList<String>();
+                        for (String loreadd : lore) {
+                            lores.add(ChatColor.translateAlternateColorCodes('&', loreadd));
+                        }
+                        meta.setLore(lores);
+                        item.setItemMeta(meta);
+                        int amount = item.getAmount();
+                        item.setAmount(1);
+                        Other.data.set("CrateKey", CommonlyWay.getItemData(item));
+                        try {
+                            File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                            Other.data.save(file1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        item.setAmount(amount);
+                        item.setItemMeta(metas);
+                        sender.sendMessage("Â§aæˆåŠŸé‡æ–°è®¾ç½®å¼€ç®±é’¥åŒ™");
+                        return true;
+                    }
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                    return true;
+                }
+                sender.sendMessage("Â§cæ§åˆ¶å°ä¸èƒ½ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("key")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl key [ç®±å­åç§°] [ç©å®¶] [æ•°é‡]  Â§2ç»™äºˆæŠ½å¥–é’¥åŒ™");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("crate")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl crate [ç®±å­åç§°]  [ç©å®¶] [ æ•°é‡]  Â§2ç»™äºˆæŠ½å¥–æ–¹å—ï¼ˆè®¾ç½®æ—¶æ‰‹æ¡çš„ï¼‰");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            return true;
+        }
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("show")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage("Â§cæ§åˆ¶å°ä¸èƒ½ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                    return true;
+                }
+                if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+                    return true;
+                }
+                int a = 0;
+                for (String name : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                    if (args[1].equals(name)) {
+                        break;
+                    }
+                    a++;
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == a) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+                        return true;
+                    }
+                }
+                a = 0;
+                Player player = (Player) sender;
+                String name = args[1];
+                if (!player.hasPermission("cl.showall") && !player.hasPermission("cl.show." + name)) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowMessage:").replace("[crate]", name)));
+                    return true;
+                }
+                if (!Other.data.getBoolean("Info." + name + ".check")) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
+                    return true;
+                }
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info." + name + ".color") + name)));
+                Gui.showcrate(player, name);
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("start")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage("Â§cæ§åˆ¶å°ä¸èƒ½æŠ½å¥–");
+                    return true;
+                }
+                if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+                    return true;
+                }
+                int a = 0;
+                for (String name : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                    if (args[1].equals(name)) {
+                        break;
+                    }
+                    a++;
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == a) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+                        return true;
+                    }
+                }
+                a = 0;
+                if (!sender.hasPermission("cl.startall") && !sender.hasPermission("cl.start." + args[1])) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoAuthorityMessage").replace("[crate]", args[1])));
+                    return true;
+                }
+                String name = args[1];
+                Player player = (Player) sender;
+                if (!player.hasPermission("cl.lottery")) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoLotteryMessage")));
+                    return true;
+                }
+                if (!player.hasPermission("cl.allcrate") && !player.hasPermission("cl.crate." + name)) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info." + name + ".color") + name))));
+                    return true;
+                }
+                List<String> itemlist = Other.data.getStringList("Info." + name + ".data");
+                int g = 1;
+                if (itemlist.size() == 0) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                    return true;
+                }
+                for (String item : itemlist) {
+                    if (!item.split(":")[1].equals("null")) {
+                        break;
+                    }
+                    if (g == itemlist.size()) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                        return true;
+                    }
+                    g++;
+                }
+                g = 1;
+                if (!Other.data.getString("Info." + name + ".announcement").equals("æ— ")) {
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info." + name + ".announcement").replace("[player]", player.getName())));
+                }
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info." + name + ".color") + name)));
+                if (Other.data.getBoolean("Info." + name + ".animation")) {
+                    if (Other.data.getDouble("Info." + name + ".cd") <= 0 && Other.data.getDouble("Info." + name + ".number") <= 0) {
+                        new WingTask(player, name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime") * 20));
+                    } else {
+                        new WingTask(player, name, Other.data.getInt("Info." + name + ".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info." + name + ".cd") * 20));
+                    }
+                } else {
+                    new WingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+                }
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("ninestart")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage("Â§cæ§åˆ¶å°ä¸èƒ½æŠ½å¥–");
+                    return true;
+                }
+                if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+                    return true;
+                }
+                int a = 0;
+                for (String name : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                    if (args[1].equals(name)) {
+                        a = 0;
+                        break;
+                    }
+                    a++;
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == a) {
+                        a = 0;
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+                        return true;
+                    }
+                }
+                if (!sender.hasPermission("cl.ninestartall") && !sender.hasPermission("cl.ninestart." + args[1])) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineAuthorityMessage").replace("[crate]", args[1])));
+                    return true;
+                }
+                String name = args[1];
+                Player player = (Player) sender;
+                if (!player.hasPermission("cl.ninelottery")) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoNineLotteryMessage")));
+                    return true;
+                }
+                if (Other.data.getBoolean("Info." + name + ".clear")) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ClearMessage")));
+                    return true;
+                }
+                if (!player.hasPermission("cl.allcrate") && !player.hasPermission("cl.crate." + name)) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoOpenCrate".replace("[crate]", Other.data.getString("Info." + name + ".color") + name))));
+                    return true;
+                }
+                List<String> itemlist = Other.data.getStringList("Info." + name + ".data");
+                int g = 1;
+                if (itemlist.size() == 0) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                    return true;
+                }
+                for (String item : itemlist) {
+                    if (!item.split(":")[1].equals("null")) {
+                        break;
+                    }
+                    if (g == itemlist.size()) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                        return true;
+                    }
+                    g++;
+                }
+                g = 1;
+
+                if (!Other.data.getString("Info." + name + ".nine").equals("æ— ")) {
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info." + name + ".nine").replace("[player]", player.getName())));
+                }
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info." + name + ".color") + name)));
+                if (Other.data.getBoolean("Info." + name + ".nineanimation")) {
+                    if (Other.data.getDouble("Info." + name + ".ninecd") <= 0 && Other.data.getDouble("Info." + name + ".ninenumber") <= 0) {
+                        new NineWingTask(player, name, Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime") * 20));
+                    } else {
+                        new NineWingTask(player, name, Other.data.getInt("Info." + name + ".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info." + name + ".ninecd") * 20));
+                    }
+                } else {
+                    new NineWingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+                }
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("help")) {
+                if (sender.isOp()) {
+                    int number = 1;
+                    try {
+                        number = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cè¯·è¾“å…¥æ•°å­—");
+                        return true;
+                    }
+                    if (number <= 0) {
+                        sender.sendMessage("Â§cæ²¡æœ‰è¿™ä¸ªé¡µæ•°ï¼");
+                        return true;
+                    }
+                    if (number == 1) {
+                        sender.sendMessage("Â§a[]==================Â§2[å¸®åŠ©Â§aç•Œé¢<1/3>]==================[]");
+                        sender.sendMessage("Â§aÂ§lå¸¸ç”¨æŒ‡ä»¤");
+                        sender.sendMessage("Â§a/cl help <é¡µæ•°> Â§6ä½¿ç”¨æŒ‡ä»¤å¸®åŠ©ä¸­å¿ƒ");
+                        sender.sendMessage("");
+                        sender.sendMessage("Â§a/cl gui  Â§6æ‰“å¼€åˆ¶ä½œgui");
+                        sender.sendMessage("Â§a/cl reload  Â§6é‡è½½æ’ä»¶é…ç½®/è¯­è¨€æ–‡ä»¶");
+                        sender.sendMessage("Â§a/cl crate [ç®±å­åç§°]  [ç©å®¶] [æ•°é‡]  Â§6ç»™äºˆæŠ½å¥–æ–¹å—");
+                        sender.sendMessage("Â§a/cl key [ç®±å­åç§°] [ç©å®¶] [æ•°é‡]  Â§6ç»™äºˆæŠ½å¥–é’¥åŒ™");
+                        sender.sendMessage("Â§a/cl setcrate Â§6è®¾ç½®æ‰‹ä¸Šç‰©å“æ”¾ç½®å‡ºçš„æ–¹å—å³ä¸ºæŠ½å¥–ç®±");
+                        sender.sendMessage("Â§a/cl setkey Â§6è®¾ç½®æ‰‹ä¸Šç‰©å“ä¸ºæŠ½å¥–é’¥åŒ™");
+                        sender.sendMessage("Â§a[]=========================Â§2==========================[]");
+                        return true;
+                    }
+                    if (number == 2) {
+                        sender.sendMessage("Â§a[]==================Â§2[å¸®åŠ©Â§aç•Œé¢<2/3>]==================[]");
+                        sender.sendMessage("Â§aÂ§lè‡ªå®šä¹‰ç›¸å…³");
+                        sender.sendMessage("Â§a/cl help <é¡µæ•°> Â§6ä½¿ç”¨æŒ‡ä»¤å¸®åŠ©ä¸­å¿ƒ");
+                        sender.sendMessage("");
+                        sender.sendMessage("Â§a/cl bc [ç®±å­åç§°] [å…¬å‘Š] ");
+                        sender.sendMessage("Â§a/cl 9nine [ç®±å­åç§°] [å…¬å‘Š] ");
+                        sender.sendMessage("Â§a/cl time Â§2[ç®±å­åç§°] [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] Â§6æ™®é€šå¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                        sender.sendMessage("Â§a/cl 9ninetime Â§2[ç®±å­åç§°] [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] Â§cä¹è¿æŠ½Â§6å¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                        sender.sendMessage("Â§6ä¸ºè¿™ä¸ªç®±å­å•ç‹¬è®¾ç½®æ—¶é—´ï¼Œç»†çœ‹config.ymlé‡Œçš„â€œå¼€ç®±éƒ¨åˆ†â€è‡ªè¡Œç†è§£");
+                        sender.sendMessage("Â§a[]=========================Â§2==========================[]");
+                        return true;
+                    }
+                    if (number == 3) {
+                        sender.sendMessage("Â§a[]==================Â§2[å¸®åŠ©Â§aç•Œé¢<3/3>]==================[]");
+                        sender.sendMessage("Â§aÂ§læŒ‡ä»¤å¼€ç®±ç›¸å…³");
+                        sender.sendMessage("Â§a/cl help <é¡µæ•°> Â§6ä½¿ç”¨æŒ‡ä»¤å¸®åŠ©ä¸­å¿ƒ");
+                        sender.sendMessage("");
+                        sender.sendMessage("Â§a/cl start Â§2[ç®±å­åç§°]  Â§6è®©è‡ªå·±å¼€å§‹å•æŠ½è¿™ä¸ªç®±å­");
+                        sender.sendMessage("Â§a/cl ninestart Â§2[ç®±å­åç§°]  Â§6è®©è‡ªå·±å¼€å§‹Â§cä¹è¿æŠ½Â§6è¿™ä¸ªç®±å­");
+                        sender.sendMessage("Â§a/cl start Â§2[ç®±å­åç§°] [ç©å®¶]  Â§6è®©ç©å®¶å¼€å§‹å•æŠ½è¿™ä¸ªç®±å­");
+                        sender.sendMessage("Â§a/cl ninestart Â§2[ç®±å­åç§°] [ç©å®¶]  Â§6è®©ç©å®¶å¼€å§‹Â§cä¹è¿æŠ½Â§6è¿™ä¸ªç®±å­");
+                        sender.sendMessage("Â§a/cl show Â§2[ç®±å­åç§°]  Â§6æŸ¥çœ‹è¿™ä¸ªç®±å­çš„å¥–æ± å†…å®¹");
+                        sender.sendMessage("Â§a/cl show Â§2[ç®±å­åç§°] [ç©å®¶]  Â§6è®©ç©å®¶æŸ¥çœ‹è¿™ä¸ªå¥–æ± çš„å†…å®¹");
+                        sender.sendMessage("Â§a[]=========================Â§2==========================[]");
+                        return true;
+                    }
+                    sender.sendMessage("Â§cæ²¡æœ‰è¿™ä¸ªé¡µæ•°ï¼");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9ninetime")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl 9ninetime Â§2[ç®±å­åç§°] [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] ä¸ºè¿™ä¸ªç®±å­çš„Â§cä¹è¿æŠ½Â§2å¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("time")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl time Â§2[ç®±å­åç§°] [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] ä¸ºè¿™ä¸ªç®±å­çš„æ™®é€šå¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9nine")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§aæˆ‘å¤§è°ƒè‰²æ¿è„šè¸©æŸšå­ç¤¾ï¼Œæ‹³æ‰“ä¸­äºŒç¤¾ï¼Œå¤´é¡¶å…«æœˆç¤¾");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("bc")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl bc [ç®±å­åç§°] [å…¬å‘Š] ");
+                    sender.sendMessage("Â§2è®¾ç½®ç®±å­å¼€å¯æ—¶å…¨æœå…¬å‘Š[å¦‚æœå†™â€œæ— â€åˆ™ä¸å¯ç”¨]ï¼Œ[player]å¼€ç®±ç©å®¶å˜é‡");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("crate")) {
+                if (sender instanceof Player) {
+                    if (sender.isOp()) {
+                        if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                            sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                            return true;
+                        }
+                        int a = 0;
+                        for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                            if (crate.equals(args[1])) {
+                                a = 0;
+                                break;
+                            }
+                            a++;
+                            if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                                sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                                a = 0;
+                                return true;
+                            }
+                        }
+                        if (Other.data.getString("CrateItem") == null) {
+                            sender.sendMessage("Â§cæœªè®¾ç½®ç®±å­");
+                            return true;
+                        }
+                        ItemStack item = CommonlyWay.getItemStack(Other.data.getString("CrateItem"));
+                        ItemMeta meta = item.getItemMeta();
+                        meta.setDisplayName(meta.getDisplayName() + Other.data.getString("Info." + args[1] + ".color") + args[1]);
+                        item.setItemMeta(meta);
+                        ((Player) sender).getInventory().addItem(item);
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('Â§', "Â§aç»™äºˆÂ§b" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aæŠ½å¥–ç®±æˆåŠŸ"));
+                        return true;
+                    }
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                    return true;
+                }
+                sender.sendMessage("Â§cä¸èƒ½ç»™æ§åˆ¶å°ç‰©å“");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("key")) {
+                if (sender instanceof Player) {
+                    if (sender.isOp()) {
+                        if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                            sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                            return true;
+                        }
+                        int a = 0;
+                        for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                            if (crate.equals(args[1])) {
+                                break;
+                            }
+                            a++;
+                            if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                                sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                                return true;
+                            }
+                        }
+                        if (Other.data.getString("CrateKey") == null) {
+                            sender.sendMessage("Â§cæœªè®¾ç½®é’¥åŒ™");
+                            return true;
+                        }
+                        a = 0;
+                        ItemStack item = CommonlyWay.getItemStack(Other.data.getString("CrateKey"));
+                        ItemMeta meta = item.getItemMeta();
+                        ArrayList<String> newlist = new ArrayList<String>();
+                        newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock")) + args[1]);
+                        if (item.getItemMeta().hasLore()) {
+                            newlist.addAll(item.getItemMeta().getLore());
+                        }
+                        meta.setLore(newlist);
+                        meta.setDisplayName(meta.getDisplayName() + Other.data.getString("Info." + args[1] + ".color") + args[1]);
+                        item.setItemMeta(meta);
+                        ((Player) sender).getInventory().addItem(item);
+                        if (Other.config.getBoolean("KeyMessage")) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info." + args[1] + ".color") + args[1])));
+                        }
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('Â§', "Â§aç»™äºˆÂ§b" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aé’¥åŒ™æˆåŠŸ"));
+                        return true;
+                    }
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                    return true;
+                }
+                sender.sendMessage("Â§cä¸èƒ½ç»™æ§åˆ¶å°ç‰©å“");
+                return true;
+            }
+            return true;
+        }
+        if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("show")) {
+                if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+                    return true;
+                }
+                int a = 0;
+                for (String name : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                    if (args[1].equals(name)) {
+                        break;
+                    }
+                    a++;
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == a) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+                        return true;
+                    }
+                }
+                a = 0;
+                if (Bukkit.getPlayer(args[2]) == null) {
+                    sender.sendMessage("Â§cè¿™ä¸ªç©å®¶æœªåœ¨çº¿");
+                    return true;
+                }
+                if (!sender.isOp()) {
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™è®©å…¶ä»–äººæŠ½å¥–");
+                    return true;
+                }
+                Player player = Bukkit.getPlayer(args[2]);
+                String name = args[1];
+                if (!Other.data.getBoolean("Info." + name + ".check")) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoShowCrates")));
+                    return true;
+                }
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowCrateMessage").replace("[crate]", Other.data.getString("Info." + name + ".color") + name)));
+                Gui.showcrate(player, name);
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("start")) {
+                if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+                    return true;
+                }
+                int a = 0;
+                for (String name : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                    if (args[1].equals(name)) {
+                        a = 0;
+                        break;
+                    }
+                    a++;
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == a) {
+                        a = 0;
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+                        return true;
+                    }
+                }
+                if (Bukkit.getPlayer(args[2]) == null) {
+                    sender.sendMessage("Â§cè¿™ä¸ªç©å®¶æœªåœ¨çº¿");
+                    return true;
+                }
+                if (!sender.isOp()) {
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™è®©å…¶ä»–äººæŠ½å¥–");
+                    return true;
+                }
+                String name = args[1];
+                Player player = Bukkit.getPlayer(args[2]);
+                List<String> itemlist = Other.data.getStringList("Info." + name + ".data");
+                int g = 1;
+                if (itemlist.size() == 0) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                    return true;
+                }
+                for (String item : itemlist) {
+                    if (!item.split(":")[1].equals("null")) {
+                        break;
+                    }
+                    if (g == itemlist.size()) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                        return true;
+                    }
+                    g++;
+                }
+                g = 1;
+                if (!Other.data.getString("Info." + name + ".announcement").equals("æ— ")) {
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info." + name + ".announcement").replace("[player]", player.getName())));
+                }
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("OpenCrateMessage").replace("[crate]", Other.data.getString("Info." + name + ".color") + name)));
+                if (Other.data.getBoolean("Info." + name + ".animation")) {
+                    if (Other.data.getDouble("Info." + name + ".cd") <= 0 && Other.data.getDouble("Info." + name + ".number") <= 0) {
+                        new WingTask(player, name, Other.config.getInt("WingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("WingSpaceTime") * 20));
+                    } else {
+                        new WingTask(player, name, Other.data.getInt("Info." + name + ".number")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info." + name + ".cd") * 20));
+                    }
+                } else {
+                    new WingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+                }
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("ninestart")) {
+                if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotAnyCrates")));
+                    return true;
+                }
+                int a = 0;
+                for (String name : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                    if (args[1].equals(name)) {
+                        a = 0;
+                        break;
+                    }
+                    a++;
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == a) {
+                        a = 0;
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotCrates")));
+                        return true;
+                    }
+                }
+                if (Bukkit.getPlayer(args[2]) == null) {
+                    sender.sendMessage("Â§cè¿™ä¸ªç©å®¶æœªåœ¨çº¿");
+                    return true;
+                }
+                if (!sender.isOp()) {
+                    sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™è®©å…¶ä»–äººæŠ½å¥–");
+                    return true;
+                }
+                String name = args[1];
+                Player player = Bukkit.getPlayer(args[2]);
+                List<String> itemlist = Other.data.getStringList("Info." + name + ".data");
+                int g = 1;
+                if (itemlist.size() == 0) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                    return true;
+                }
+                for (String item : itemlist) {
+                    if (!item.split(":")[1].equals("null")) {
+                        break;
+                    }
+                    if (g == itemlist.size()) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemMessage")));
+                        return true;
+                    }
+                    g++;
+                }
+                g = 1;
+                if (!Other.data.getString("Info." + name + ".nine").equals("æ— ")) {
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Other.data.getString("Info." + name + ".nine").replace("[player]", player.getName())));
+                }
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NineOpenCrateMessage").replace("[crate]", Other.data.getString("Info." + name + ".color") + name)));
+                if (Other.data.getBoolean("Info." + name + ".nineanimation")) {
+                    if (Other.data.getDouble("Info." + name + ".ninecd") <= 0 && Other.data.getDouble("Info." + name + ".ninenumber") <= 0) {
+                        new NineWingTask(player, name, Other.config.getInt("NineWingLongTime")).runTaskTimer(Main.plugin, 0, (int) (Other.config.getDouble("NineWingSpaceTime") * 20));
+                    } else {
+                        new NineWingTask(player, name, Other.data.getInt("Info." + name + ".ninenumber")).runTaskTimer(Main.plugin, 0, (int) (Other.data.getDouble("Info." + name + ".ninecd") * 20));
+                    }
+                } else {
+                    new NineWingTaskS(player, name).runTaskTimer(Main.plugin, 0, 0);
+                }
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9ninetime")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl 9ninetime Â§2[ç®±å­åç§°]  [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] ä¸ºè¿™ä¸ªç®±å­çš„Â§cä¹è¿æŠ½Â§2å¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("time")) {
+                if (sender.isOp()) {
+                    sender.sendMessage("Â§a/cl time Â§2[ç®±å­åç§°]  [å˜å¹»æ¬¡æ•°] [å˜å¹»æ—¶é—´] ä¸ºè¿™ä¸ªç®±å­çš„æ™®é€šå¼€ç®±å•ç‹¬è®¾ç½®æ—¶é—´");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("bc")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    a = 0;
+                    if (args[2].equals("æ— ")) {
+                        sender.sendMessage("Â§aæˆåŠŸå–æ¶ˆ" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aå¼€ç®±æ—¶çš„å…¬å‘Š");
+                        Other.data.set("Info." + args[1] + ".announcement", "æ— ");
+                    } else {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "Â§aæˆåŠŸè®¾ç½®" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aå¼€ç®±æ—¶çš„å…¬å‘Šä¸º" + args[2]));
+                        Other.data.set("Info." + args[1] + ".announcement", args[2]);
+                    }
+                    try {
+                        File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                        Other.data.save(file1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9Nine")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    a = 0;
+                    if (args[2].equals("æ— ")) {
+                        sender.sendMessage("Â§aæˆåŠŸå–æ¶ˆ" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§cä¹è¿Â§aå¼€ç®±æ—¶çš„å…¬å‘Š");
+                        Other.data.set("Info." + args[1] + ".nine", "æ— ");
+                    } else {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "Â§aæˆåŠŸè®¾ç½®" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§cä¹è¿Â§aå¼€ç®±æ—¶çš„å…¬å‘Šä¸º" + args[2]));
+                        Other.data.set("Info." + args[1] + ".nine", args[2]);
+                    }
+                    try {
+                        File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                        Other.data.save(file1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("crate")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    if (Other.data.getString("CrateItem") == null) {
+                        sender.sendMessage("Â§cæœªè®¾ç½®ç®±å­");
+                        return true;
+                    }
+                    if (Bukkit.getServer().getPlayer(args[2]) == null) {
+                        sender.sendMessage("Â§cè¿™ä¸ªç©å®¶ä¸å­˜åœ¨/ä¸åœ¨çº¿");
+                        return true;
+                    }
+                    Player player = Bukkit.getServer().getPlayer(args[2]);
+                    a = 0;
+                    ItemStack item = CommonlyWay.getItemStack(Other.data.getString("CrateItem"));
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(meta.getDisplayName() + Other.data.getString("Info." + args[1] + ".color") + args[1]);
+                    item.setItemMeta(meta);
+                    player.getInventory().addItem(item);
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('Â§', "Â§aç»™äºˆÂ§b" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aæŠ½å¥–ç®±æˆåŠŸ"));
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("key")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    if (Other.data.getString("CrateKey") == null) {
+                        sender.sendMessage("Â§cæœªè®¾ç½®é’¥åŒ™");
+                        return true;
+                    }
+                    if (Bukkit.getServer().getPlayer(args[2]) == null) {
+                        sender.sendMessage("Â§cè¿™ä¸ªç©å®¶ä¸å­˜åœ¨/ä¸åœ¨çº¿");
+                        return true;
+                    }
+                    Player player = Bukkit.getServer().getPlayer(args[2]);
+                    a = 0;
+                    ItemStack item = CommonlyWay.getItemStack(Other.data.getString("CrateKey"));
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(meta.getDisplayName() + Other.data.getString("Info." + args[1] + ".color") + args[1]);
+                    ArrayList<String> newlist = new ArrayList<String>();
+                    newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock")) + args[1]);
+                    if (item.getItemMeta().hasLore()) {
+                        newlist.addAll(item.getItemMeta().getLore());
+                    }
+                    meta.setLore(newlist);
+                    item.setItemMeta(meta);
+                    player.getInventory().addItem(item);
+                    if (Other.config.getBoolean("KeyMessage")) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info." + args[1] + ".color") + args[1])));
+                    }
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('Â§', "Â§aç»™äºˆÂ§b" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aé’¥åŒ™æˆåŠŸ"));
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            return true;
+        }
+        if (args.length == 4) {
+            if (args[0].equalsIgnoreCase("time")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    int number = 1;
+                    try {
+                        number = Integer.parseInt(args[2]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cæ¬¡æ•°åªèƒ½ä¸ºæ•´æ•°");
+                        return true;
+                    }
+                    double cd = 0.5;
+                    try {
+                        cd = Double.parseDouble(args[3]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cè¯·è¾“å…¥æ•°å­—");
+                        return true;
+                    }
+                    if (number <= 0) {
+                        sender.sendMessage("Â§cæ¬¡æ•°ä¸èƒ½å°äºç­‰äº0ï¼");
+                        return true;
+                    }
+                    if (cd <= 0) {
+                        sender.sendMessage("Â§cæ—¶é—´ä¸èƒ½å°äºç­‰äº0ï¼");
+                        return true;
+                    }
+                    Other.data.set("Info." + args[1] + ".number", number);
+                    Other.data.set("Info." + args[1] + ".cd", cd);
+                    try {
+                        File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                        Other.data.save(file1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    sender.sendMessage("Â§aæˆåŠŸè®¾ç½®æŠ½å¥–ç®±" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§açš„å¼€ç®±æ—¶é•¿æ¬¡æ•°ä¸ºÂ§2" + number + "Â§aæ¬¡");
+                    sender.sendMessage("Â§aæˆåŠŸè®¾ç½®æŠ½å¥–ç®±" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§açš„æ¯æ¬¡å˜å¹»ç›¸å·®ç§’æ•°ä¸ºÂ§2" + cd + "Â§aç§’");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("9ninetime")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    int number = 1;
+                    try {
+                        number = Integer.parseInt(args[2]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cæ¬¡æ•°åªèƒ½ä¸ºæ•´æ•°");
+                        return true;
+                    }
+                    double cd = 0.5;
+                    try {
+                        cd = Double.parseDouble(args[3]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cè¯·è¾“å…¥æ•°å­—");
+                        return true;
+                    }
+                    if (number <= 0) {
+                        sender.sendMessage("Â§cæ¬¡æ•°ä¸èƒ½å°äºç­‰äº0ï¼");
+                        return true;
+                    }
+                    if (cd <= 0) {
+                        sender.sendMessage("Â§cæ—¶é—´ä¸èƒ½å°äºç­‰äº0ï¼");
+                        return true;
+                    }
+                    Other.data.set("Info." + args[1] + ".ninenumber", number);
+                    Other.data.set("Info." + args[1] + ".ninecd", cd);
+                    try {
+                        File file1 = new File(Main.plugin.getDataFolder(), "data.yml");
+                        Other.data.save(file1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    sender.sendMessage("Â§aæˆåŠŸè®¾ç½®æŠ½å¥–ç®±" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§açš„Â§cä¹è¿æŠ½Â§aå¼€ç®±æ—¶é•¿æ¬¡æ•°ä¸ºÂ§2" + number + "Â§aæ¬¡");
+                    sender.sendMessage("Â§aæˆåŠŸè®¾ç½®æŠ½å¥–ç®±" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§açš„Â§cä¹è¿æŠ½Â§aæ¯æ¬¡å˜å¹»ç›¸å·®ç§’æ•°ä¸ºÂ§2" + cd + "Â§aç§’");
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("key")) {
+                if (sender.isOp()) {
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    if (Other.data.getString("CrateKey") == null) {
+                        sender.sendMessage("Â§cæœªè®¾ç½®é’¥åŒ™");
+                        return true;
+                    }
+                    if (Bukkit.getServer().getPlayer(args[2]) == null) {
+                        sender.sendMessage("Â§cè¿™ä¸ªç©å®¶ä¸å­˜åœ¨/ä¸åœ¨çº¿");
+                        return true;
+                    }
+                    int amount = 1;
+                    try {
+                        amount = Integer.parseInt(args[3]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cè¯·è¾“å…¥æ•°å­—");
+                        return true;
+                    }
+                    Player player = Bukkit.getServer().getPlayer(args[2]);
+                    a = 0;
+                    ItemStack item = CommonlyWay.getItemStack(Other.data.getString("CrateKey"));
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(meta.getDisplayName() + Other.data.getString("Info." + args[1] + ".color") + args[1]);
+                    ArrayList<String> newlist = new ArrayList<String>();
+                    newlist.add(ChatColor.translateAlternateColorCodes('&', Other.config.getString("Lock")) + args[1]);
+                    if (item.getItemMeta().hasLore()) {
+                        newlist.addAll(item.getItemMeta().getLore());
+                    }
+                    meta.setLore(newlist);
+                    item.setItemMeta(meta);
+                    item.setAmount(amount);
+                    player.getInventory().addItem(item);
+                    if (Other.config.getBoolean("KeyMessage")) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("GetKeyMessage").replace("[key]", Other.data.getString("Info." + args[1] + ".color") + args[1])));
+                    }
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('Â§', "Â§aç»™äºˆÂ§b" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aé’¥åŒ™æˆåŠŸ"));
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("crate")) {
+                if (sender.isOp()) {
+                    if (Other.data.getString("CrateItem") == null) {
+                        sender.sendMessage("Â§cæœªè®¾ç½®ç®±å­");
+                        return true;
+                    }
+                    if (Other.data.getConfigurationSection("Info").getKeys(false).size() == 0) {
+                        sender.sendMessage("Â§cå½“å‰æ²¡æœ‰å­˜åœ¨ä»»ä½•æŠ½å¥–ç®±");
+                        return true;
+                    }
+                    int a = 0;
+                    for (String crate : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (crate.equals(args[1])) {
+                            break;
+                        }
+                        a++;
+                        if (a == Other.data.getConfigurationSection("Info").getKeys(false).size()) {
+                            sender.sendMessage("Â§cä¸å­˜åœ¨è¿™ä¸ªæŠ½å¥–ç®±");
+                            return true;
+                        }
+                    }
+                    if (Bukkit.getServer().getPlayer(args[2]) == null) {
+                        sender.sendMessage("Â§cè¿™ä¸ªç©å®¶ä¸å­˜åœ¨/ä¸åœ¨çº¿");
+                        return true;
+                    }
+                    int amount = 1;
+                    try {
+                        amount = Integer.parseInt(args[3]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("Â§cè¯·è¾“å…¥æ•°å­—");
+                        return true;
+                    }
+                    Player player = Bukkit.getServer().getPlayer(args[2]);
+                    a = 0;
+                    ItemStack item = CommonlyWay.getItemStack(Other.data.getString("CrateItem"));
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(meta.getDisplayName() + Other.data.getString("Info." + args[1] + ".color") + args[1]);
+                    item.setItemMeta(meta);
+                    item.setAmount(amount);
+                    player.getInventory().addItem(item);
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('Â§', "Â§aç»™äºˆÂ§b" + Other.data.getString("Info." + args[1] + ".color") + args[1] + "Â§aæŠ½å¥–ç®±æˆåŠŸ"));
+                    return true;
+                }
+                sender.sendMessage("Â§cä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤æŒ‡ä»¤");
+                return true;
+            }
+            return true;
+        }
+        if (sender.isOp()) {
+            sender.sendMessage("Â§a/cl help <é¡µæ•°> Â§2ä½¿ç”¨æŒ‡ä»¤å¸®åŠ©ä¸­å¿ƒ");
+        } else {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                boolean a = false;
+                if (player.hasPermission("cl.startall")) {
+                    for (String p : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        a = true;
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowStart").replace("[crate]", Other.data.getString("Info." + p + ".color") + p)));
+                    }
+                } else {
+                    for (PermissionAttachmentInfo p : sender.getEffectivePermissions()) {
+                        if (p.getPermission().startsWith("cl.start.")) {
+                            for (String b : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                                if (b.equals(p.getPermission().split("\\.")[2])) {
+                                    a = true;
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowStart").replace("[crate]", Other.data.getString("Info." + p.getPermission().split("\\.")[2]) + ".color") + p.getPermission().split("\\.")[2]));
+                                }
+                            }
+                        }
+                    }
+                }
+                int c = 0;
+                if (player.hasPermission("cl.ninestartall")) {
+                    for (String p : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        c++;
+                        if (c == 1 && a) {
+                            sender.sendMessage("");
+                        }
+                        a = true;
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowNineStart").replace("[crate]", Other.data.getString("Info." + p + ".color") + p)));
+                    }
+                } else {
+                    for (PermissionAttachmentInfo p : sender.getEffectivePermissions()) {
+                        if (p.getPermission().startsWith("cl.ninestart.")) {
+                            for (String b : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                                if (b.equals(p.getPermission().split("\\.")[2])) {
+                                    c++;
+                                    if (c == 1 && a) {
+                                        sender.sendMessage("");
+                                    }
+                                    a = true;
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowNineStart").replace("[crate]", Other.data.getString("Info." + p.getPermission().split("\\.")[2]) + ".color") + p.getPermission().split("\\.")[2]));
+                                }
+                            }
+                        }
+                    }
+                }
+                c = 1;
+                if (player.hasPermission("cl.showall")) {
+                    for (String p : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                        if (a && c != 0) {
+                            sender.sendMessage("");
+                            c = 0;
+                        }
+                        a = true;
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowMessage").replace("[crate]", Other.data.getString("Info." + p + ".color") + p)));
+                    }
+                } else {
+                    for (PermissionAttachmentInfo p : sender.getEffectivePermissions()) {
+                        if (p.getPermission().startsWith("cl.show.")) {
+                            for (String b : Other.data.getConfigurationSection("Info").getKeys(false)) {
+                                if (b.equals(p.getPermission().split("\\.")[2])) {
+                                    if (a && c != 0) {
+                                        sender.sendMessage("");
+                                        c = 0;
+                                    }
+                                    a = true;
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("ShowMessage").replace("[crate]", Other.data.getString("Info." + p.getPermission().split("\\.")[2]) + ".color") + p.getPermission().split("\\.")[2]));
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!a) {
+                    sender.sendMessage("Â§cNull");
+                }
+                return true;
+            }
+            sender.sendMessage("Â§cNull");
+        }
+        return true;
+    }
 }

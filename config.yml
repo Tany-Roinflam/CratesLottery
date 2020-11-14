@@ -27,3 +27,7 @@ ChangeSoundTimbre: false
 
 #同步验证钥匙是否符合（通过匹配lore和名称的信息）（相当于添加了一个lore）
 Lock: '&a此&c钥匙&a可以开启抽奖箱：&6 '
+
+#是否启用日志功能
+#启动后抽奖的结果将会在log.yml里显示
+Log: true

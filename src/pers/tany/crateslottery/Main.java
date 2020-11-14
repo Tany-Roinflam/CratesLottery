@@ -1,34 +1,41 @@
 package pers.tany.crateslottery;
 
-import java.io.File;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import pers.tany.crateslottery.command.Commands;
 import pers.tany.crateslottery.listenevent.Event;
 import pers.tany.crateslottery.placeholderapi.PlaceholderAPI;
-public class Main extends JavaPlugin{
-		public static Plugin plugin = null;
-		public void onEnable() {
-		    plugin = this;
-			Bukkit.getConsoleSender().sendMessage("¡ìa[Crates¡ì2Lottery]¡ìa²å¼şÒÑ¼ÓÔØ");
-	        if (!new File(getDataFolder(), "config.yml").exists()) {
-	        	saveResource("config.yml", false);
-	        }
-	        if (!new File(getDataFolder(), "data.yml").exists()) {
-	            saveResource("data.yml", false);
-	        }
-	        if (!new File(getDataFolder(), "message.yml").exists()) {
-	            saveResource("message.yml", false);
-	        }
-			new BasicLibrary();
-		    getCommand("cl").setExecutor(new Commands());
-		    getServer().getPluginManager().registerEvents(new Event(), this);
-	        new PlaceholderAPI(this).register();
-		}
-		public void onDisable() {
-			Bukkit.getConsoleSender().sendMessage("¡ìa[Crates¡ì2Lottery]¡ìc²å¼şÒÑĞ¶ÔØ");
-		}
+
+import java.io.File;
+
+public class Main extends JavaPlugin {
+    public static Plugin plugin = null;
+
+    @Override
+    public void onEnable() {
+        plugin = this;
+        Bukkit.getConsoleSender().sendMessage("Â§a[CratesÂ§2Lottery]Â§aæ’ä»¶å·²åŠ è½½");
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            saveResource("config.yml", false);
+        }
+        if (!new File(getDataFolder(), "data.yml").exists()) {
+            saveResource("data.yml", false);
+        }
+        if (!new File(getDataFolder(), "message.yml").exists()) {
+            saveResource("message.yml", false);
+        }
+        if (!new File(getDataFolder(), "log.yml").exists()) {
+            saveResource("log.yml", false);
+        }
+        new BasicLibrary();
+        getCommand("cl").setExecutor(new Commands());
+        getServer().getPluginManager().registerEvents(new Event(), this);
+        new PlaceholderAPI(this).register();
+    }
+
+    @Override
+    public void onDisable() {
+        Bukkit.getConsoleSender().sendMessage("Â§a[CratesÂ§2Lottery]Â§cæ’ä»¶å·²å¸è½½");
+    }
 }

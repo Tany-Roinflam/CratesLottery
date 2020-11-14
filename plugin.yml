@@ -1,7 +1,8 @@
 name: CratesLottery
 main: pers.tany.crateslottery.Main
-version: 2.1.1
+version: 2.1.2
 author: tany
+description: 非常炫酷的抽奖
 depend: [ProtocolLib]
 api-version: 1.13
 commands:
